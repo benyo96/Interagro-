@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { userRoutes, productRoutes } = require('./routes');
+const clientesRoutes = require('./routes/clienteRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,8 +10,7 @@ app.use(cors());
 app.use(express.json()); // Para parsear JSON en las requests
 
 // Routes
-app.use('/api/cliente', clietesRoutes);
-app.use('/api/products', productRoutes);
+app.use('/api/cliente', clientesRoutes);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
