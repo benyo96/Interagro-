@@ -1,21 +1,30 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const db = require('./config/db');
-const routes = require('./routes/index');
+const cors = require('cors');
+const clientesRoutes = require('./routes/clienteRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Database connection
-db();
+// Middlewares
+app.use(cors());
+app.use(express.json()); // Para parsear JSON en las requests
 
 // Routes
-app.use('/api', routes);
+app.use('/api/cliente', clientesRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.json({ message: 'API funcionando correctamente' });
 });
+
+// Manejar rutas no encontradas
+app.use('*', (req, res) => {
+  res.status(404).json({ error: 'Ruta no encontrada' });
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+module.exports = app;
