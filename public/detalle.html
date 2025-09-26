@@ -10,19 +10,75 @@
     .detalle-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .card { border-radius: 18px; box-shadow: 0 2px 16px #0001; max-width: 400px; }
     .card-img-top { height: 280px; object-fit: cover; border-radius: 18px 18px 0 0; }
-    .btn-chat { background: #fff; border: 1px solid #ddd; font-size: 1.2rem; margin-top: 10px; }
+    .btn-chat {
+      background: #fff;
+      border: 1px solid #4caf50;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #4caf50;
+      border-radius: 12px;
+      transition: background .2s, color .2s;
+    }
+    .btn-chat:hover {
+      background: #4caf50;
+      color: #fff;
+    }
+    .animated-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      background: radial-gradient(circle at 20% 20%, #c8e6c9 0%, #e8f5e9 60%, #fff 100%),
+                  repeating-linear-gradient(135deg, #a5d6a7 0 2px, transparent 2px 40px);
+      animation: bgMove 10s infinite alternate;
+    }
+    @keyframes bgMove {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(40deg); }
+    }
+    .animated-card {
+      animation: fadeInCard .8s;
+    }
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #loaderOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #fff9;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #loaderOverlay .logo {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
   </style>
 </head>
 <body>
+  <div class="animated-bg"></div>
   <div class="detalle-container">
-    <div class="card w-100">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Producto">
+    <div class="card w-100 animated-card">
+      <img src="img/4.png" class="card-img-top" alt="Producto" id="imgProducto">
       <div class="card-body">
         <h5 class="card-title" id="nombreProducto">Producto</h5>
         <p class="card-text" id="descripcionProducto"></p>
         <p class="card-text"><strong id="precioProducto"></strong></p>
-        <button class="btn btn-chat w-100">Iniciar chat</button>
+        <button class="btn btn-chat w-100" onclick="mostrarLoader()">Iniciar chat</button>
       </div>
+    </div>
+  </div>
+  <div id="loaderOverlay">
+    <div class="text-center">
+      <img src="img/logo-interagro.png" alt="Logo" class="logo">
+      <div class="spinner-border text-success" role="status"></div>
+      <div class="meta">Cargando...</div>
     </div>
   </div>
   <script>
@@ -34,8 +90,17 @@
       document.getElementById('nombreProducto').textContent = prod.nombre_productos || 'Producto';
       document.getElementById('descripcionProducto').textContent = prod.descripcion || '';
       document.getElementById('precioProducto').textContent = prod.precio ? `$${prod.precio}` : '';
+      // Si tienes imagen real, reemplaza src
+      // document.getElementById('imgProducto').src = prod.imagen || 'img/logo-interagro.png';
     }
     cargarDetalle();
+    function mostrarLoader() {
+      document.getElementById('loaderOverlay').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('loaderOverlay').style.display = 'none';
+        alert('Chat iniciado (simulado)');
+      }, 1500);
+    }
   </script>
 </body>
 </html>

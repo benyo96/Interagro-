@@ -8,37 +8,102 @@
   <style>
     body { background: #fafafa; }
     .register-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    .card { border-radius: 16px; box-shadow: 0 2px 16px #0001; }
-    .logo { width: 80px; margin-bottom: 20px; }
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+      animation: fadeIn 1.2s;
+    }
+    .fade-in {
+      animation: fadeIn 1.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card {
+      border-radius: 16px;
+      box-shadow: 0 2px 16px #0001;
+      border: 1px solid #e0e0e0;
+      max-width: 400px;
+    }
+    h2 {
+      color: #4caf50;
+      font-family: 'Pacifico', cursive;
+    }
+    .animated-btn {
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .animated-btn:hover {
+      box-shadow: 0 4px 16px #4caf5040;
+      transform: scale(1.04);
+    }
+    a {
+      color: #388e3c !important;
+      text-decoration: underline;
+      transition: color .2s;
+    }
+    a:hover {
+      color: #1b5e20 !important;
+    }
+    #loaderOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fff9;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
   <div class="register-container">
-    <div class="card p-4 mx-auto" style="max-width: 400px;">
+    <div class="card p-4 mx-auto">
       <div class="text-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Logo" class="logo">
-        <h2 class="mb-4" style="font-family: 'Pacifico', cursive;">Interagro</h2>
+        <img src="img/4.png" alt="Logo InterAgro" class="logo mb-3">
+        <h2 class="mb-4">InterAgro</h2>
       </div>
-      <form id="registerForm">
-        <div class="mb-3">
-          <input type="text" class="form-control" id="nombre" placeholder="Nombre completo" required>
+      <div class="card p-4 fade-in">
+        <form id="registerForm">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre completo" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" id="correo" placeholder="Correo electrónico" required>
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" id="contrasena" placeholder="Contraseña" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100 animated-btn">Registrarse</button>
+        </form>
+        <div class="mt-3 text-center">
+          <a href="login.html">¿Ya tienes cuenta? Inicia sesión</a>
         </div>
-        <div class="mb-3">
-          <input type="email" class="form-control" id="correo" placeholder="Correo electrónico" required>
-        </div>
-        <div class="mb-3">
-          <input type="password" class="form-control" id="contrasena" placeholder="Contraseña" required>
-        </div>
-        <button type="submit" class="btn btn-success w-100">Registrarse</button>
-      </form>
-      <div class="mt-3 text-center">
-        <a href="login.html">¿Ya tienes cuenta? Inicia sesión</a>
       </div>
     </div>
   </div>
+  <div id="loaderOverlay">
+    <div class="text-center">
+      <img src="img/logo-interagro.png" alt="Logo" class="logo">
+      <div class="spinner-border text-success" role="status"></div>
+      <div class="meta">Cargando...</div>
+    </div>
+  </div>
   <script>
+    function mostrarLoader() {
+      document.getElementById('loaderOverlay').style.display = 'flex';
+    }
+    function ocultarLoader() {
+      document.getElementById('loaderOverlay').style.display = 'none';
+    }
     document.getElementById('registerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      mostrarLoader();
       const nombre = document.getElementById('nombre').value;
       const correo = document.getElementById('correo').value;
       const contrasena = document.getElementById('contrasena').value;
@@ -48,6 +113,7 @@
         body: JSON.stringify({ nombre, correo, contrasena })
       });
       const data = await res.json();
+      ocultarLoader();
       if (res.ok) {
         window.location.href = 'login.html';
       } else {
