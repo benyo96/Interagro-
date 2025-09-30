@@ -4,14 +4,14 @@ const bcrypt = require('bcrypt');
 const usuarioController = {
   // Registro de usuario
   register: async (req, res) => {
-    const { nombre, correo, contrasena } = req.body;
-    if (!nombre || !correo || !contrasena) {
+    const { nombre, correo, telefono, direccion, contrasena } = req.body;
+    if (!nombre || !correo || !telefono || !contrasena) {
       return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
     const hash = await bcrypt.hash(contrasena, 10);
     db.query(
-      'INSERT INTO usuarios (nombre, correo, contrasena) VALUES (?, ?, ?)',
-      [nombre, correo, hash],
+      'INSERT INTO usuarios (nombre, correo, telefono, direccion, contrasena) VALUES (?, ?, ?, ?, ?)',
+      [nombre, correo, telefono, direccion, hash],
       (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Usuario registrado correctamente' });
