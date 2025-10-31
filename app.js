@@ -4,6 +4,7 @@ const clientesRoutes = require('./routes/clienteRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const mensajeRoutes = require('./routes/mensajeRoutes');
 const publicacionRoutes = require('./routes/publicacionRoutes');
+const reporteRoutes = require('./routes/reporteRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ app.use('/api/cliente', clientesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/mensajes', mensajeRoutes);
 app.use('/api/publicaciones', publicacionRoutes);
+app.use('/api/reportes', reporteRoutes);
 
 // Ruta de inicio profesional: redirige a /html/loader.html
 app.get('/', (req, res) => {

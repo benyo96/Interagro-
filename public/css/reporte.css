@@ -1,1 +1,158 @@
-form#formReporte { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 24px; margin-top: 24px; }
+/*
+  Nuevo diseño: el formulario de reporte ocupa el centro, es más grande, sin doble cuadro, con colores amigables y animaciones sutiles.
+*/
+body {
+  background: linear-gradient(135deg, #eafff0 0%, #7fffd4 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar {
+  min-width: 220px;
+  background: #181818;
+  color: #fff;
+  padding: 32px 0 0 0;
+  border-radius: 22px 0 0 22px;
+  box-shadow: 0 2px 24px #0002;
+  height: 100vh;
+}
+
+.logo {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  margin: 0 auto 12px auto;
+  display: block;
+  object-fit: cover;
+  box-shadow: 0 2px 8px #0002;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.08em;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  transition: background 0.2s;
+}
+nav a.active, nav a:hover {
+  background: #23272f;
+  color: #4caf50;
+}
+
+main.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+h2.fw-bold {
+  color: #4caf50;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+  font-size: 2.2em;
+  letter-spacing: 0.5px;
+  animation: fadeInDown 0.7s;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+form#formReporte {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px #0002;
+  padding: 38px 38px 28px 38px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  animation: fadeInUp 0.8s;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#formReporte input, #formReporte textarea {
+  border-radius: 12px;
+  border: 2px solid #b2f2d7;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.13em;
+  padding: 12px 16px;
+  background: #f8fff8;
+  color: #222;
+  margin-bottom: 8px;
+  width: 100%;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #4caf5011;
+}
+#formReporte input:focus, #formReporte textarea:focus {
+  border: 2px solid #4caf50;
+  outline: none;
+  box-shadow: 0 2px 12px #4caf5022;
+}
+#formReporte button[type="submit"] {
+  background: linear-gradient(90deg, #4caf50 60%, #7fffd4 100%);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 0;
+  font-size: 1.15em;
+  width: 100%;
+  box-shadow: 0 2px 12px #4caf5022;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+#formReporte button[type="submit"]:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #4caf50 100%);
+  transform: scale(1.03);
+}
+#reporteMsg {
+  color: #4caf50;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 1.13em;
+  min-height: 24px;
+  animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 700px) {
+  .main-content { flex-direction: column; }
+  .sidebar { min-width: 100vw; border-radius: 0; height: auto; }
+  main.main-content { padding: 0 0 32px 0; }
+  form#formReporte { max-width: 98vw; padding: 18px 6vw; }
+}

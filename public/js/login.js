@@ -16,10 +16,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   });
   const data = await res.json();
   ocultarLoader();
-  if (res.ok) {
-    localStorage.setItem('nombre', data.usuario?.nombre || 'Usuario');
-    localStorage.setItem('correo', data.usuario?.correo || correo);
-    localStorage.setItem('id_usuario', data.usuario?.id_usuario || '');
+  if (res.ok && data.usuario) {
+    // Guardar el usuario completo en localStorage
+    localStorage.setItem('usuario', JSON.stringify({
+      id_usuario: data.usuario.id_usuario,
+      nombre: data.usuario.nombre,
+      correo: data.usuario.correo,
+      rol: data.usuario.rol || 'cliente'
+    }));
     window.location.href = 'inicio.html';
   } else {
     alert(data.error || 'Credenciales incorrectas');
