@@ -6,33 +6,312 @@
   <title>Perfil | InterAgro</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background: #f5f5f5; font-family: 'Montserrat', sans-serif; }
-    .sidebar { width:260px; min-height:100vh; background:#181818; color:#fff; box-shadow:2px 0 12px #0002; position:fixed; left:0; top:0; z-index:100; }
-    .sidebar .logo { width:48px; margin:24px auto 8px auto; display:block; }
-    .sidebar h4 { color:#4caf50; text-align:center; font-weight:bold; margin-bottom:32px; }
-    .sidebar nav { margin-bottom:32px; }
-    .sidebar nav a { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; font-size:1.15em; padding:12px 24px; border-radius:12px; margin-bottom:8px; transition:background .2s; }
-    .sidebar nav a.active, .sidebar nav a:hover { background:#222; color:#4caf50; }
-    .sidebar .mas-btn { position:absolute; bottom:24px; left:16px; width:calc(100% - 32px); border-radius:12px; font-weight:bold; }
-    .main-content { margin-left:260px; padding:40px 24px; }
-  </style>
+  <link rel="stylesheet" href="css/perfil.css">
 </head>
 <body>
   <aside class="sidebar">
     <img src="img/agricultor.png" alt="Logo" class="logo">
-    <h4>InterAgro</h4>
+    <h4 style="font-family: 'Montserrat', sans-serif; color:#4caf50;">InterAgro</h4>
     <nav>
-      <a href="inicio.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M12 3l9 8h-3v7h-4v-5h-4v5H6v-7H3z"/></svg></span> Inicio</a>
-      <a href="buscar.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span> Buscar</a>
-      <a href="mensajes.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-4 4V4h18v10z"/></svg></span> Mensajes</a>
-      <a href="perfil.html" class="active"><img src="img/agricultor.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;" class="me-2"> Perfil</a>
+      <a href="inicio.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M12 3l9 8h-3v7h-4v-5h-4v5H6v-7H3z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Inicio</span></a>
+      <a href="buscar.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Buscar</span></a>
+      <a href="mensajes.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-4 4V4h18v10z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Mensajes</span></a>
+      <a href="perfil.html" class="active"><img src="img/agricultor.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;" class="me-2"> <span style="font-family: 'Montserrat', sans-serif;">Perfil</span></a>
     </nav>
-    <button class="btn btn-dark mas-btn">☰ Más</button>
   </aside>
   <main class="main-content">
-    <h2 class="fw-bold" style="color:#4caf50;">Mi perfil</h2>
-    <p>Aquí puedes ver y editar tus datos, y gestionar tus publicaciones.</p>
+    <div class="perfil-header" style="display:flex;align-items:center;gap:32px;margin-bottom:32px;">
+      <div>
+        <img id="perfilFoto" src="img/agricultor.png" alt="Foto de perfil" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid #222;">
+      </div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:18px;">
+          <h3 id="perfilNombre" style="font-weight:700;color:#fff;margin-bottom:0;">Usuario</h3>
+          <button class="btn btn-dark" style="border-radius:8px;font-weight:600;">Editar perfil</button>
+          <button class="btn btn-outline-secondary" style="border-radius:8px;font-weight:600;">Ver archivo</button>
+        </div>
+        <div style="display:flex;gap:32px;margin:18px 0 8px 0;">
+          <span><b id="perfilPublicaciones">0</b> publicaciones</span>
+          <span><b id="perfilSeguidores">0</b> seguidores</span>
+          <span><b id="perfilSeguidos">0</b> seguidos</span>
+        </div>
+        <div id="perfilBio" style="color:#bbb;font-size:1.08em;margin-bottom:8px;">Biografía del usuario</div>
+        <div id="perfilExtra" style="color:#4caf50;font-size:1.08em;"></div>
+      </div>
+    </div>
+    <div class="perfil-historias" style="display:flex;gap:18px;margin-bottom:32px;">
+      <div class="historia-item" style="text-align:center;">
+        <img src="img/agricultor.png" style="width:64px;height:64px;border-radius:50%;border:3px solid #4caf50;object-fit:cover;">
+        <div style="color:#fff;font-size:.98em;margin-top:4px;">Yo</div>
+      </div>
+      <div class="historia-item" style="text-align:center;">
+        <img src="img/agricultor.png" style="width:64px;height:64px;border-radius:50%;border:3px solid #e53935;object-fit:cover;">
+        <div style="color:#fff;font-size:.98em;margin-top:4px;">Parceros</div>
+      </div>
+      <div class="historia-item" style="text-align:center;">
+        <img src="img/agricultor.png" style="width:64px;height:64px;border-radius:50%;border:3px solid #039be5;object-fit:cover;">
+        <div style="color:#fff;font-size:.98em;margin-top:4px;">Paseos</div>
+      </div>
+      <div class="historia-item" style="text-align:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;border:3px solid #888;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="32" height="32" viewBox="0 0 24 24"><path d="M12 7v5l4.28 2.54.72-1.21-3.5-2.08V7z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+        </div>
+        <div style="color:#fff;font-size:.98em;margin-top:4px;">Nueva</div>
+      </div>
+    </div>
+    <div class="perfil-publicaciones" style="margin-bottom:32px;">
+      <h5 style="color:#4caf50;font-weight:700;margin-bottom:18px;">Publicaciones</h5>
+      <div id="publicacionesGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;"></div>
+    </div>
+    <div class="perfil-nueva-publicacion" style="margin-bottom:32px;">
+      <button id="btnCrearPublicacion" class="btn btn-success" style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.08em;padding:12px 28px;border-radius:12px;box-shadow:0 2px 8px #0002;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="22" height="22" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+        Publicar
+      </button>
+      <div id="modalPublicacion" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#181818cc;z-index:2000;align-items:center;justify-content:center;">
+        <div style="background:#222;padding:38px 32px 32px 32px;border-radius:22px;box-shadow:0 4px 32px #0008;max-width:420px;width:100%;position:relative;">
+          <button id="cerrarModalPublicacion" style="position:absolute;top:18px;right:18px;background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+          <h4 style="color:#4caf50;font-weight:700;text-align:center;margin-bottom:18px;">Crear nueva publicación</h4>
+          <form id="formNuevaPublicacion" style="display:flex;flex-direction:column;gap:10px;">
+            <div id="dropArea" style="border:2px dashed #4caf50;border-radius:14px;padding:24px;text-align:center;background:#181818;cursor:pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="48" height="48" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-2 0H5V5h14v14z"/><path d="M8.5 13.5l2.5 3.01L15.5 10l4.5 6H4l4.5-6z"/></svg>
+              <div style="color:#fff;font-size:1.08em;margin:12px 0 8px 0;">Arrastra las fotos aquí</div>
+            <script src="perfil.js"></script>
+    </div>
   </main>
+  <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    Más
+  </button>
+<div id="menuMas" class="menu-mas" style="display:none; position:fixed; left:16px; bottom:70px; z-index:999; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
+  <a href="configuracion.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> Configuración
+  </a>
+  <a href="#" class="menu-mas-item" id="actividadBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 8h14v-2H7v2zm0-4h14v-2H7v2zm0-6v2h14V7H7z"/></svg></span> Tu actividad
+  </a>
+  <a href="#" class="menu-mas-item" id="guardadoBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></span> Guardado
+  </a>
+  <a href="#" class="menu-mas-item" id="aparienciaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 3a9 9 0 000 18c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7 0-3.87 3.13-7 7-7v14z"/></svg></span> Cambiar apariencia
+  </a>
+  <a href="#" class="menu-mas-item" id="reporteBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-1.7 1.7c-.14.14-.3.33-.3.53V19c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1.77c0-.2-.16-.39-.3-.53L18 16z"/></svg></span> Reportar un problema
+  </a>
+  <hr style="margin:8px 0;border-color:#444;">
+  <a href="#" class="menu-mas-item" id="cambiarCuentaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span> Cambiar de cuenta
+  </a>
+  <a href="#" class="menu-mas-item" id="salirBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3zM20 3h-8c-1.1 0-2 .9-2 2v4h2V5h8v14h-8v-4h-2v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></span> Salir
+  </a>
+</div>
+<div id="actividadPanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;"></div>
+<div id="guardadoPanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;"></div>
+<div id="reportePanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;">
+  <h4>Reportar un problema</h4>
+  <form id="formReporte">
+    <input type="text" id="asuntoReporte" class="form-control mb-2" placeholder="Asunto" required>
+    <textarea id="descReporte" class="form-control mb-2" placeholder="Describe el problema" rows="3" required></textarea>
+    <button type="submit" class="btn btn-success">Enviar reporte</button>
+  </form>
+  <div id="reporteMsg" class="mt-2"></div>
+</div>
+
+<script>
+// Menú Más
+const btnMas = document.getElementById('btnMas');
+const menuMas = document.getElementById('menuMas');
+btnMas.onclick = () => {
+  menuMas.style.display = menuMas.style.display === 'none' ? 'block' : 'none';
+};
+document.addEventListener('click', (e) => {
+  if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
+});
+
+// Salir y cambiar cuenta
+document.getElementById('salirBtn').onclick = () => {
+  localStorage.clear();
+  window.location.href = 'login.html';
+};
+document.getElementById('cambiarCuentaBtn').onclick = () => {
+  localStorage.clear();
+  window.location.href = 'login.html';
+};
+
+// Cambiar apariencia (modo oscuro/claro)
+document.getElementById('aparienciaBtn').onclick = () => {
+  document.body.classList.toggle('dark-mode');
+};
+
+// Tu actividad (compras/ventas)
+document.getElementById('actividadBtn').onclick = async () => {
+  hidePanels();
+  const id_usuario = localStorage.getItem('id_usuario');
+  const panel = document.getElementById('actividadPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = '<b>Cargando actividad...</b>';
+  // Consulta compras y ventas
+  const compras = await fetch(`/api/compras/${id_usuario}`).then(r=>r.json());
+  const ventas = await fetch(`/api/ventas/${id_usuario}`).then(r=>r.json());
+  let html = '<h4>Mis compras</h4>';
+  if (compras.length) {
+    html += '<ul>' + compras.map(c => `<li>Compra #${c.idcompra} - ${c.fecha}</li>`).join('') + '</ul>';
+  } else {
+    html += '<p>No tienes compras registradas.</p>';
+  }
+  html += '<h4>Mis ventas</h4>';
+  if (ventas.length) {
+    html += '<ul>' + ventas.map(v => `<li>Venta producto: ${v.nombre_productos} - Cantidad: ${v.cantidad}</li>`).join('') + '</ul>';
+  } else {
+    html += '<p>No tienes ventas registradas.</p>';
+  }
+  panel.innerHTML = html;
+};
+
+// Guardado (favoritos)
+document.getElementById('guardadoBtn').onclick = async () => {
+  hidePanels();
+  const id_usuario = localStorage.getItem('id_usuario');
+  const panel = document.getElementById('guardadoPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = '<b>Cargando guardados...</b>';
+  const favoritos = await fetch(`/api/favoritos/${id_usuario}`).then(r=>r.json());
+  if (favoritos.length) {
+    panel.innerHTML = '<h4>Mis productos guardados</h4><ul>' + favoritos.map(f => `<li>${f.nombre_productos} - $${f.precio}</li>`).join('') + '</ul>';
+  } else {
+    panel.innerHTML = '<p>No tienes productos guardados.</p>';
+  }
+};
+
+// Reportar un problema
+document.getElementById('reporteBtn').onclick = () => {
+  hidePanels();
+  document.getElementById('reportePanel').style.display = 'block';
+};
+document.getElementById('formReporte').onsubmit = async (e) => {
+  e.preventDefault();
+  const id_usuario = localStorage.getItem('id_usuario');
+  const asunto = document.getElementById('asuntoReporte').value;
+  const descripcion = document.getElementById('descReporte').value;
+  const res = await fetch('/api/reportes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id_usuario, asunto, descripcion })
+  });
+  if (res.ok) {
+    document.getElementById('reporteMsg').innerText = 'Reporte enviado correctamente.';
+    document.getElementById('formReporte').reset();
+  } else {
+    document.getElementById('reporteMsg').innerText = 'Error al enviar el reporte.';
+  }
+};
+
+function hidePanels() {
+  document.getElementById('actividadPanel').style.display = 'none';
+  document.getElementById('guardadoPanel').style.display = 'none';
+  document.getElementById('reportePanel').style.display = 'none';
+}
+
+// --- Perfil: cargar datos y publicaciones ---
+async function cargarPerfil() {
+  const id_usuario = localStorage.getItem('id_usuario');
+  if (!id_usuario) return;
+  // Cargar datos usuario
+  const usuario = await fetch(`/api/usuarios/${id_usuario}`).then(r=>r.json());
+  document.getElementById('perfilNombre').innerText = usuario.nombre || 'Usuario';
+  document.getElementById('perfilBio').innerText = usuario.biografia || '';
+  document.getElementById('perfilExtra').innerText = usuario.ubicacion || '';
+  document.getElementById('perfilFoto').src = usuario.foto || 'img/agricultor.png';
+  document.getElementById('perfilSeguidores').innerText = usuario.seguidores || 0;
+  document.getElementById('perfilSeguidos').innerText = usuario.seguidos || 0;
+  // Cargar publicaciones
+  const publicaciones = await fetch(`/api/publicaciones/${id_usuario}`).then(r=>r.json());
+  document.getElementById('perfilPublicaciones').innerText = publicaciones.length;
+  const grid = document.getElementById('publicacionesGrid');
+  if (!publicaciones.length) {
+    grid.innerHTML = '<div style="color:#888;text-align:center;padding:32px;">No tienes publicaciones aún.</div>';
+  } else {
+    grid.innerHTML = publicaciones.map(pub => `
+      <div class="pub-card" style="background:#222;border-radius:14px;box-shadow:0 2px 12px #0003;padding:18px;color:#fff;">
+        <div style="font-weight:700;font-size:1.08em;color:#4caf50;">${pub.titulo}</div>
+        <div style="color:#bbb;font-size:.98em;margin-bottom:8px;">${pub.descripcion}</div>
+        ${pub.precio ? `<div style='color:#fff;font-weight:600;'>$${pub.precio}</div>` : ''}
+        <div style="font-size:.92em;color:#888;margin-top:8px;">${new Date(pub.fecha).toLocaleDateString('es-ES')}</div>
+      </div>
+    `).join('');
+  }
+}
+
+window.onload = cargarPerfil;
+
+// --- Nueva publicación ---
+document.getElementById('btnCrearPublicacion').onclick = function() {
+  document.getElementById('modalPublicacion').style.display = 'flex';
+};
+document.getElementById('cerrarModalPublicacion').onclick = function() {
+  document.getElementById('modalPublicacion').style.display = 'none';
+};
+// Drag & drop y selección de archivos
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('filePublicacion');
+const btnSeleccionarArchivo = document.getElementById('btnSeleccionarArchivo');
+const previewImg = document.getElementById('previewImg');
+let imagenesSeleccionadas = [];
+dropArea.addEventListener('click', () => fileInput.click());
+btnSeleccionarArchivo.onclick = () => fileInput.click();
+dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.style.background='#222'; });
+dropArea.addEventListener('dragleave', e => { e.preventDefault(); dropArea.style.background='#181818'; });
+dropArea.addEventListener('drop', e => {
+  e.preventDefault();
+  dropArea.style.background='#181818';
+  imagenesSeleccionadas = Array.from(e.dataTransfer.files);
+  mostrarPreviewImagenes();
+});
+fileInput.onchange = function() {
+  imagenesSeleccionadas = Array.from(fileInput.files);
+  mostrarPreviewImagenes();
+};
+function mostrarPreviewImagenes() {
+  if (!imagenesSeleccionadas.length) { previewImg.innerHTML = ''; return; }
+  previewImg.innerHTML = imagenesSeleccionadas.map(img => {
+    return `<img src="${URL.createObjectURL(img)}" style="max-width:120px;max-height:120px;border-radius:12px;margin:0 6px 6px 0;box-shadow:0 2px 8px #0003;">`;
+  }).join('');
+}
+document.getElementById('formNuevaPublicacion').onsubmit = async function(e) {
+  e.preventDefault();
+  const id_usuario = localStorage.getItem('id_usuario');
+  const titulo = document.getElementById('tituloPublicacion').value;
+  const descripcion = document.getElementById('descPublicacion').value;
+  const precio = document.getElementById('precioPublicacion').value;
+  const formData = new FormData();
+  formData.append('id_usuario', id_usuario);
+  formData.append('titulo', titulo);
+  formData.append('descripcion', descripcion);
+  formData.append('precio', precio);
+  imagenesSeleccionadas.forEach((img, i) => formData.append('imagenes', img));
+  const res = await fetch('/api/publicaciones', {
+    method: 'POST',
+    body: formData
+  });
+  if (res.ok) {
+    document.getElementById('msgPublicacion').innerText = '';
+    document.getElementById('formNuevaPublicacion').reset();
+    previewImg.innerHTML = '';
+    imagenesSeleccionadas = [];
+    document.getElementById('modalPublicacion').style.display = 'none';
+    cargarPerfil(); // Recargar publicaciones
+  } else {
+    document.getElementById('msgPublicacion').innerText = 'Error al publicar.';
+  }
+};
+
+// Mostrar/ocultar formulario de publicación
+document.getElementById('btnCrearPublicacion').onclick = function() {
+  const form = document.getElementById('formNuevaPublicacion');
+  form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+};
+</script>
 </body>
 </html>

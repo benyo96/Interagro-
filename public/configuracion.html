@@ -4,28 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Configuración de Perfil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background: #f5f5f5; }
-    .config-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    .card { border-radius: 18px; box-shadow: 0 2px 16px #0001; max-width: 420px; }
-    .logo { width: 80px; margin-bottom: 20px; }
-    .btn-success { background: #4caf50; border: none; }
-    .btn-success:hover { background: #388e3c; }
-    .perfil-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #4caf50; background: #e8f5e9; margin-bottom: 12px; }
-    h2 {
-      color: #4caf50;
-      font-family: 'Pacifico', cursive;
-    }
-  </style>
+  <link rel="stylesheet" href="css/configuracion.css">
 </head>
 <body>
-  <div class="config-container">
+  <aside class="sidebar">
+    <img src="img/agricultor.png" alt="Logo" class="logo">
+    <h4 style="font-family: 'Montserrat', sans-serif; color:#4caf50;">InterAgro</h4>
+    <nav>
+      <a href="inicio.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M12 3l9 8h-3v7h-4v-5h-4v5H6v-7H3z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Inicio</span></a>
+      <a href="configuracion.html" class="active"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Configuración</span></a>
+      <a href="buscar.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Buscar</span></a>
+      <a href="mensajes.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-4 4V4h18v10z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Mensajes</span></a>
+      <a href="perfil.html"><img src="img/agricultor.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;" class="me-2"> <span style="font-family: 'Montserrat', sans-serif;">Perfil</span></a>
+    </nav>
+    <button class="btn btn-dark mas-btn" id="btnMas" style="position:absolute;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+      Más
+    </button>
+    <div id="menuMas" class="menu-mas">
+      <a href="configuracion.html" class="menu-mas-item"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> Configuración</a>
+      <a href="#" class="menu-mas-item" id="actividadBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 8h14v-2H7v2zm0-4h14v-2H7v2zm0-6v2h14V7H7z"/></svg></span> Tu actividad</a>
+      <a href="#" class="menu-mas-item" id="guardadoBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></span> Guardado</a>
+      <a href="#" class="menu-mas-item" id="aparienciaBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 3a9 9 0 000 18c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7 0-3.87 3.13-7 7-7v14z"/></svg></span> Cambiar apariencia</a>
+      <a href="#" class="menu-mas-item" id="reporteBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-1.7 1.7c-.14.14-.3.33-.3.53V19c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1.77c0-.2-.16-.39-.3-.53L18 16z"/></svg></span> Reportar un problema</a>
+      <hr style="margin:8px 0;border-color:#444;">
+      <a href="#" class="menu-mas-item" id="cambiarCuentaBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span> Cambiar de cuenta</a>
+      <a href="#" class="menu-mas-item" id="salirBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3zM20 3h-8c-1.1 0-2 .9-2 2v4h2V5h8v14h-8v-4h-2v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></span> Salir</a>
+    </div>
+  </aside>
+  <main class="main-content" style="margin-left:260px;min-height:100vh;display:flex;align-items:center;justify-content:center;">
     <div class="card p-4 mx-auto">
       <div class="text-center">
         <img src="img/agricultor.png" alt="Perfil" class="perfil-img">
-        <h2 class="mb-4">Editar Perfil</h2>
+        <h2 class="mb-2" style="color:#4caf50;font-weight:700;">Configuración</h2>
       </div>
+      <div class="section-title">Datos personales</div>
       <form id="configForm">
         <div class="mb-3">
           <input type="text" class="form-control" id="nombre" placeholder="Nombre completo" required>
@@ -33,28 +48,107 @@
         <div class="mb-3">
           <input type="email" class="form-control" id="correo" placeholder="Correo electrónico" required>
         </div>
+        <div class="section-title">Contraseña y seguridad</div>
         <div class="mb-3">
           <input type="password" class="form-control" id="contrasena" placeholder="Nueva contraseña">
         </div>
         <button type="submit" class="btn btn-success w-100">Guardar cambios</button>
       </form>
       <div class="mt-3 text-center">
-        <a href="catalogo.html">Volver al catálogo</a>
+        <a href="catalogo.html" style="color:#4caf50;">Volver al catálogo</a>
       </div>
     </div>
-  </div>
+    <div id="actividadPanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;"></div>
+    <div id="guardadoPanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;"></div>
+    <div id="reportePanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;">
+      <h4>Reportar un problema</h4>
+      <form id="formReporte">
+        <input type="text" id="asuntoReporte" class="form-control mb-2" placeholder="Asunto" required>
+        <textarea id="descReporte" class="form-control mb-2" placeholder="Describe el problema" rows="3" required></textarea>
+        <button type="submit" class="btn btn-success">Enviar reporte</button>
+      </form>
+      <div id="reporteMsg" class="mt-2"></div>
+    </div>
+  </main>
+  <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    Más
+  </button>
+<div id="menuMas" class="menu-mas">
+  <a href="configuracion.html" class="menu-mas-item"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> Configuración</a>
+  <a href="#" class="menu-mas-item" id="actividadBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 8h14v-2H7v2zm0-4h14v-2H7v2zm0-6v2h14V7H7z"/></svg></span> Tu actividad</a>
+  <a href="#" class="menu-mas-item" id="guardadoBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></span> Guardado</a>
+  <a href="#" class="menu-mas-item" id="aparienciaBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 3a9 9 0 000 18c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7 0-3.87 3.13-7 7-7v14z"/></svg></span> Cambiar apariencia</a>
+  <a href="#" class="menu-mas-item" id="reporteBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-1.7 1.7c-.14.14-.3.33-.3.53V19c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1.77c0-.2-.16-.39-.3-.53L18 16z"/></svg></span> Reportar un problema</a>
+  <hr style="margin:8px 0;border-color:#444;">
+  <a href="#" class="menu-mas-item" id="cambiarCuentaBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span> Cambiar de cuenta</a>
+  <a href="#" class="menu-mas-item" id="salirBtn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3zM20 3h-8c-1.1 0-2 .9-2 2v4h2V5h8v14h-8v-4h-2v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></span> Salir</a>
+</div>
+<div id="actividadPanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;"></div>
+<div id="guardadoPanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;"></div>
+<div id="reportePanel" style="display:none;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 16px #0001;max-width:600px;margin:24px auto;">
+  <h4>Reportar un problema</h4>
+  <form id="formReporte">
+    <input type="text" id="asuntoReporte" class="form-control mb-2" placeholder="Asunto" required>
+    <textarea id="descReporte" class="form-control mb-2" placeholder="Describe el problema" rows="3" required></textarea>
+    <button type="submit" class="btn btn-success">Enviar reporte</button>
+  </form>
+  <div id="reporteMsg" class="mt-2"></div>
+</div>
   <script>
     // Cargar datos actuales
     document.getElementById('nombre').value = localStorage.getItem('nombre') || '';
     document.getElementById('correo').value = localStorage.getItem('correo') || '';
     document.getElementById('configForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      // Guardar en localStorage (simulación, luego se conecta con backend)
-      localStorage.setItem('nombre', document.getElementById('nombre').value);
-      localStorage.setItem('correo', document.getElementById('correo').value);
-      alert('Cambios guardados (simulado)');
-      window.location.href = 'catalogo.html';
+      // Guardar en backend
+      const id_usuario = localStorage.getItem('id_usuario');
+      const nombre = document.getElementById('nombre').value;
+      const correo = document.getElementById('correo').value;
+      const contrasena = document.getElementById('contrasena').value;
+      fetch('/api/usuarios/' + id_usuario, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, correo, contrasena })
+      }).then(res => {
+        if (res.ok) {
+          localStorage.setItem('nombre', nombre);
+          localStorage.setItem('correo', correo);
+          alert('Cambios guardados correctamente');
+          window.location.href = 'inicio.html';
+        } else {
+          alert('Error al guardar los cambios');
+        }
+      });
     });
+
+    // Menú Más
+    const btnMas = document.getElementById('btnMas');
+    const menuMas = document.getElementById('menuMas');
+    btnMas.onclick = () => {
+      menuMas.style.display = menuMas.style.display === 'none' ? 'block' : 'none';
+    };
+    document.addEventListener('click', (e) => {
+      if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
+    });
+
+    // Salir y cambiar cuenta
+    document.getElementById('salirBtn').onclick = () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    };
+    document.getElementById('cambiarCuentaBtn').onclick = () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    };
+
+    // Cambiar apariencia (modo oscuro/claro)
+    document.getElementById('aparienciaBtn').onclick = () => {
+      // Aquí puedes agregar la lógica para cambiar la apariencia
+      // Por ejemplo, alternar una clase en el body:
+      // document.body.classList.toggle('dark-mode');
+    };
   </script>
+  <script src="configuracion.js"></script>
 </body>
 </html>

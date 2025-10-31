@@ -1,0 +1,6 @@
+body { background: #fafafa; height: 100vh; display: flex; align-items: center; justify-content: center; }
+.logo { width: 140px; margin-bottom: 30px; animation: fadeIn 1.2s; }
+.meta { font-size: 1.2rem; color: #4caf50; margin-top: 30px; text-align: center; font-weight: bold; letter-spacing: 1px; }
+.fade-in { animation: fadeIn 1.2s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.spinner-border.text-success { border-color: #4caf50 #4caf50 #e0e0e0 #e0e0e0; }

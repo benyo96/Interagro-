@@ -1,0 +1,19 @@
+body { background: #18191a; font-family: 'Montserrat', sans-serif; }
+.sidebar { width: 240px; background: #222; color: #fff; position: fixed; top: 0; left: 0; bottom: 0; padding: 32px 0 0 0; z-index: 100; }
+.sidebar .logo { display: block; margin: 0 auto 12px; width: 48px; }
+.sidebar h4 { text-align: center; color: #4caf50; font-weight: 700; margin-bottom: 24px; }
+.sidebar nav a { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; padding: 12px 32px; font-size: 1.08rem; border-radius: 8px; margin-bottom: 4px; transition: background .2s; }
+.sidebar nav a.active, .sidebar nav a:hover { background: #333; color: #4caf50; }
+.sidebar nav img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.config-container { margin-left: 260px; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding-top: 48px; }
+.main-content { margin-left: 260px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.card { background: #242526; color: #fff; border-radius: 18px; box-shadow: 0 2px 24px #0006; max-width: 420px; width: 100%; }
+.perfil-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; }
+.section-title { font-size: 1.2rem; font-weight: 700; color: #4caf50; margin-top: 24px; margin-bottom: 12px; }
+.form-control, .btn { font-family: 'Montserrat', sans-serif; }
+.btn-success { background: #4caf50; border: none; }
+.btn-success:hover { background: #388e3c; }
+.menu-mas { display:none; position:fixed; left:16px; bottom:70px; z-index:999; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif; }
+.menu-mas-item { display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px; }
+.menu-mas-item:hover { background:#333; color:#4caf50; }
+#btnMas { position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002; }

@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const clientesRoutes = require('./routes/clienteRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
+const mensajeRoutes = require('./routes/mensajeRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.use(express.static('public')); // Servir archivos estáticos
 // Routes
 app.use('/api/cliente', clientesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/mensajes', mensajeRoutes);
 
 // Ruta de inicio profesional: redirige a loader.html
 app.get('/', (req, res) => {
