@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cambiar apariencia | InterAgro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/buscar.css">
+  <link rel="stylesheet" href="../css/apariencia.css">
+  <link rel="stylesheet" href="../css/interagro-theme.css">
+</head>
+<body>
+  <!-- header-logo eliminado para evitar texto flotante -->
+  <div class="main-content">
+    <aside class="sidebar">
+      <img src="../img/agricultor.png" alt="Logo" class="logo">
+      <h4 style="font-family: 'Montserrat', sans-serif; color:#4caf50;">InterAgro</h4>
+      <nav>
+        <a href="inicio.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M12 3l9 8h-3v7h-4v-5h-4v5H6v-7H3z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Inicio</span></a>
+        <a href="buscar.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Buscar</span></a>
+        <a href="mensajes.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-4 4V4h18v10z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Mensajes</span></a>
+        <a href="perfil.html"><img src="../img/agricultor.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;" class="me-2"> <span style="font-family: 'Montserrat', sans-serif;">Perfil</span></a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h2 class="fw-bold" style="color:#4caf50;">Cambiar apariencia</h2>
+      <div id="apariencia-panel">
+        <button id="toggle-dark" class="btn btn-success">Alternar modo oscuro</button>
+      </div>
+    </main>
+
+    <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+      Más
+    </button>
+
+    <div id="menuMas" class="menu-mas" style="display:none; position:fixed; left:16px; bottom:70px; z-index:999; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
+      <a href="inicio.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Inicio</a>
+      <a href="configuracion.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Configuración</a>
+      <a href="actividad.html" class="menu-mas-item" id="actividadBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Tu actividad</a>
+      <a href="guardado.html" class="menu-mas-item" id="guardadoBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Guardado</a>
+      <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Cambiar apariencia</a>
+      <a href="reporte.html" class="menu-mas-item" id="reporteBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Reportar un problema</a>
+      <hr style="margin:8px 0;border-color:#444;">
+      <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Cambiar de cuenta</a>
+      <a href="login.html" class="menu-mas-item" id="salirBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Salir</a>
+    </div>
+
+  </div>
+
+  <script src="../js/buscar.js"></script>
+  <script src="../js/apariencia.js"></script>
+</body>
+</html>

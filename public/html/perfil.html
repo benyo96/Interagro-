@@ -40,26 +40,7 @@
         <div id="perfilExtra" style="color:#4caf50;font-size:1.08em;"></div>
       </div>
     </div>
-    <div class="perfil-historias" style="display:flex;gap:18px;margin-bottom:32px;">
-      <div class="historia-item" style="text-align:center;">
-  <img src="../img/agricultor.png" style="width:64px;height:64px;border-radius:50%;border:3px solid #4caf50;object-fit:cover;">
-        <div style="color:#fff;font-size:.98em;margin-top:4px;">Yo</div>
-      </div>
-      <div class="historia-item" style="text-align:center;">
-  <img src="../img/agricultor.png" style="width:64px;height:64px;border-radius:50%;border:3px solid #e53935;object-fit:cover;">
-        <div style="color:#fff;font-size:.98em;margin-top:4px;">Parceros</div>
-      </div>
-      <div class="historia-item" style="text-align:center;">
-  <img src="../img/agricultor.png" style="width:64px;height:64px;border-radius:50%;border:3px solid #039be5;object-fit:cover;">
-        <div style="color:#fff;font-size:.98em;margin-top:4px;">Paseos</div>
-      </div>
-      <div class="historia-item" style="text-align:center;">
-        <div style="width:64px;height:64px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;border:3px solid #888;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="32" height="32" viewBox="0 0 24 24"><path d="M12 7v5l4.28 2.54.72-1.21-3.5-2.08V7z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-        </div>
-        <div style="color:#fff;font-size:.98em;margin-top:4px;">Nueva</div>
-      </div>
-    </div>
+    <!-- Historias eliminadas -->
     <div class="perfil-publicaciones" style="margin-bottom:32px;">
       <h5 style="color:#4caf50;font-weight:700;margin-bottom:18px;">Publicaciones</h5>
       <div id="publicacionesGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;"></div>
@@ -69,15 +50,39 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="22" height="22" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
         Publicar
       </button>
+<script>
+// Mostrar el modal al hacer click en "Publicar"
+document.getElementById('btnCrearPublicacion').onclick = function() {
+  document.getElementById('modalPublicacion').style.display = 'flex';
+};
+// Asegura que el botón X cierre el modal correctamente
+document.addEventListener('DOMContentLoaded', function() {
+  var cerrarBtn = document.getElementById('cerrarModalPublicacion');
+  if (cerrarBtn) {
+    cerrarBtn.onclick = function() {
+      document.getElementById('modalPublicacion').style.display = 'none';
+    };
+  }
+});
+</script>
       <div id="modalPublicacion" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#181818cc;z-index:2000;align-items:center;justify-content:center;">
         <div style="background:#222;padding:38px 32px 32px 32px;border-radius:22px;box-shadow:0 4px 32px #0008;max-width:420px;width:100%;position:relative;">
           <button id="cerrarModalPublicacion" style="position:absolute;top:18px;right:18px;background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
           <h4 style="color:#4caf50;font-weight:700;text-align:center;margin-bottom:18px;">Crear nueva publicación</h4>
-          <form id="formNuevaPublicacion" style="display:flex;flex-direction:column;gap:10px;">
-            <div id="dropArea" style="border:2px dashed #4caf50;border-radius:14px;padding:24px;text-align:center;background:#181818;cursor:pointer;">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="48" height="48" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-2 0H5V5h14v14z"/><path d="M8.5 13.5l2.5 3.01L15.5 10l4.5 6H4l4.5-6z"/></svg>
-              <div style="color:#fff;font-size:1.08em;margin:12px 0 8px 0;">Arrastra las fotos aquí</div>
-            <script src="../js/perfil.js"></script>
+          <form id="formNuevaPublicacion" style="display:flex;flex-direction:column;gap:18px;align-items:center;" enctype="multipart/form-data">
+            <div id="dropArea" style="background:#23272f;padding:38px 0 32px 0;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;width:100%;cursor:pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="64" height="64" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.55-3.72 3.55-3.97l1.1-.13.5-1.02C8.68 6.6 10.21 5.5 12 5.5c2.21 0 4 1.79 4 4v1h1c1.65 0 3 1.35 3 3s-1.35 3-3 3z"/></svg>
+              <span style="color:#fff;font-size:1.1em;">Arrastra la foto del producto aquí</span>
+              <input type="file" id="fotoPublicacion" name="fotoPublicacion" accept="image/*" style="display:none;">
+              <button type="button" id="btnSeleccionarFoto" class="btn btn-primary" style="margin-top:8px;">Seleccionar de la computadora</button>
+              <img id="previewFoto" src="" alt="Vista previa" style="display:none;max-width:180px;max-height:180px;border-radius:12px;margin-top:10px;" />
+            </div>
+            <textarea id="descripcionPublicacion" class="form-control" placeholder="Descripción del producto" rows="2" style="margin-top:10px;max-width:320px;"></textarea>
+            <button type="submit" class="btn btn-success" style="font-weight:700;font-size:1.08em;padding:12px 28px;border-radius:12px;">Publicar</button>
+          </form>
+          <div id="msgPublicacion" style="margin-top:16px;color:#4caf50;font-weight:600;text-align:center;display:none;"></div>
+        </div>
+      </div>
     </div>
   </main>
   <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
@@ -88,23 +93,23 @@
   <a href="configuracion.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> Configuración
   </a>
-  <a href="#" class="menu-mas-item" id="actividadBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+  <a href="actividad.html" class="menu-mas-item" id="actividadBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 8h14v-2H7v2zm0-4h14v-2H7v2zm0-6v2h14V7H7z"/></svg></span> Tu actividad
   </a>
-  <a href="#" class="menu-mas-item" id="guardadoBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+  <a href="guardado.html" class="menu-mas-item" id="guardadoBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></span> Guardado
   </a>
-  <a href="#" class="menu-mas-item" id="aparienciaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+  <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 3a9 9 0 000 18c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7 0-3.87 3.13-7 7-7v14z"/></svg></span> Cambiar apariencia
   </a>
-  <a href="#" class="menu-mas-item" id="reporteBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+  <a href="reporte.html" class="menu-mas-item" id="reporteBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-1.7 1.7c-.14.14-.3.33-.3.53V19c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1.77c0-.2-.16-.39-.3-.53L18 16z"/></svg></span> Reportar un problema
   </a>
   <hr style="margin:8px 0;border-color:#444;">
-  <a href="#" class="menu-mas-item" id="cambiarCuentaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+  <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span> Cambiar de cuenta
   </a>
-  <a href="#" class="menu-mas-item" id="salirBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
+  <a href="login.html" class="menu-mas-item" id="salirBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3zM20 3h-8c-1.1 0-2 .9-2 2v4h2V5h8v14h-8v-4h-2v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></span> Salir
   </a>
 </div>
@@ -119,6 +124,13 @@
   </form>
   <div id="reporteMsg" class="mt-2"></div>
 </div>
+<div id="modalConstruccion" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:#fff;padding:32px 40px;border-radius:18px;box-shadow:0 2px 24px #0006;max-width:90vw;text-align:center;">
+    <h4 style="color:#4caf50;">Función en construcción</h4>
+    <p>Esta sección estará disponible próximamente.</p>
+    <button onclick="document.getElementById('modalConstruccion').style.display='none'" class="btn btn-success mt-2">Cerrar</button>
+  </div>
+</div>
 
 <script>
 // Menú Más
@@ -130,189 +142,149 @@ btnMas.onclick = () => {
 document.addEventListener('click', (e) => {
   if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
 });
+// Botones funcionales menú Más
+const actividadBtn = document.getElementById('actividadBtn');
+const guardadoBtn = document.getElementById('guardadoBtn');
+const aparienciaBtn = document.getElementById('aparienciaBtn');
+const reporteBtn = document.getElementById('reporteBtn');
+const cambiarCuentaBtn = document.getElementById('cambiarCuentaBtn');
+const salirBtn = document.getElementById('salirBtn');
+if (actividadBtn) actividadBtn.onclick = null;
+if (guardadoBtn) guardadoBtn.onclick = null;
+if (reporteBtn) reporteBtn.onclick = null;
+if (aparienciaBtn) aparienciaBtn.onclick = () => { document.body.classList.toggle('dark-mode'); };
+if (cambiarCuentaBtn) cambiarCuentaBtn.onclick = () => { localStorage.clear(); window.location.href = 'login.html'; };
+if (salirBtn) salirBtn.onclick = () => { localStorage.clear(); window.location.href = 'login.html'; };
 
-// Salir y cambiar cuenta
-document.getElementById('salirBtn').onclick = () => {
-  localStorage.clear();
-  window.location.href = 'login.html';
-};
-document.getElementById('cambiarCuentaBtn').onclick = () => {
-  localStorage.clear();
-  window.location.href = 'login.html';
-};
-
-// Cambiar apariencia (modo oscuro/claro)
-document.getElementById('aparienciaBtn').onclick = () => {
-  document.body.classList.toggle('dark-mode');
-};
-
-// Tu actividad (compras/ventas)
-document.getElementById('actividadBtn').onclick = async () => {
-  hidePanels();
-  const id_usuario = localStorage.getItem('id_usuario');
-  const panel = document.getElementById('actividadPanel');
-  panel.style.display = 'block';
-  panel.innerHTML = '<b>Cargando actividad...</b>';
-  // Consulta compras y ventas
-  const compras = await fetch(`/api/compras/${id_usuario}`).then(r=>r.json());
-  const ventas = await fetch(`/api/ventas/${id_usuario}`).then(r=>r.json());
-  let html = '<h4>Mis compras</h4>';
-  if (compras.length) {
-    html += '<ul>' + compras.map(c => `<li>Compra #${c.idcompra} - ${c.fecha}</li>`).join('') + '</ul>';
-  } else {
-    html += '<p>No tienes compras registradas.</p>';
-  }
-  html += '<h4>Mis ventas</h4>';
-  if (ventas.length) {
-    html += '<ul>' + ventas.map(v => `<li>Venta producto: ${v.nombre_productos} - Cantidad: ${v.cantidad}</li>`).join('') + '</ul>';
-  } else {
-    html += '<p>No tienes ventas registradas.</p>';
-  }
-  panel.innerHTML = html;
-};
-
-// Guardado (favoritos)
-document.getElementById('guardadoBtn').onclick = async () => {
-  hidePanels();
-  const id_usuario = localStorage.getItem('id_usuario');
-  const panel = document.getElementById('guardadoPanel');
-  panel.style.display = 'block';
-  panel.innerHTML = '<b>Cargando guardados...</b>';
-  const favoritos = await fetch(`/api/favoritos/${id_usuario}`).then(r=>r.json());
-  if (favoritos.length) {
-    panel.innerHTML = '<h4>Mis productos guardados</h4><ul>' + favoritos.map(f => `<li>${f.nombre_productos} - $${f.precio}</li>`).join('') + '</ul>';
-  } else {
-    panel.innerHTML = '<p>No tienes productos guardados.</p>';
-  }
-};
-
-// Reportar un problema
-document.getElementById('reporteBtn').onclick = () => {
-  hidePanels();
-  document.getElementById('reportePanel').style.display = 'block';
-};
-document.getElementById('formReporte').onsubmit = async (e) => {
-  e.preventDefault();
-  const id_usuario = localStorage.getItem('id_usuario');
-  const asunto = document.getElementById('asuntoReporte').value;
-  const descripcion = document.getElementById('descReporte').value;
-  const res = await fetch('/api/reportes', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id_usuario, asunto, descripcion })
-  });
-  if (res.ok) {
-    document.getElementById('reporteMsg').innerText = 'Reporte enviado correctamente.';
-    document.getElementById('formReporte').reset();
-  } else {
-    document.getElementById('reporteMsg').innerText = 'Error al enviar el reporte.';
-  }
-};
-
-function hidePanels() {
-  document.getElementById('actividadPanel').style.display = 'none';
-  document.getElementById('guardadoPanel').style.display = 'none';
-  document.getElementById('reportePanel').style.display = 'none';
-}
-
-// --- Perfil: cargar datos y publicaciones ---
-async function cargarPerfil() {
-  const id_usuario = localStorage.getItem('id_usuario');
-  if (!id_usuario) return;
-  // Cargar datos usuario
-  const usuario = await fetch(`/api/usuarios/${id_usuario}`).then(r=>r.json());
-  document.getElementById('perfilNombre').innerText = usuario.nombre || 'Usuario';
-  document.getElementById('perfilBio').innerText = usuario.biografia || '';
-  document.getElementById('perfilExtra').innerText = usuario.ubicacion || '';
-  document.getElementById('perfilFoto').src = usuario.foto || '../img/agricultor.png';
-  document.getElementById('perfilSeguidores').innerText = usuario.seguidores || 0;
-  document.getElementById('perfilSeguidos').innerText = usuario.seguidos || 0;
-  // Cargar publicaciones
-  const publicaciones = await fetch(`/api/publicaciones/${id_usuario}`).then(r=>r.json());
-  document.getElementById('perfilPublicaciones').innerText = publicaciones.length;
-  const grid = document.getElementById('publicacionesGrid');
-  if (!publicaciones.length) {
-    grid.innerHTML = '<div style="color:#888;text-align:center;padding:32px;">No tienes publicaciones aún.</div>';
-  } else {
-    grid.innerHTML = publicaciones.map(pub => `
-      <div class="pub-card" style="background:#222;border-radius:14px;box-shadow:0 2px 12px #0003;padding:18px;color:#fff;">
-        <div style="font-weight:700;font-size:1.08em;color:#4caf50;">${pub.titulo}</div>
-        <div style="color:#bbb;font-size:.98em;margin-bottom:8px;">${pub.descripcion}</div>
-        ${pub.precio ? `<div style='color:#fff;font-weight:600;'>$${pub.precio}</div>` : ''}
-        <div style="font-size:.92em;color:#888;margin-top:8px;">${new Date(pub.fecha).toLocaleDateString('es-ES')}</div>
-      </div>
-    `).join('');
-  }
-}
-
-window.onload = cargarPerfil;
-
-// --- Nueva publicación ---
-document.getElementById('btnCrearPublicacion').onclick = function() {
-  document.getElementById('modalPublicacion').style.display = 'flex';
-};
-document.getElementById('cerrarModalPublicacion').onclick = function() {
-  document.getElementById('modalPublicacion').style.display = 'none';
-};
-// Drag & drop y selección de archivos
+// Drag & drop y preview para la foto
 const dropArea = document.getElementById('dropArea');
-const fileInput = document.getElementById('filePublicacion');
-const btnSeleccionarArchivo = document.getElementById('btnSeleccionarArchivo');
-const previewImg = document.getElementById('previewImg');
-let imagenesSeleccionadas = [];
-dropArea.addEventListener('click', () => fileInput.click());
-btnSeleccionarArchivo.onclick = () => fileInput.click();
-dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.style.background='#222'; });
-dropArea.addEventListener('dragleave', e => { e.preventDefault(); dropArea.style.background='#181818'; });
-dropArea.addEventListener('drop', e => {
+const fotoInput = document.getElementById('fotoPublicacion');
+const btnSeleccionarFoto = document.getElementById('btnSeleccionarFoto');
+const previewFoto = document.getElementById('previewFoto');
+let fotoBase64 = '';
+
+dropArea.addEventListener('click', () => fotoInput.click());
+btnSeleccionarFoto.addEventListener('click', (e) => { e.stopPropagation(); fotoInput.click(); });
+
+dropArea.addEventListener('dragover', (e) => {
   e.preventDefault();
-  dropArea.style.background='#181818';
-  imagenesSeleccionadas = Array.from(e.dataTransfer.files);
-  mostrarPreviewImagenes();
+  dropArea.style.background = '#2d323a';
 });
-fileInput.onchange = function() {
-  imagenesSeleccionadas = Array.from(fileInput.files);
-  mostrarPreviewImagenes();
-};
-function mostrarPreviewImagenes() {
-  if (!imagenesSeleccionadas.length) { previewImg.innerHTML = ''; return; }
-  previewImg.innerHTML = imagenesSeleccionadas.map(img => {
-    return `<img src="${URL.createObjectURL(img)}" style="max-width:120px;max-height:120px;border-radius:12px;margin:0 6px 6px 0;box-shadow:0 2px 8px #0003;">`;
-  }).join('');
-}
-document.getElementById('formNuevaPublicacion').onsubmit = async function(e) {
+dropArea.addEventListener('dragleave', (e) => {
   e.preventDefault();
-  const id_usuario = localStorage.getItem('id_usuario');
-  const titulo = document.getElementById('tituloPublicacion').value;
-  const descripcion = document.getElementById('descPublicacion').value;
-  const precio = document.getElementById('precioPublicacion').value;
-  const formData = new FormData();
-  formData.append('id_usuario', id_usuario);
-  formData.append('titulo', titulo);
-  formData.append('descripcion', descripcion);
-  formData.append('precio', precio);
-  imagenesSeleccionadas.forEach((img, i) => formData.append('imagenes', img));
-  const res = await fetch('/api/publicaciones', {
-    method: 'POST',
-    body: formData
-  });
-  if (res.ok) {
-    document.getElementById('msgPublicacion').innerText = '';
-    document.getElementById('formNuevaPublicacion').reset();
-    previewImg.innerHTML = '';
-    imagenesSeleccionadas = [];
-    document.getElementById('modalPublicacion').style.display = 'none';
-    cargarPerfil(); // Recargar publicaciones
-  } else {
-    document.getElementById('msgPublicacion').innerText = 'Error al publicar.';
+  dropArea.style.background = '#23272f';
+});
+dropArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropArea.style.background = '#23272f';
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    fotoInput.files = e.dataTransfer.files;
+    mostrarPreview(fotoInput.files[0]);
   }
+});
+fotoInput.addEventListener('change', (e) => {
+  if (fotoInput.files && fotoInput.files[0]) {
+    mostrarPreview(fotoInput.files[0]);
+  }
+});
+function mostrarPreview(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    previewFoto.src = e.target.result;
+    previewFoto.style.display = 'block';
+    fotoBase64 = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// Guardar publicación en localStorage y mostrar en el grid
+const formNuevaPublicacion = document.getElementById('formNuevaPublicacion');
+const publicacionesGrid = document.getElementById('publicacionesGrid');
+const descripcionInput = document.getElementById('descripcionPublicacion');
+
+formNuevaPublicacion.addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!fotoBase64) {
+    document.getElementById('msgPublicacion').textContent = 'Selecciona una foto para publicar.';
+    document.getElementById('msgPublicacion').style.display = 'block';
+    return;
+  }
+  const descripcion = descripcionInput.value;
+  let publicaciones = JSON.parse(localStorage.getItem('publicacionesPerfil') || '[]');
+  publicaciones.unshift({ foto: fotoBase64, descripcion, fecha: new Date().toISOString() });
+  localStorage.setItem('publicacionesPerfil', JSON.stringify(publicaciones));
+  mostrarPublicaciones();
+  document.getElementById('msgPublicacion').textContent = '¡Publicación realizada!';
+  document.getElementById('msgPublicacion').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('modalPublicacion').style.display = 'none';
+    document.getElementById('msgPublicacion').style.display = 'none';
+    previewFoto.style.display = 'none';
+    fotoInput.value = '';
+    fotoBase64 = '';
+    descripcionInput.value = '';
+  }, 1200);
+});
+
+function mostrarPublicaciones() {
+  let publicaciones = JSON.parse(localStorage.getItem('publicacionesPerfil') || '[]');
+  publicacionesGrid.innerHTML = '';
+  publicaciones.forEach((pub, idx) => {
+    const div = document.createElement('div');
+    div.style.background = '#fff';
+    div.style.borderRadius = '12px';
+    div.style.boxShadow = '0 2px 12px #0001';
+    div.style.overflow = 'hidden';
+    div.style.display = 'flex';
+    div.style.flexDirection = 'column';
+    div.style.alignItems = 'center';
+    div.style.padding = '8px';
+    div.innerHTML = `<img src="${pub.foto}" style="width:100%;max-width:220px;max-height:220px;object-fit:cover;border-radius:10px;">` +
+      `<div style='margin-top:8px;color:#222;font-size:1em;text-align:center;' id='desc-pub-${idx}'>${pub.descripcion ? pub.descripcion : ''}</div>` +
+      `<div style='display:flex;gap:10px;margin-top:10px;'>
+        <button class='btn btn-outline-primary btn-sm' onclick='editarDescripcion(${idx})'>Editar</button>
+        <button class='btn btn-outline-danger btn-sm' onclick='eliminarPublicacion(${idx})'>Eliminar</button>
+      </div>`;
+    publicacionesGrid.appendChild(div);
+  });
+// Editar descripción de una publicación
+window.editarDescripcion = function(idx) {
+  let publicaciones = JSON.parse(localStorage.getItem('publicacionesPerfil') || '[]');
+  const pub = publicaciones[idx];
+  const descDiv = document.getElementById('desc-pub-' + idx);
+  const currentDesc = pub.descripcion || '';
+  const input = document.createElement('textarea');
+  input.value = currentDesc;
+  input.rows = 2;
+  input.style.width = '100%';
+  input.style.marginTop = '8px';
+  input.style.borderRadius = '8px';
+  input.style.border = '1px solid #4caf50';
+  input.style.padding = '6px';
+  input.style.fontSize = '1em';
+  descDiv.replaceWith(input);
+  input.focus();
+  input.onblur = function() {
+    pub.descripcion = input.value;
+    publicaciones[idx] = pub;
+    localStorage.setItem('publicacionesPerfil', JSON.stringify(publicaciones));
+    mostrarPublicaciones();
+    if (typeof mostrarFeed === 'function') mostrarFeed();
+  };
 };
 
-// Mostrar/ocultar formulario de publicación
-document.getElementById('btnCrearPublicacion').onclick = function() {
-  const form = document.getElementById('formNuevaPublicacion');
-  form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+// Eliminar publicación
+window.eliminarPublicacion = function(idx) {
+  if (!confirm('¿Seguro que deseas eliminar esta publicación?')) return;
+  let publicaciones = JSON.parse(localStorage.getItem('publicacionesPerfil') || '[]');
+  publicaciones.splice(idx, 1);
+  localStorage.setItem('publicacionesPerfil', JSON.stringify(publicaciones));
+  mostrarPublicaciones();
+  if (typeof mostrarFeed === 'function') mostrarFeed();
 };
+}
+mostrarPublicaciones();
 </script>
+<script src="../js/perfil.js"></script>
 </body>
 </html>

@@ -48,6 +48,61 @@
       <div class="meta">Cargando...</div>
     </div>
   </div>
+  <div id="modalConstruccion" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:32px 40px;border-radius:18px;box-shadow:0 2px 24px #0006;max-width:90vw;text-align:center;">
+      <h4 style="color:#4caf50;">Función en construcción</h4>
+      <p>Esta sección estará disponible próximamente.</p>
+      <button onclick="document.getElementById('modalConstruccion').style.display='none'" class="btn btn-success mt-2">Cerrar</button>
+    </div>
+  </div>
   <script src="../js/register.js"></script>
+  <script>
+function mostrarConstruccion(e) {
+  if (e) e.preventDefault();
+  document.getElementById('modalConstruccion').style.display = 'flex';
+}
+  </script>
+  <script>
+// Menú Más
+const btnMas = document.getElementById('btnMas');
+const menuMas = document.getElementById('menuMas');
+btnMas.onclick = () => {
+  menuMas.style.display = menuMas.style.display === 'none' ? 'block' : 'none';
+};
+document.addEventListener('click', (e) => {
+  if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
+});
+
+// Botones funcionales menú Más
+const actividadBtn = document.getElementById('actividadBtn');
+const guardadoBtn = document.getElementById('guardadoBtn');
+const aparienciaBtn = document.getElementById('aparienciaBtn');
+const reporteBtn = document.getElementById('reporteBtn');
+const cambiarCuentaBtn = document.getElementById('cambiarCuentaBtn');
+const salirBtn = document.getElementById('salirBtn');
+
+if (actividadBtn) actividadBtn.onclick = mostrarConstruccion;
+if (guardadoBtn) guardadoBtn.onclick = mostrarConstruccion;
+if (reporteBtn) reporteBtn.onclick = () => {
+  const panel = document.getElementById('reportePanel');
+  if (panel) panel.style.display = 'block';
+  else mostrarConstruccion();
+};
+if (aparienciaBtn) aparienciaBtn.onclick = () => {
+  document.body.classList.toggle('dark-mode');
+};
+if (cambiarCuentaBtn) cambiarCuentaBtn.onclick = () => {
+  localStorage.clear();
+  window.location.href = 'login.html';
+};
+if (salirBtn) salirBtn.onclick = () => {
+  localStorage.clear();
+  window.location.href = 'login.html';
+};
+function mostrarConstruccion(e) {
+  if (e) e.preventDefault();
+  document.getElementById('modalConstruccion').style.display = 'flex';
+}
+  </script>
 </body>
 </html>

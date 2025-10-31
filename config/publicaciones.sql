@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS publicaciones (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  foto LONGTEXT NOT NULL,
+  descripcion TEXT,
+  fecha DATETIME NOT NULL
+);

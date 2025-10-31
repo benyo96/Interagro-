@@ -1,0 +1,230 @@
+<!DOCTYPE html>  <!-- header-logo eliminado para evitar texto flotante -->
+
+<html lang="es"><!DOCTYPE html>
+
+<head><html lang="es">
+
+  <meta charset="UTF-8"><head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <meta charset="UTF-8">
+
+  <title>Tu actividad | InterAgro</title>  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../css/buscar.css">  <title>Tu actividad | InterAgro</title>
+
+  <link rel="stylesheet" href="../css/interagro-theme.css">  <link rel="stylesheet" href="../css/actividad.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">  <link rel="stylesheet" href="../css/interagro-theme.css">
+
+  <link rel="icon" href="../img/agricultor.png"></head>
+
+  <style><body>
+
+    body {  <aside class="sidebar">
+
+      background: linear-gradient(135deg, #eafff0 0%, #a8ffce 100%);    <img src="../img/agricultor.png" alt="Logo" class="logo">
+
+      min-height: 100vh;    <h4 style="font-family: 'Montserrat', sans-serif; color:#4caf50;">InterAgro</h4>
+
+      font-family: 'Montserrat', sans-serif;    <nav>
+
+    }      <a href="inicio.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M12 3l9 8h-3v7h-4v-5h-4v5H6v-7H3z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Inicio</span></a>
+
+    .sidebar {      <a href="buscar.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Buscar</span></a>
+
+      position: fixed;      <a href="mensajes.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-4 4V4h18v10z"/></svg></span> <span style="font-family: 'Montserrat', sans-serif;">Mensajes</span></a>
+
+      left: 0;      <a href="perfil.html"><img src="../img/agricultor.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;" class="me-2"> <span style="font-family: 'Montserrat', sans-serif;">Perfil</span></a>
+
+      top: 0;    </nav>
+
+      width: 220px;  </aside>
+
+      height: 100vh;  <main class="main-content" style="margin-left:260px; padding:40px 24px; min-height:100vh;">
+
+      background: #181c1b;    <div style="max-width:600px;margin:48px auto 0 auto;">
+
+      color: #fff;      <div style="background:#fff;border-radius:18px;box-shadow:0 4px 32px #0002;padding:32px 32px 24px 32px;">
+
+      display: flex;        <h2 class="fw-bold" style="color:#4caf50;">Tu actividad</h2>
+
+      flex-direction: column;        <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px #0001;padding:24px;margin-top:24px;">
+
+      align-items: flex-start;          <div id="actividad-lista">Cargando actividad...</div>
+
+      padding: 32px 0 16px 0;        </div>
+
+      z-index: 100;      </div>
+
+      box-shadow: 2px 0 16px #0001;    </div>
+
+    }    <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
+
+    .sidebar .logo {      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+
+      width: 44px;      Más
+
+      margin: 0 0 8px 24px;    </button>
+
+    }    <div id="menuMas" class="menu-mas" style="display:none; position:fixed; left:16px; bottom:70px; z-index:999; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
+
+    .sidebar h4 {      <a href="inicio.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Inicio</a>
+
+      margin: 0 0 32px 24px;      <a href="configuracion.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Configuración</a>
+
+      font-weight: 700;      <a href="actividad.html" class="menu-mas-item" id="actividadBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Tu actividad</a>
+
+      font-size: 1.4rem;      <a href="guardado.html" class="menu-mas-item" id="guardadoBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Guardado</a>
+
+      color: #4caf50;      <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Cambiar apariencia</a>
+
+    }      <a href="reporte.html" class="menu-mas-item" id="reporteBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Reportar un problema</a>
+
+    .sidebar nav {      <hr style="margin:8px 0;border-color:#444;">
+
+      width: 100%;      <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Cambiar de cuenta</a>
+
+      display: flex;      <a href="login.html" class="menu-mas-item" id="salirBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Salir</a>
+
+      flex-direction: column;    </div>
+
+      gap: 8px;  </main>
+
+    }  </main>
+
+    .sidebar nav a {  <script src="../js/actividad.js"></script>
+
+      display: flex;</body>
+
+      align-items: center;</html>
+
+      gap: 12px;
+      padding: 12px 24px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px 0 0 8px;
+      font-size: 1.08rem;
+      transition: background 0.2s;
+    }
+    .sidebar nav a:hover, .sidebar nav a.active {
+      background: #232b28;
+      color: #4caf50;
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 48px 16px 0 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .actividad-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #0002;
+      padding: 32px 32px 24px 32px;
+      max-width: 600px;
+      width: 100%;
+      margin-top: 32px;
+    }
+    .actividad-inner-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0001;
+      padding: 24px;
+      margin-top: 24px;
+    }
+    .mas-btn {
+      position: fixed;
+      left: 16px;
+      bottom: 24px;
+      z-index: 1000;
+      font-family: 'Montserrat',sans-serif;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #0002;
+      background: #232b28;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      cursor: pointer;
+    }
+    .menu-mas {
+      display: none;
+      position: fixed;
+      left: 16px;
+      bottom: 70px;
+      z-index: 999;
+      min-width: 220px;
+      background: #222;
+      color: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 24px #0006;
+      padding: 12px 0;
+      font-family: 'Montserrat',sans-serif;
+    }
+    .menu-mas-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 24px;
+      text-decoration: none;
+      color: #fff;
+      gap: 12px;
+      transition: background 0.2s;
+    }
+    .menu-mas-item:hover {
+      background: #333;
+      color: #4caf50;
+    }
+    @media (max-width: 900px) {
+      .sidebar { width: 64px; align-items: center; }
+      .sidebar h4, .sidebar nav a span:last-child { display: none; }
+      .main-content { margin-left: 64px; }
+    }
+    @media (max-width: 600px) {
+      .main-content { padding: 24px 2vw 0 2vw; }
+      .actividad-card { padding: 18px 6vw 18px 6vw; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <img src="../img/agricultor.png" alt="Logo" class="logo">
+    <h4>InterAgro</h4>
+    <nav>
+      <a href="inicio.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M12 3l9 8h-3v7h-4v-5h-4v5H6v-7H3z"/></svg></span> <span>Inicio</span></a>
+      <a href="buscar.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span> <span>Buscar</span></a>
+      <a href="mensajes.html"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4caf50" width="28" height="28"><path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-4 4V4h18v10z"/></svg></span> <span>Mensajes</span></a>
+      <a href="perfil.html"><img src="../img/agricultor.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;" class="me-2"> <span>Perfil</span></a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <div class="actividad-card">
+      <h2 class="fw-bold" style="color:#4caf50;">Tu actividad</h2>
+      <div class="actividad-inner-card">
+        <div id="actividad-lista">Cargando actividad...</div>
+      </div>
+    </div>
+  </main>
+  <button class="mas-btn" id="btnMas">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+    Más
+  </button>
+  <div id="menuMas" class="menu-mas">
+    <a href="inicio.html" class="menu-mas-item">Inicio</a>
+    <a href="configuracion.html" class="menu-mas-item">Configuración</a>
+    <a href="actividad.html" class="menu-mas-item" id="actividadBtn">Tu actividad</a>
+    <a href="guardado.html" class="menu-mas-item" id="guardadoBtn">Guardado</a>
+    <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn">Cambiar apariencia</a>
+    <a href="reporte.html" class="menu-mas-item" id="reporteBtn">Reportar un problema</a>
+    <hr style="margin:8px 0;border-color:#444;">
+    <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn">Cambiar de cuenta</a>
+    <a href="login.html" class="menu-mas-item" id="salirBtn">Salir</a>
+  </div>
+  <script src="../js/buscar.js"></script>
+</body>
+</html>

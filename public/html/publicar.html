@@ -42,12 +42,23 @@
       <div class="meta">Cargando...</div>
     </div>
   </div>
+  <div id="modalConstruccion" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:32px 40px;border-radius:18px;box-shadow:0 2px 24px #0006;max-width:90vw;text-align:center;">
+      <h4 style="color:#4caf50;">Función en construcción</h4>
+      <p>Esta sección estará disponible próximamente.</p>
+      <button onclick="document.getElementById('modalConstruccion').style.display='none'" class="btn btn-success mt-2">Cerrar</button>
+    </div>
+  </div>
   <script>
     function mostrarLoader() {
       document.getElementById('loaderOverlay').style.display = 'flex';
     }
     function ocultarLoader() {
       document.getElementById('loaderOverlay').style.display = 'none';
+    }
+    function mostrarConstruccion(e) {
+      if (e) e.preventDefault();
+      document.getElementById('modalConstruccion').style.display = 'flex';
     }
     document.getElementById('publicarForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -72,6 +83,60 @@
         alert(data.error || 'No se pudo publicar');
       }
     });
+  </script>
+  <!-- Menú Más -->
+  <button id="btnMas" class="btn btn-primary">Más</button>
+  <div id="menuMas" class="menu-mas" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:32px 40px;border-radius:18px;box-shadow:0 2px 24px #0006;max-width:90vw;text-align:center;">
+      <a href="configuracion.html" class="menu-mas-item">Configuración</a>
+      <a href="actividad.html" class="menu-mas-item" id="actividadBtn">Tu actividad</a>
+      <a href="guardado.html" class="menu-mas-item" id="guardadoBtn">Guardado</a>
+      <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn">Cambiar apariencia</a>
+      <a href="reporte.html" class="menu-mas-item" id="reporteBtn">Reportar un problema</a>
+      <hr style="margin:8px 0;border-color:#444;">
+      <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn">Cambiar de cuenta</a>
+      <a href="login.html" class="menu-mas-item" id="salirBtn">Salir</a>
+    </div>
+  </div>
+  <script>
+    const btnMas = document.getElementById('btnMas');
+    const menuMas = document.getElementById('menuMas');
+    btnMas.onclick = () => {
+      menuMas.style.display = menuMas.style.display === 'none' ? 'block' : 'none';
+    };
+    document.addEventListener('click', (e) => {
+      if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
+    });
+
+    const actividadBtn = document.getElementById('actividadBtn');
+    const guardadoBtn = document.getElementById('guardadoBtn');
+    const aparienciaBtn = document.getElementById('aparienciaBtn');
+    const reporteBtn = document.getElementById('reporteBtn');
+    const cambiarCuentaBtn = document.getElementById('cambiarCuentaBtn');
+    const salirBtn = document.getElementById('salirBtn');
+
+    if (actividadBtn) actividadBtn.onclick = mostrarConstruccion;
+    if (guardadoBtn) guardadoBtn.onclick = mostrarConstruccion;
+    if (reporteBtn) reporteBtn.onclick = () => {
+      const panel = document.getElementById('reportePanel');
+      if (panel) panel.style.display = 'block';
+      else mostrarConstruccion();
+    };
+    if (aparienciaBtn) aparienciaBtn.onclick = () => {
+      document.body.classList.toggle('dark-mode');
+    };
+    if (cambiarCuentaBtn) cambiarCuentaBtn.onclick = () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    };
+    if (salirBtn) salirBtn.onclick = () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    };
+    function mostrarConstruccion(e) {
+      if (e) e.preventDefault();
+      document.getElementById('modalConstruccion').style.display = 'flex';
+    }
   </script>
 </body>
 </html>
