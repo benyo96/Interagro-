@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/perfil.css">
   <link rel="stylesheet" href="../css/interagro-theme.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -163,11 +164,11 @@ btnGuardarPerfil.onclick = function() {
       </div>
     </div>
   </main>
-  <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;left:16px;bottom:24px;z-index:1000;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
+  <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;bottom:24px;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
     Más
   </button>
-<div id="menuMas" class="menu-mas" style="display:none; position:fixed; left:16px; bottom:70px; z-index:999; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
+<div id="menuMas" class="menu-mas" style="display:none; position:fixed; bottom:70px; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
   <a href="configuracion.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">
     <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> Configuración
   </a>
@@ -365,6 +366,7 @@ window.eliminarPublicacion = function(idx) {
 }
 mostrarPublicaciones();
 </script>
+<script src="../js/sidebar.js"></script>
 <script src="../js/perfil.js"></script>
 </body>
 </html>
