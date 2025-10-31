@@ -1,0 +1,75 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(135deg, #f5fff5 0%, #e0ffe0 40%, #43e97b 100%);
+  color: #181818;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.header-logo img {
+  height: 48px;
+  width: auto;
+}
+.header-logo span {
+  font-size: 2.2em;
+  font-weight: bold;
+  background: linear-gradient(90deg, #43e97b, #38f9d7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main-content {
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px #0002;
+  padding: 32px 24px;
+  margin: 32px auto;
+  max-width: 900px;
+}
+
+.btn-primary, .btn-success {
+  background: linear-gradient(90deg, #43e97b, #38f9d7);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #43e97b33;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover, .btn-success:hover {
+  background: linear-gradient(90deg, #38f9d7, #43e97b);
+  box-shadow: 0 4px 16px #38f9d733;
+}
+
+input, textarea, select {
+  border-radius: 6px;
+  border: 1px solid #43e97b;
+  padding: 8px 12px;
+  font-size: 1em;
+  margin-bottom: 12px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #e0ffe0;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  border-radius: 8px;
+}
+
+.sidebar {
+  background: #181818;
+  color: #fff;
+}
+.sidebar nav a.active, .sidebar nav a:hover {
+  background: #222;
+  color: #43e97b;
+}

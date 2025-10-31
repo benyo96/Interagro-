@@ -1,0 +1,11 @@
+<svg width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="interagro-green" x1="0" y1="0" x2="180" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43e97b"/>
+      <stop offset="1" stop-color="#38f9d7"/>
+    </linearGradient>
+  </defs>
+  <text x="10" y="38" font-family="Montserrat, Arial, sans-serif" font-size="38" font-weight="bold" fill="url(#interagro-green)" stroke="#222" stroke-width="1.5" letter-spacing="2">
+    InterAgro
+  </text>
+</svg>

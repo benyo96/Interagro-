@@ -17,9 +17,9 @@ app.use('/api/cliente', clientesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/mensajes', mensajeRoutes);
 
-// Ruta de inicio profesional: redirige a loader.html
+// Ruta de inicio profesional: redirige a /html/loader.html
 app.get('/', (req, res) => {
-  res.redirect('/loader.html');
+  res.redirect('/html/loader.html');
 });
 
 // Manejar rutas no encontradas
