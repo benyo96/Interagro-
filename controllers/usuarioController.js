@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 const usuarioController = {
   // Registro de usuario
@@ -35,6 +36,23 @@ const usuarioController = {
       }
     );
   }
+};
+
+// Subir foto de perfil
+usuarioController.subirFotoPerfil = (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se subió ninguna imagen' });
+  }
+  const usuarioId = req.body.usuarioId;
+  const rutaFoto = `/img/perfiles/${req.file.filename}`;
+  db.query(
+    'UPDATE usuarios SET foto_perfil = ? WHERE id = ?',
+    [rutaFoto, usuarioId],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ message: 'Foto de perfil actualizada', rutaFoto });
+    }
+  );
 };
 
 module.exports = usuarioController;

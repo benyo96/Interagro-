@@ -21,13 +21,25 @@
           <input type="text" class="form-control" id="nombre_productos" placeholder="Nombre del producto" required>
         </div>
         <div class="mb-3">
-          <input type="number" class="form-control" id="cantidad" placeholder="Cantidad" required>
+          <textarea class="form-control" id="descripcion" placeholder="Descripción" rows="2" required></textarea>
         </div>
         <div class="mb-3">
-          <input type="number" class="form-control" id="precio" placeholder="Precio" required>
+          <input type="number" class="form-control" id="precio" placeholder="Precio en pesos colombianos (COP)" min="0" required>
         </div>
         <div class="mb-3">
-          <textarea class="form-control" id="descripcion" placeholder="Descripción" rows="2"></textarea>
+          <label for="categoria" class="form-label">Categoría</label>
+          <select class="form-select" id="categoria" required multiple>
+            <option value="Frutas">Frutas</option>
+            <option value="Verduras">Verduras</option>
+            <option value="Cereales">Cereales</option>
+            <option value="Legumbres">Legumbres</option>
+            <option value="Tubérculos">Tubérculos</option>
+            <option value="Plantas Aromáticas">Plantas Aromáticas</option>
+            <option value="Animales">Animales</option>
+            <option value="Lácteos">Lácteos</option>
+            <option value="Otra">Otra...</option>
+          </select>
+          <input type="text" class="form-control mt-2" id="otraCategoria" placeholder="Especifique la categoría" style="display:none;">
         </div>
         <button type="submit" class="btn btn-success w-100">Publicar</button>
       </form>
@@ -50,95 +62,6 @@
       <button onclick="document.getElementById('modalConstruccion').style.display='none'" class="btn btn-success mt-2">Cerrar</button>
     </div>
   </div>
-  <script>
-    function mostrarLoader() {
-      document.getElementById('loaderOverlay').style.display = 'flex';
-    }
-    function ocultarLoader() {
-      document.getElementById('loaderOverlay').style.display = 'none';
-    }
-    function mostrarConstruccion(e) {
-      if (e) e.preventDefault();
-      document.getElementById('modalConstruccion').style.display = 'flex';
-    }
-    document.getElementById('publicarForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      mostrarLoader();
-      // Simulación de id_usuario, reemplaza con el real
-      const id_usuario = localStorage.getItem('id_usuario') || 1;
-      const nombre_productos = document.getElementById('nombre_productos').value;
-      const cantidad = document.getElementById('cantidad').value;
-      const precio = document.getElementById('precio').value;
-      const descripcion = document.getElementById('descripcion').value;
-      const res = await fetch('/api/productos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id_usuario, nombre_productos, cantidad, precio, descripcion, id_categoria: 1 })
-      });
-      const data = await res.json();
-      ocultarLoader();
-      if (res.ok) {
-        alert('Producto publicado exitosamente');
-        window.location.href = 'catalogo.html';
-      } else {
-        alert(data.error || 'No se pudo publicar');
-      }
-    });
-  </script>
-  <!-- Menú Más -->
-  <button id="btnMas" class="btn btn-primary">Más</button>
-  <div id="menuMas" class="menu-mas" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
-    <div style="background:#fff;padding:32px 40px;border-radius:18px;box-shadow:0 2px 24px #0006;max-width:90vw;text-align:center;">
-      <a href="configuracion.html" class="menu-mas-item">Configuración</a>
-      <a href="actividad.html" class="menu-mas-item" id="actividadBtn">Tu actividad</a>
-      <a href="guardado.html" class="menu-mas-item" id="guardadoBtn">Guardado</a>
-      <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn">Cambiar apariencia</a>
-      <a href="reporte.html" class="menu-mas-item" id="reporteBtn">Reportar un problema</a>
-      <hr style="margin:8px 0;border-color:#444;">
-      <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn">Cambiar de cuenta</a>
-      <a href="login.html" class="menu-mas-item" id="salirBtn">Salir</a>
-    </div>
-  </div>
-  <script>
-    const btnMas = document.getElementById('btnMas');
-    const menuMas = document.getElementById('menuMas');
-    btnMas.onclick = () => {
-      menuMas.style.display = menuMas.style.display === 'none' ? 'block' : 'none';
-    };
-    document.addEventListener('click', (e) => {
-      if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
-    });
-
-    const actividadBtn = document.getElementById('actividadBtn');
-    const guardadoBtn = document.getElementById('guardadoBtn');
-    const aparienciaBtn = document.getElementById('aparienciaBtn');
-    const reporteBtn = document.getElementById('reporteBtn');
-    const cambiarCuentaBtn = document.getElementById('cambiarCuentaBtn');
-    const salirBtn = document.getElementById('salirBtn');
-
-    if (actividadBtn) actividadBtn.onclick = mostrarConstruccion;
-    if (guardadoBtn) guardadoBtn.onclick = mostrarConstruccion;
-    if (reporteBtn) reporteBtn.onclick = () => {
-      const panel = document.getElementById('reportePanel');
-      if (panel) panel.style.display = 'block';
-      else mostrarConstruccion();
-    };
-    if (aparienciaBtn) aparienciaBtn.onclick = () => {
-      document.body.classList.toggle('dark-mode');
-    };
-    if (cambiarCuentaBtn) cambiarCuentaBtn.onclick = () => {
-      localStorage.clear();
-      window.location.href = 'login.html';
-    };
-    if (salirBtn) salirBtn.onclick = () => {
-      localStorage.clear();
-      window.location.href = 'login.html';
-    };
-    function mostrarConstruccion(e) {
-      if (e) e.preventDefault();
-      document.getElementById('modalConstruccion').style.display = 'flex';
-    }
-  </script>
   <script src="../js/sidebar.js"></script>
 </body>
 </html>

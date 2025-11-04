@@ -39,17 +39,21 @@
     const cambiarCuentaBtn = document.getElementById('cambiarCuentaBtn');
     const salirBtn = document.getElementById('salirBtn');
 
-    if (actividadBtn) actividadBtn.addEventListener('click', (e) => callMostrarConstruccion(e));
-    if (guardadoBtn) guardadoBtn.addEventListener('click', (e) => callMostrarConstruccion(e));
+    if (actividadBtn) actividadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'actividad.html';
+    });
+    if (guardadoBtn) guardadoBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'guardado.html';
+    });
     if (reporteBtn) reporteBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      const panel = document.getElementById('reportePanel');
-      if (panel) panel.style.display = 'block';
-      else callMostrarConstruccion(e);
+      window.location.href = 'reporte.html';
     });
     if (aparienciaBtn) aparienciaBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      document.body.classList.toggle('dark-mode');
+      window.location.href = 'apariencia.html';
     });
     if (cambiarCuentaBtn) cambiarCuentaBtn.addEventListener('click', (e) => { e.preventDefault(); localStorage.clear(); window.location.href = 'login.html'; });
     if (salirBtn) salirBtn.addEventListener('click', (e) => { e.preventDefault(); localStorage.clear(); window.location.href = 'login.html'; });

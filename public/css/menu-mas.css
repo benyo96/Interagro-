@@ -1,0 +1,49 @@
+/* Menú "Más" estilo moderno */
+.menu-mas {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  right: 32px;
+  min-width: 260px;
+  background: #181818;
+  color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 4px 32px #0005;
+  padding: 10px 0 0 0;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 2000;
+}
+.menu-mas-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  font-size: 1.08em;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.menu-mas-item svg {
+  min-width: 22px;
+  min-height: 22px;
+  color: #4caf50;
+  flex-shrink: 0;
+}
+.menu-mas-item:hover {
+  background: #222;
+  color: #43e97b;
+}
+.menu-mas hr {
+  margin: 0 0 2px 0;
+  border: none;
+  border-top: 2px solid #222;
+}
+.menu-mas-item:last-child {
+  border-radius: 0 0 22px 22px;
+}
+.menu-mas-item:active {
+  background: #333;
+}

@@ -35,24 +35,94 @@
     </main>
 
   <button class="btn btn-dark mas-btn" id="btnMas" style="position:fixed;bottom:24px;font-family:'Montserrat',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:10px;box-shadow:0 2px 8px #0002;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-      Más
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+  <span style="font-weight:700;">Más</span>
     </button>
-
-  <div id="menuMas" class="menu-mas" style="display:none; position:fixed; bottom:70px; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
-      <a href="inicio.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Inicio</a>
-      <a href="configuracion.html" class="menu-mas-item" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Configuración</a>
-      <a href="actividad.html" class="menu-mas-item" id="actividadBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Tu actividad</a>
-      <a href="guardado.html" class="menu-mas-item" id="guardadoBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Guardado</a>
-      <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Cambiar apariencia</a>
-      <a href="reporte.html" class="menu-mas-item" id="reporteBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Reportar un problema</a>
-      <hr style="margin:8px 0;border-color:#444;">
-      <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Cambiar de cuenta</a>
-      <a href="login.html" class="menu-mas-item" id="salirBtn" style="display:flex;align-items:center;padding:10px 24px;text-decoration:none;color:#fff;gap:12px;">Salir</a>
+<style>
+  .mas-btn {
+    position: fixed !important;
+    left: 40px !important;
+    bottom: 32px !important;
+    background: #181818 !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px #0002 !important;
+    z-index: 2100 !important;
+    padding: 8px 18px !important;
+    font-size: 1.1em !important;
+    transition: box-shadow 0.2s;
+  }
+  .mas-btn:hover {
+    box-shadow: 0 4px 16px #0004 !important;
+  }
+  .menu-mas {
+    background: #222 !important;
+    color: #4caf50 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 2px 24px #0006 !important;
+    padding: 12px 0 !important;
+    font-family: 'Montserrat',sans-serif !important;
+    min-width: 260px !important;
+    max-width: 90vw !important;
+    left: 40px !important;
+  }
+  .menu-mas-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px 24px !important;
+    text-decoration: none !important;
+    color: #4caf50 !important;
+    font-size: 1.08em !important;
+    font-weight: 500 !important;
+    border: none !important;
+    background: none !important;
+    transition: background 0.15s;
+  }
+  .menu-mas-item:hover {
+    background: #333 !important;
+    color: #81c784 !important;
+  }
+  .menu-mas-item svg {
+    flex-shrink: 0 !important;
+    fill: #4caf50 !important;
+    stroke: #4caf50 !important;
+    width: 22px !important;
+    height: 22px !important;
+    margin-right: 2px !important;
+  }
+  .menu-mas hr {
+    margin: 8px 0 !important;
+    border-color: #444 !important;
+  }
+</style>
+    <div id="menuMas" class="menu-mas" style="display:none; position:fixed; bottom:70px; min-width:220px; background:#222; color:#fff; border-radius:18px; box-shadow:0 2px 24px #0006; padding:12px 0; font-family:'Montserrat',sans-serif;">
+  <a href="configuracion.html" class="menu-mas-item" id="configuracionBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2.34l-1.41-.49a7.03 7.03 0 00-.34-1.02l.73-1.29a.996.996 0 00-.21-1.27l-1.42-1.42a.996.996 0 00-1.27-.21l-1.29.73c-.33-.13-.67-.24-1.02-.34l-.49-1.41A.996.996 0 0013 2h-2a.996.996 0 00-.96.74l-.49 1.41c-.35.1-.69.21-1.02.34l-1.29-.73a.996.996 0 00-1.27.21L4.21 5.79a.996.996 0 00-.21 1.27l.73 1.29c-.13.33-.24.67-.34 1.02l-1.41.49A.996.996 0 002 11v2c0 .45.3.85.74.96l1.41.49c.1.35.21.69.34 1.02l-.73 1.29a.996.996 0 00.21 1.27l1.42 1.42c.36.36.92.39 1.27.21l1.29-.73c.33.13.67.24 1.02.34l.49 1.41c.11.44.51.74.96.74h2c.45 0 .85-.3.96-.74l.49-1.41c.35-.1.69-.21 1.02-.34l1.29.73c.36.18.91.15 1.27-.21l1.42-1.42a.996.996 0 00.21-1.27l-.73-1.29c.13-.33.24-.67.34-1.02l1.41-.49A.996.996 0 0022 13v-2c0-.45-.3-.85-.74-.96z"/></svg></span> Configuración
+  </a>
+  <a href="actividad.html" class="menu-mas-item" id="actividadBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 9h8M8 13h6"/></svg></span> Tu actividad
+  </a>
+  <a href="guardado.html" class="menu-mas-item" id="guardadoBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></span> Guardado
+  </a>
+  <a href="apariencia.html" class="menu-mas-item" id="aparienciaBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg></span> Cambiar apariencia
+  </a>
+  <a href="reporte.html" class="menu-mas-item" id="reporteBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3v4M8 3v4"/><path d="M12 11v6"/></svg></span> Reportar un problema
+  </a>
+  <hr style="margin:8px 0;border-color:#444;">
+  <a href="login.html" class="menu-mas-item" id="cambiarCuentaBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span> Cambiar de cuenta
+  </a>
+  <a href="login.html" class="menu-mas-item" id="salirBtn">
+    <span><svg xmlns="http://www.w3.org/2000/svg" fill="#4caf50" width="22" height="22" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3zM20 3h-8c-1.1 0-2 .9-2 2v4h2V5h8v14h-8v-4h-2v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></span> Salir
+  </a>
     </div>
+    </main>
 
-  </div>
-
+  <script src="../js/sidebar.js"></script>
   <script src="../js/buscar.js"></script>
   <script src="../js/reporte.js"></script>
 </body>

@@ -1,12 +1,3 @@
-// Menú Más
-const btnMas = document.getElementById('btnMas');
-const menuMas = document.getElementById('menuMas');
-btnMas.onclick = () => {
-  menuMas.style.display = menuMas.style.display === 'none' ? 'block' : 'none';
-};
-document.addEventListener('click', (e) => {
-  if (!btnMas.contains(e.target) && !menuMas.contains(e.target)) menuMas.style.display = 'none';
-});
 
 // Salir y cambiar cuenta
 document.getElementById('salirBtn').onclick = () => {
