@@ -28,29 +28,31 @@
       <div id="publicacionesGrid" class="publicaciones-grid"></div>
     </div>
     <!-- Modal editar perfil -->
-    <div id="modalEditarPerfil" class="modal">
-      <div class="modal-content">
-        <span class="close" id="cerrarModalEditarPerfil">&times;</span>
+    <div id="modalEditarPerfil" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.25);z-index:1000;">
+      <div class="modal-content" style="background:#fff;padding:24px;border-radius:12px;max-width:350px;width:90vw;box-shadow:0 2px 16px #0002;position:relative;">
+        <span class="close" id="cerrarModalEditarPerfil" style="position:absolute;top:12px;right:16px;font-size:1.5em;cursor:pointer;">&times;</span>
         <h4>Editar perfil</h4>
+        <label for="inputFotoPerfil" style="font-weight:600;color:#4caf50;margin-bottom:6px;display:block;">Foto de perfil</label>
+        <input type="file" id="inputFotoPerfil" accept="image/*" style="margin-bottom:10px;">
         <label for="inputDescripcion" style="font-weight:600;color:#4caf50;margin-bottom:6px;display:block;">Descripción</label>
         <textarea id="inputDescripcion" placeholder="Escribe tu descripción..." style="width:100%;min-height:60px;resize:vertical;"></textarea>
-        <button id="guardarDescripcion" class="btn-guardar">Guardar</button>
+        <button id="guardarDescripcion" class="btn-guardar" style="margin-top:12px;">Guardar</button>
       </div>
     </div>
     <!-- Modal nueva publicación -->
-    <div id="modalNuevaPublicacion" class="modal">
-      <div class="modal-content">
-        <span class="close" id="cerrarModalNuevaPublicacion">&times;</span>
+    <div id="modalNuevaPublicacion" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.25);z-index:1000;">
+      <div class="modal-content" style="background:#fff;padding:24px;border-radius:12px;max-width:350px;width:90vw;box-shadow:0 2px 16px #0002;position:relative;">
+        <span class="close" id="cerrarModalNuevaPublicacion" style="position:absolute;top:12px;right:16px;font-size:1.5em;cursor:pointer;">&times;</span>
         <h4>Nueva publicación</h4>
-        <div class="modal-publicar-foto-nombre">
+        <div class="modal-publicar-foto-nombre" style="display:flex;align-items:center;margin-bottom:10px;">
           <img id="modalPerfilFoto" src="../img/agricultor.png" alt="Foto de perfil" class="perfil-foto" style="width:56px;height:56px;">
           <span id="modalPerfilNombre" style="font-weight:700;font-size:1.1em;margin-left:10px;">Usuario</span>
         </div>
-        <input type="text" id="tituloPublicacion" placeholder="Nombre del producto*" required>
-        <input type="text" id="precioPublicacion" placeholder="Precio (COP)*" required autocomplete="off" inputmode="numeric" pattern="[0-9.]*">
-        <div class="publicar-categorias">
+        <input type="text" id="tituloPublicacion" placeholder="Nombre del producto*" required style="margin-bottom:8px;">
+        <input type="text" id="precioPublicacion" placeholder="Precio (COP)*" required autocomplete="off" inputmode="numeric" pattern="[0-9.]*" style="margin-bottom:8px;">
+        <div class="publicar-categorias" style="margin-bottom:8px;">
           <label for="categoriaPublicacion" style="font-weight:600;color:#222;margin-bottom:4px;">Categoría</label>
-          <select id="categoriaPublicacion" required>
+          <select id="categoriaPublicacion" required style="margin-bottom:8px;">
             <optgroup label="Frutas y Verduras">
               <option value="Frutas">Frutas</option>
               <option value="Verduras">Verduras</option>
@@ -69,8 +71,8 @@
           </select>
           <input type="text" id="otraCategoriaPublicacion" placeholder="Especifique la categoría" style="display:none;margin-top:8px;">
         </div>
-        <textarea id="descPublicacion" placeholder="Descripción del producto (opcional)"></textarea>
-        <input type="file" id="imgPublicacion" accept="image/*" multiple required>
+        <textarea id="descPublicacion" placeholder="Descripción del producto (opcional)" style="margin-bottom:8px;"></textarea>
+        <input type="file" id="imgPublicacion" accept="image/*" multiple required style="margin-bottom:8px;">
         <button id="publicarBtn" class="btn-guardar">Publicar</button>
       </div>
     </div>

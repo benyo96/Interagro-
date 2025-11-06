@@ -73,3 +73,27 @@ input, textarea, select {
   background: #222;
   color: #43e97b;
 }
+
+/* Perfil: foto de usuario circular y tamaño uniforme */
+.perfil-foto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline-block;
+  border: 4px solid rgba(255,255,255,0.9);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Avatar pequeño para modales */
+.modal .perfil-foto {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+/* Ajuste responsivo: reducir avatar en pantallas muy pequeñas */
+@media (max-width: 420px) {
+  .perfil-foto { width: 96px; height: 96px; }
+  .modal .perfil-foto { width: 48px; height: 48px; }
+}
