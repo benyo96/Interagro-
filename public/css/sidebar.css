@@ -1,3 +1,57 @@
+/*
+  NOTA IMPORTANTE:
+  El menú 'Más' debe tener un z-index MAYOR que el sidebar (sidebar usa z-index:1000).
+  Por eso aquí se usa z-index: 2001 para evitar que quede por detrás del menú lateral.
+  Si el menú sigue quedando detrás, revisa que ningún otro elemento tenga un z-index mayor o que el sidebar no tenga z-index superior a este valor.
+*/
+.menu-mas {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  left: calc(var(--ia-sidebar-width, 220px) + 16px);
+  min-width: 260px;
+  background: #181818;
+  color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 4px 32px #0005;
+  padding: 10px 0 0 0;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 2001 !important;
+}
+.menu-mas-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  font-size: 1.08em;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.menu-mas-item svg {
+  min-width: 22px;
+  min-height: 22px;
+  color: #4caf50;
+  flex-shrink: 0;
+}
+.menu-mas-item:hover {
+  background: #222;
+  color: #43e97b;
+}
+.menu-mas hr {
+  margin: 0 0 2px 0;
+  border: none;
+  border-top: 2px solid #222;
+}
+.menu-mas-item:last-child {
+  border-radius: 0 0 22px 22px;
+}
+.menu-mas-item:active {
+  background: #333;
+}
 /* Sidebar / layout shared styles for InterAgro */
 :root{
   --ia-sidebar-bg: #0f1412; /* dark sidebar */
@@ -21,11 +75,18 @@
   z-index:1000;
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:20px;
   align-items:flex-start;
 }
 .sidebar .logo{ display:block; width:48px; height:48px; object-fit:cover; border-radius:8px; margin-bottom:4px; }
-.sidebar h4{ margin:0 0 6px 0; font-weight:700; }
+.sidebar h4{
+  margin: 0 0 18px 0;
+  font-weight: 700;
+  font-size: 1.7em;
+  color: var(--ia-accent);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
 .sidebar nav{ width:100%; display:flex; flex-direction:column; gap:6px; }
 .sidebar nav a{
   display:flex; align-items:center; gap:12px; padding:10px 12px; text-decoration:none; color:var(--ia-text); border-radius:12px; transition:all .18s ease;
