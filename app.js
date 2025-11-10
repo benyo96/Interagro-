@@ -12,7 +12,16 @@ const PORT = process.env.PORT || 3000;
 // Middlewares
 app.use(cors());
 app.use(express.json()); // Para parsear JSON en las requests
+app.use(express.urlencoded({ extended: true })); // Para parsear datos de formularios
 app.use(express.static('public')); // Servir archivos estáticos
+
+// Crear directorio para imágenes si no existe
+const fs = require('fs');
+const path = require('path');
+const uploadDir = path.join(__dirname, 'public/img/publicaciones');
+if (!fs.existsSync(uploadDir)){
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 // Routes
 app.use('/api/cliente', clientesRoutes);

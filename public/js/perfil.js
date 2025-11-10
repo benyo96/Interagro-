@@ -1,29 +1,7 @@
 
 // --- Estado y elementos ---
 let descripcion = localStorage.getItem('perfil_descripcion') || '';
-const btnMas = document.getElementById('btnMas');
-const menuMas = document.getElementById('menuMas');
-const perfilFoto = document.getElementById('perfilFoto');
-const btnEditarPerfil = document.getElementById('btnEditarPerfil');
-const perfilDescripcion = document.getElementById('perfilDescripcion');
-const perfilPublicaciones = document.getElementById('perfilPublicaciones');
-const publicacionesGrid = document.getElementById('publicacionesGrid');
-const btnNuevaPublicacion = document.getElementById('btnNuevaPublicacion');
-const modalEditarPerfil = document.getElementById('modalEditarPerfil');
-const cerrarModalEditarPerfil = document.getElementById('cerrarModalEditarPerfil');
-const inputDescripcion = document.getElementById('inputDescripcion');
-const guardarDescripcion = document.getElementById('guardarDescripcion');
-const modalNuevaPublicacion = document.getElementById('modalNuevaPublicacion');
-const cerrarModalNuevaPublicacion = document.getElementById('cerrarModalNuevaPublicacion');
-const tituloPublicacion = document.getElementById('tituloPublicacion');
-const precioPublicacion = document.getElementById('precioPublicacion');
-const descPublicacion = document.getElementById('descPublicacion');
-const imgPublicacion = document.getElementById('imgPublicacion');
-const publicarBtn = document.getElementById('publicarBtn');
-
-const inputFotoPerfil = document.getElementById('inputFotoPerfil');
-const categoriaPublicacion = document.getElementById('categoriaPublicacion');
-const otraCategoriaPublicacion = document.getElementById('otraCategoriaPublicacion');
+let elements = {};
 // --- Menú Más ---
 if (btnMas) {
   btnMas.addEventListener('click', (e) => {
@@ -169,21 +147,38 @@ if (guardarDescripcion) {
 }
 
 // --- Nueva publicación ---
+console.log('Inicializando evento de nueva publicación');
+console.log('btnNuevaPublicacion:', btnNuevaPublicacion);
+console.log('modalNuevaPublicacion:', modalNuevaPublicacion);
+
 if (btnNuevaPublicacion) {
   btnNuevaPublicacion.addEventListener('click', () => {
-    // Mostrar modal
-    modalNuevaPublicacion.style.display = 'flex';
-    // Llenar foto/nombre en modal si existen
-    const modalPerfilFoto = document.getElementById('modalPerfilFoto');
-    const modalPerfilNombre = document.getElementById('modalPerfilNombre');
-    const foto = localStorage.getItem('perfil_foto');
-    if (modalPerfilFoto) modalPerfilFoto.src = foto ? foto : '../img/agricultor.png';
-    if (modalPerfilNombre) modalPerfilNombre.textContent = localStorage.getItem('perfil_nombre') || 'Usuario';
+    console.log('Click en botón nueva publicación');
+    try {
+      // Mostrar modal
+      if (!modalNuevaPublicacion) {
+        console.error('Modal no encontrado');
+        return;
+      }
+      modalNuevaPublicacion.classList.add('show');
+      console.log('Modal mostrado correctamente');
+      
+      // Llenar foto/nombre en modal si existen
+      const modalPerfilFoto = document.getElementById('modalPerfilFoto');
+      const modalPerfilNombre = document.getElementById('modalPerfilNombre');
+      const foto = localStorage.getItem('perfil_foto');
+      if (modalPerfilFoto) modalPerfilFoto.src = foto ? foto : '../img/agricultor.png';
+      if (modalPerfilNombre) modalPerfilNombre.textContent = localStorage.getItem('perfil_nombre') || 'Usuario';
+    } catch (error) {
+      console.error('Error al mostrar el modal:', error);
+    }
   });
+} else {
+  console.error('Botón nueva publicación no encontrado');
 }
 if (cerrarModalNuevaPublicacion) {
-  cerrarModalNuevaPublicacion.addEventListener('click', () => {
-    modalNuevaPublicacion.style.display = 'none';
+    cerrarModalNuevaPublicacion.addEventListener('click', () => {
+    modalNuevaPublicacion.classList.remove('show');
     if (tituloPublicacion) tituloPublicacion.value = '';
     if (precioPublicacion) precioPublicacion.value = '';
     if (descPublicacion) descPublicacion.value = '';
@@ -196,56 +191,113 @@ if (cerrarModalNuevaPublicacion) {
 
 // --- Publicar nueva publicación ---
 publicarBtn.onclick = async () => {
-  const titulo = tituloPublicacion.value.trim();
-  const precio = precioPublicacion.value.replace(/\D/g, '');
-  const descripcionPub = descPublicacion.value.trim();
-  const id_usuario = String(localStorage.getItem('id_usuario'));
-  const files = Array.from(imgPublicacion.files);
-  let categoria = categoriaPublicacion.value;
-  if (categoria === 'Otra') {
-    categoria = document.getElementById('otraCategoriaPublicacion').value.trim();
-    if (!categoria) {
-      alert('Especifique la categoría');
+  try {
+    const titulo = tituloPublicacion.value.trim();
+    const precio = precioPublicacion.value.replace(/\D/g, '');
+    const descripcionPub = descPublicacion.value.trim();
+    // Obtener y validar id_usuario
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (!usuarioGuardado) {
+      alert('Error: No hay usuario identificado. Por favor, inicia sesión nuevamente.');
+      window.location.href = 'login.html';
       return;
     }
+    
+    const usuario = JSON.parse(usuarioGuardado);
+    const id_usuario = usuario.id_usuario;
+    if (!id_usuario) {
+      alert('Error: ID de usuario no válido. Por favor, inicia sesión nuevamente.');
+      window.location.href = 'login.html';
+      return;
+    }
+
+    console.log('ID de usuario actual:', id_usuario);
+
+    const files = Array.from(imgPublicacion.files);
+    let categoria = categoriaPublicacion.value;
+    
+    // Validaciones
+    if (categoria === 'Otra') {
+      categoria = document.getElementById('otraCategoriaPublicacion').value.trim();
+      if (!categoria) {
+        alert('Especifique la categoría');
+        return;
+      }
+    }
+    if (!titulo) {
+      alert('El nombre del producto es obligatorio');
+      return;
+    }
+    if (!precio) {
+      alert('El precio es obligatorio');
+      return;
+    }
+    if (!files.length) {
+      alert('Agrega al menos una imagen');
+      return;
+    }
+
+    // Crear FormData para enviar los datos
+    const formData = new FormData();
+    formData.append('titulo', titulo);
+    formData.append('descripcion', descripcionPub);
+    formData.append('precio', precio);
+    formData.append('categoria', categoria);
+    formData.append('id_usuario', id_usuario);
+    formData.append('foto', files[0]); // Solo la primera imagen por ahora
+    formData.append('mostrar_ubicacion', '1'); // Por defecto mostrar ubicación
+
+    // Enviar al servidor
+    console.log('Enviando datos al servidor:', {
+      titulo,
+      descripcion: descripcionPub,
+      precio,
+      categoria,
+      id_usuario,
+      foto: files[0]?.name
+    });
+
+    console.log('Enviando formulario con FormData:', {
+      titulo: formData.get('titulo'),
+      precio: formData.get('precio'),
+      categoria: formData.get('categoria'),
+      id_usuario: formData.get('id_usuario'),
+      foto: formData.get('foto')?.name
+    });
+
+    const response = await fetch('/api/publicaciones', {
+      method: 'POST',
+      body: formData
+    });
+
+    const responseData = await response.json();
+    console.log('Respuesta del servidor:', responseData);
+
+    if (!response.ok) {
+      console.error('Error del servidor:', responseData);
+      throw new Error(responseData.error || 'Error al crear la publicación');
+    }
+
+    console.log('Publicación creada:', responseData);
+
+    // Limpiar formulario y cerrar modal
+    modalNuevaPublicacion.style.display = 'none';
+    tituloPublicacion.value = '';
+    precioPublicacion.value = '';
+    descPublicacion.value = '';
+    imgPublicacion.value = '';
+    categoriaPublicacion.value = categoriaPublicacion.options[0].value;
+    document.getElementById('otraCategoriaPublicacion').value = '';
+    document.getElementById('otraCategoriaPublicacion').style.display = 'none';
+
+    // Recargar publicaciones
+    cargarPublicaciones();
+    
+    alert('Publicación creada exitosamente');
+  } catch (error) {
+    console.error('Error al crear publicación:', error);
+    alert('Error al crear la publicación. Por favor, intenta de nuevo.');
   }
-  if (!titulo) {
-    alert('El nombre del producto es obligatorio');
-    return;
-  }
-  if (!precio) {
-    alert('El precio es obligatorio');
-    return;
-  }
-  if (!files.length) {
-    alert('Agrega al menos una imagen');
-    return;
-  }
-  // Leer imágenes como base64
-  const imagenesBase64 = await Promise.all(files.map(file => new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
-    reader.readAsDataURL(file);
-  })));
-  let publicaciones = JSON.parse(localStorage.getItem('publicaciones_local') || '[]');
-  publicaciones.unshift({
-    nombre_productos: titulo,
-    precio,
-    descripcion: descripcionPub,
-    imagenes: imagenesBase64,
-    fecha: new Date(),
-    id_usuario: id_usuario,
-    categoria: categoria
-  });
-  localStorage.setItem('publicaciones_local', JSON.stringify(publicaciones));
-  cargarPerfil();
-  modalNuevaPublicacion.style.display = 'none';
-  tituloPublicacion.value = '';
-  precioPublicacion.value = '';
-  descPublicacion.value = '';
-  imgPublicacion.value = '';
-  categoriaPublicacion.value = '';
-  document.getElementById('otraCategoriaPublicacion').value = '';
 };
 
 // Formatear precio con puntos de miles en tiempo real
@@ -254,6 +306,36 @@ precioPublicacion.addEventListener('input', function(e) {
   if (!val) { precioPublicacion.value = ''; return; }
   precioPublicacion.value = Number(val).toLocaleString('es-CO');
 });
+
+// Cargar publicaciones del usuario
+async function cargarPublicaciones() {
+  try {
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (!usuarioGuardado) {
+      console.error('No hay usuario en localStorage');
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    const usuario = JSON.parse(usuarioGuardado);
+    const id_usuario = usuario.id_usuario;
+    if (!id_usuario) {
+      console.error('ID de usuario no válido');
+      window.location.href = 'login.html';
+      return;
+    }
+
+    console.log('Cargando publicaciones para usuario:', id_usuario);
+    const response = await fetch(`/api/publicaciones?usuario=${id_usuario}`);
+    if (!response.ok) throw new Error('Error al cargar publicaciones');
+    
+    const publicaciones = await response.json();
+    mostrarPublicaciones(publicaciones);
+  } catch (error) {
+    console.error('Error:', error);
+    publicacionesGrid.innerHTML = '<div style="color:#888;text-align:center;padding:32px;">Error al cargar las publicaciones.</div>';
+  }
+}
 
 // Renderizar publicaciones y descripción
 function cargarPerfil() {
@@ -264,35 +346,186 @@ function cargarPerfil() {
     perfilFoto.src = '../img/agricultor.png';
   }
   perfilDescripcion.textContent = descripcion || 'Sin descripción';
-  const id_usuario = localStorage.getItem('id_usuario');
-  let publicaciones = JSON.parse(localStorage.getItem('publicaciones_local') || '[]');
-  publicaciones = publicaciones.filter(pub => String(pub.id_usuario) === String(id_usuario));
+  
+  // Cargar publicaciones
+  cargarPublicaciones();
+}
+
+// Mostrar publicaciones en el grid
+function mostrarPublicaciones(publicaciones) {
+  if (!publicaciones || publicaciones.length === 0) {
+    publicacionesGrid.innerHTML = '<div style="color:#888;text-align:center;padding:32px;">No tienes publicaciones aún.</div>';
+    perfilPublicaciones.textContent = '0';
+    return;
+  }
+
   perfilPublicaciones.textContent = publicaciones.length;
-  publicacionesGrid.innerHTML = publicaciones.length ? publicaciones.map(pub => {
-    let imgs = [];
-    if (pub.imagenes) {
-      try { imgs = typeof pub.imagenes === 'string' ? JSON.parse(pub.imagenes) : pub.imagenes; } catch {}
-    }
-    let imagenesHtml = '';
-    if (Array.isArray(imgs) && imgs.length > 0) {
-      imagenesHtml = `<div style='display:flex;gap:8px;margin-bottom:8px;'>` + imgs.map(img => `<img src="${img}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px #0002;">`).join('') + `</div>`;
-    }
-    return `<div class=\"publicacion-card\" style=\"background:#fff;border-radius:14px;box-shadow:0 2px 12px #0001;padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;\">\n      ${imagenesHtml}\n      <div style=\"font-weight:700;font-size:1.08em;color:#4caf50;\">${pub.nombre_productos||''}</div>\n      <div style=\"color:#222;font-size:.98em;margin-bottom:4px;\">${pub.descripcion||''}</div>\n      <div style=\"color:#388e3c;font-size:1.08em;font-weight:600;\">${pub.precio ? '$'+Number(pub.precio).toLocaleString('es-CO') : ''}</div>\n      <div style=\"color:#222;font-size:.95em;\">${pub.categoria ? 'Categoría: '+pub.categoria : ''}</div>\n    </div>`;
-  }).join('') : '<div style=\"color:#888;text-align:center;padding:32px;\">No tienes publicaciones aún.</div>';
+  publicacionesGrid.innerHTML = publicaciones.map(pub => `
+    <div class="publicacion-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 12px #0001;padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;">
+      <div style="width:100%;height:200px;overflow:hidden;border-radius:10px;margin-bottom:8px;">
+        <img src="${pub.foto || '../img/placeholder.jpg'}" 
+             style="width:100%;height:100%;object-fit:cover;" 
+             alt="${pub.titulo}">
+      </div>
+      <div style="font-weight:700;font-size:1.08em;color:#4caf50;">${pub.titulo}</div>
+      <div style="color:#222;font-size:.98em;margin-bottom:4px;">${pub.descripcion || ''}</div>
+      <div style="color:#388e3c;font-size:1.08em;font-weight:600;">$${Number(pub.precio).toLocaleString('es-CO')}</div>
+      <div style="color:#222;font-size:.95em;">Categoría: ${pub.categoria || 'Sin categoría'}</div>
+      <div class="acciones" style="display:flex;gap:10px;margin-top:10px;width:100%;">
+        <button onclick="editarPublicacion(${pub.id_publicacion})" 
+                class="btn btn-outline-success" 
+                style="flex:1;">Editar</button>
+        <button onclick="eliminarPublicacion(${pub.id_publicacion})" 
+                class="btn btn-outline-danger" 
+                style="flex:1;">Eliminar</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 // Inicializar perfil al cargar
-window.onload = cargarPerfil;
-// Mostrar/ocultar input de otra categoría
-const categoriaSelect = document.getElementById('categoriaPublicacion');
-const otraCategoriaInput = document.getElementById('otraCategoriaPublicacion');
-if (categoriaSelect && otraCategoriaInput) {
-  categoriaSelect.addEventListener('change', function() {
-    if (this.value === 'Otra') {
-      otraCategoriaInput.style.display = 'block';
-    } else {
-      otraCategoriaInput.style.display = 'none';
-      otraCategoriaInput.value = '';
+// Función para verificar si hay usuario logueado
+function verificarUsuario() {
+  const usuarioGuardado = localStorage.getItem('usuario');
+  if (!usuarioGuardado) {
+    console.error('No hay usuario en localStorage');
+    window.location.href = 'login.html';
+    return null;
+  }
+
+  try {
+    const usuario = JSON.parse(usuarioGuardado);
+    if (!usuario.id_usuario) {
+      throw new Error('ID de usuario no válido');
+    }
+    console.log('Usuario actual:', usuario.nombre, '(ID:', usuario.id_usuario, ')');
+    return usuario;
+  } catch (error) {
+    console.error('Error al validar usuario:', error);
+    localStorage.removeItem('usuario');
+    window.location.href = 'login.html';
+    return null;
+  }
+}
+
+// Función para inicializar elementos DOM
+function inicializarElementos() {
+  console.log('Inicializando elementos DOM');
+  
+  // Obtener todos los elementos DOM necesarios
+  elements = {
+    btnMas: document.getElementById('btnMas'),
+    menuMas: document.getElementById('menuMas'),
+    perfilFoto: document.getElementById('perfilFoto'),
+    btnEditarPerfil: document.getElementById('btnEditarPerfil'),
+    perfilDescripcion: document.getElementById('perfilDescripcion'),
+    perfilPublicaciones: document.getElementById('perfilPublicaciones'),
+    publicacionesGrid: document.getElementById('publicacionesGrid'),
+    btnNuevaPublicacion: document.getElementById('btnNuevaPublicacion'),
+    modalEditarPerfil: document.getElementById('modalEditarPerfil'),
+    cerrarModalEditarPerfil: document.getElementById('cerrarModalEditarPerfil'),
+    inputDescripcion: document.getElementById('inputDescripcion'),
+    guardarDescripcion: document.getElementById('guardarDescripcion'),
+    modalNuevaPublicacion: document.getElementById('modalNuevaPublicacion'),
+    cerrarModalNuevaPublicacion: document.getElementById('cerrarModalNuevaPublicacion'),
+    tituloPublicacion: document.getElementById('tituloPublicacion'),
+    precioPublicacion: document.getElementById('precioPublicacion'),
+    descPublicacion: document.getElementById('descPublicacion'),
+    imgPublicacion: document.getElementById('imgPublicacion'),
+    publicarBtn: document.getElementById('publicarBtn'),
+    inputFotoPerfil: document.getElementById('inputFotoPerfil'),
+    categoriaPublicacion: document.getElementById('categoriaPublicacion'),
+    otraCategoriaPublicacion: document.getElementById('otraCategoriaPublicacion')
+  };
+
+  // Debug: imprimir el estado de los elementos críticos
+  console.log('Estado de elementos críticos:');
+  console.log('btnNuevaPublicacion:', elements.btnNuevaPublicacion);
+  console.log('modalNuevaPublicacion:', elements.modalNuevaPublicacion);
+  console.log('publicarBtn:', elements.publicarBtn);
+  console.log('categoriaPublicacion:', elements.categoriaPublicacion);
+
+  // Verificar si se encontraron todos los elementos críticos
+  const elementosCriticos = ['btnNuevaPublicacion', 'modalNuevaPublicacion', 'publicarBtn', 'categoriaPublicacion'];
+  const elementosFaltantes = elementosCriticos.filter(id => !elements[id]);
+  
+  if (elementosFaltantes.length > 0) {
+    console.error('Elementos críticos no encontrados:', elementosFaltantes);
+    return false;
+  }
+
+  console.log('Todos los elementos críticos encontrados');
+  return true;
+}
+
+// Inicializar al cargar
+window.onload = () => {
+  console.log('Página cargada, inicializando...');
+  
+  if (!inicializarElementos()) {
+    console.error('Error al inicializar elementos. Algunas funciones podrían no estar disponibles.');
+    return;
+  }
+
+  // Configurar eventos
+  document.addEventListener('click', (e) => {
+    if (elements.modalNuevaPublicacion && 
+        !elements.modalNuevaPublicacion.querySelector('.modal-content').contains(e.target) &&
+        !elements.btnNuevaPublicacion.contains(e.target)) {
+      elements.modalNuevaPublicacion.classList.remove('show');
     }
   });
+
+  // Prevenir que los clics dentro del modal se propaguen al documento
+  if (elements.modalNuevaPublicacion) {
+    elements.modalNuevaPublicacion.querySelector('.modal-content').addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
+  if (elements.btnNuevaPublicacion && elements.modalNuevaPublicacion) {
+    console.log('Configurando evento del botón nueva publicación');
+    elements.btnNuevaPublicacion.addEventListener('click', () => {
+      console.log('Click en botón nueva publicación');
+      try {
+        elements.modalNuevaPublicacion.style.display = 'flex';
+        console.log('Modal mostrado correctamente');
+
+        // Llenar foto/nombre en modal si existen
+        const modalPerfilFoto = document.getElementById('modalPerfilFoto');
+        const modalPerfilNombre = document.getElementById('modalPerfilNombre');
+        const foto = localStorage.getItem('perfil_foto');
+        if (modalPerfilFoto) modalPerfilFoto.src = foto || '../img/agricultor.png';
+        if (modalPerfilNombre) modalPerfilNombre.textContent = localStorage.getItem('perfil_nombre') || 'Usuario';
+      } catch (error) {
+        console.error('Error al mostrar el modal:', error);
+      }
+    });
+  } else {
+    console.error('No se encontró el botón o el modal de nueva publicación');
+  }
+
+  cargarPerfil();
+};
+// Inicializar elementos del formulario
+function inicializarFormulario() {
+  const categoriaSelect = document.getElementById('categoriaPublicacion');
+  const otraCategoriaInput = document.getElementById('otraCategoriaPublicacion');
+  
+  if (categoriaSelect && otraCategoriaInput) {
+    // Asegurarse de que haya una opción seleccionada por defecto
+    if (!categoriaSelect.value) {
+      categoriaSelect.value = categoriaSelect.options[0].value;
+    }
+
+    // Manejar cambio de categoría
+    categoriaSelect.addEventListener('change', function() {
+      if (this.value === 'Otra') {
+        otraCategoriaInput.style.display = 'block';
+      } else {
+        otraCategoriaInput.style.display = 'none';
+        otraCategoriaInput.value = '';
+      }
+    });
+  }
 }

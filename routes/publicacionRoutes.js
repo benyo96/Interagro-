@@ -3,8 +3,13 @@ const router = express.Router();
 const publicacionController = require('../controllers/publicacionController');
 const uploadPublicacion = require('../config/multerPublicacion');
 
+// Obtener todas las publicaciones
 router.get('/', publicacionController.getPublicaciones);
-// Permitir múltiples imágenes
-router.post('/', uploadPublicacion.array('imagenes', 10), publicacionController.createPublicacion);
+
+// Obtener una publicación específica
+router.get('/:id', publicacionController.getPublicacionById);
+
+// Crear nueva publicación
+router.post('/', uploadPublicacion, publicacionController.createPublicacion);
 
 module.exports = router;

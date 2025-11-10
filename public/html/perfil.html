@@ -9,13 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/interagro-theme.css">
   <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/perfil.css">
+  <link rel="stylesheet" href="../css/modal.css">
 </head>
 <body>
 
   <div id="sidebar-container"></div>
   <main class="main-content">
     <div class="perfil-card">
-      <img id="perfilFoto" src="../img/agricultor.png" alt="Foto de perfil" class="perfil-foto">
+      <img id="perfilFoto" src="../img/4.png" alt="Foto de perfil" class="perfil-foto">
       <button id="btnEditarPerfil" class="btn-editar">Editar perfil</button>
       <div style="width:100%;max-width:420px;margin:0 auto 10px auto;">
         <h5 style="margin:18px 0 4px 0;font-weight:700;color:#4caf50;">Descripción</h5>
@@ -53,6 +55,7 @@
         <div class="publicar-categorias" style="margin-bottom:8px;">
           <label for="categoriaPublicacion" style="font-weight:600;color:#222;margin-bottom:4px;">Categoría</label>
           <select id="categoriaPublicacion" required style="margin-bottom:8px;">
+            <option value="" selected disabled>Seleccione una categoría</option>
             <optgroup label="Frutas y Verduras">
               <option value="Frutas">Frutas</option>
               <option value="Verduras">Verduras</option>
