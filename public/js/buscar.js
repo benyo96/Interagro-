@@ -95,19 +95,36 @@ function hidePanels() {
   document.getElementById('reportePanel').style.display = 'none';
 }
 
-  // Mostrar publicaciones en el grid principal
-  async function cargarPublicacionesBuscar() {
+  // Mostrar publicaciones en el grid principal. options: {q, categories, minPrice, maxPrice, location, sort}
+  async function cargarPublicacionesBuscar(options = {}) {
     const grid = document.querySelector('.products-grid');
+    const resultsInfo = document.querySelector('.results-header p');
     if (!grid) return;
     grid.innerHTML = '<div style="text-align:center;padding:32px;">Cargando publicaciones...</div>';
+
+    // Construir query string
+    const qs = new URLSearchParams();
+    if (options.q) qs.set('q', options.q);
+    if (options.categories && options.categories.length) qs.set('categories', options.categories.join(','));
+    if (options.minPrice != null) qs.set('minPrice', options.minPrice);
+    if (options.maxPrice != null) qs.set('maxPrice', options.maxPrice);
+    if (options.location) qs.set('location', options.location);
+    if (options.sort) qs.set('sort', options.sort);
+
+    const url = '/api/publicaciones' + (qs.toString() ? `?${qs.toString()}` : '');
+
     try {
-      const res = await fetch('/api/publicaciones');
+      const res = await fetch(url);
       const publicaciones = await res.json();
       console.log('Publicaciones recibidas:', publicaciones);
       if (!Array.isArray(publicaciones) || publicaciones.length === 0) {
+        if (resultsInfo) resultsInfo.innerText = 'Mostrando 0 resultados';
         grid.innerHTML = '<div style="text-align:center;padding:32px;">No hay publicaciones disponibles.</div>';
         return;
       }
+
+      if (resultsInfo) resultsInfo.innerText = `Mostrando ${publicaciones.length} resultados`;
+
       grid.innerHTML = publicaciones.map(pub => {
         // Corregir la ruta de la imagen si es relativa
         let foto = pub.foto;
@@ -137,6 +154,7 @@ function hidePanels() {
         `;
       }).join('');
     } catch (error) {
+      if (resultsInfo) resultsInfo.innerText = 'Error al cargar resultados';
       grid.innerHTML = '<div style="text-align:center;padding:32px;">Error al cargar publicaciones.</div>';
       console.error('Error al cargar publicaciones:', error);
     }
@@ -149,5 +167,52 @@ function hidePanels() {
     } catch (err) {
       console.warn('attachUiHandlers error (some sidebar elements may be missing):', err);
     }
-    cargarPublicacionesBuscar();
+
+    // Elementos de búsqueda y filtros
+    const searchInput = document.querySelector('.search-container input[type="text"]');
+    const searchBtn = document.querySelector('.search-container button');
+    const sortSelect = document.getElementById('sortSelect');
+    const filterSection = document.querySelector('.filter-section');
+
+    function gatherFilters() {
+      const options = {};
+      if (searchInput && searchInput.value.trim()) options.q = searchInput.value.trim();
+
+      // categorías: todos los checkboxes dentro de filter-section
+      if (filterSection) {
+        const checked = Array.from(filterSection.querySelectorAll('input[type="checkbox"]:checked'))
+          .map(cb => cb.nextElementSibling ? cb.nextElementSibling.innerText.trim() : cb.id);
+        if (checked.length) options.categories = checked;
+
+        // price inputs: asumimos dos inputs numéricos dentro .price-inputs
+        const priceInputs = filterSection.querySelectorAll('.price-inputs input[type="number"]');
+        if (priceInputs && priceInputs.length >= 2) {
+          const min = priceInputs[0].value ? Number(priceInputs[0].value) : null;
+          const max = priceInputs[1].value ? Number(priceInputs[1].value) : null;
+          if (!isNaN(min) && min !== null) options.minPrice = min;
+          if (!isNaN(max) && max !== null) options.maxPrice = max;
+        }
+
+        // ubicación: el select dentro de filter-section (si existe)
+        const locSelect = filterSection.querySelector('select');
+        if (locSelect && locSelect.value && !locSelect.value.startsWith('Todas')) options.location = locSelect.value;
+      }
+
+      if (sortSelect && sortSelect.value) options.sort = sortSelect.value;
+      return options;
+    }
+
+    // Listeners
+    if (searchBtn) searchBtn.addEventListener('click', () => cargarPublicacionesBuscar(gatherFilters()));
+    if (searchInput) searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); cargarPublicacionesBuscar(gatherFilters()); } });
+    if (filterSection) {
+      filterSection.addEventListener('change', (e) => {
+        // responde a cambios en checkboxes, price inputs o location select
+        cargarPublicacionesBuscar(gatherFilters());
+      });
+    }
+    if (sortSelect) sortSelect.addEventListener('change', () => cargarPublicacionesBuscar(gatherFilters()));
+
+    // Carga inicial con filtros vacíos (muestra todo)
+    cargarPublicacionesBuscar(gatherFilters());
   });

@@ -53,34 +53,73 @@
             
             <div class="mb-4">
               <h6 class="fw-bold">Categorías</h6>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="cat1">
-                <label class="form-check-label" for="cat1">Semillas</label>
+
+              <div class="category-group mb-2">
+                <h6 class="small fw-bold">Frutas y Verduras</h6>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-frutas" value="Frutas">
+                  <label class="form-check-label" for="cat-frutas">Frutas</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-verduras" value="Verduras">
+                  <label class="form-check-label" for="cat-verduras">Verduras</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-tuberculos" value="Tubérculos">
+                  <label class="form-check-label" for="cat-tuberculos">Tubérculos</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-legumbres" value="Legumbres">
+                  <label class="form-check-label" for="cat-legumbres">Legumbres</label>
+                </div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="cat2">
-                <label class="form-check-label" for="cat2">Herramientas</label>
+
+              <div class="category-group mb-2">
+                <h6 class="small fw-bold">Cereales y Plantas</h6>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-cereales" value="Cereales">
+                  <label class="form-check-label" for="cat-cereales">Cereales</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-plantas" value="Plantas Aromáticas">
+                  <label class="form-check-label" for="cat-plantas">Plantas Aromáticas</label>
+                </div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="cat3">
-                <label class="form-check-label" for="cat3">Fertilizantes</label>
+
+              <div class="category-group mb-2">
+                <h6 class="small fw-bold">Animales y Derivados</h6>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-animales" value="Animales">
+                  <label class="form-check-label" for="cat-animales">Animales</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-lacteos" value="Lácteos">
+                  <label class="form-check-label" for="cat-lacteos">Lácteos</label>
+                </div>
+              </div>
+
+              <div class="category-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cat-otra" value="Otra">
+                  <label class="form-check-label" for="cat-otra">Otra...</label>
+                </div>
               </div>
             </div>
 
             <div class="mb-4">
               <h6 class="fw-bold">Precio</h6>
               <div class="range-slider">
-                <input type="range" class="form-range" min="0" max="1000" id="priceRange">
+                <input type="range" class="form-range" min="0" max="1000" id="priceRange" aria-label="Rango de precio">
                 <div class="price-inputs d-flex gap-2">
-                  <input type="number" class="form-control form-control-sm" placeholder="Min">
-                  <input type="number" class="form-control form-control-sm" placeholder="Max">
+                  <input type="number" class="form-control form-control-sm" placeholder="Min" aria-label="Precio mínimo">
+                  <input type="number" class="form-control form-control-sm" placeholder="Max" aria-label="Precio máximo">
                 </div>
               </div>
             </div>
 
             <div class="mb-4">
               <h6 class="fw-bold">Ubicación</h6>
-              <select class="form-select">
+              <select class="form-select" aria-label="Seleccionar ubicación">
                 <option selected>Todas las ubicaciones</option>
                 <option>Departamento 1</option>
                 <option>Departamento 2</option>
@@ -95,7 +134,7 @@
   </main>
   <!-- Menú Más global -->
   <button class="btn btn-dark mas-btn" id="btnMas">
-    <span style="font-weight:700;">Más</span>
+    <span class="fw-bold">Más</span>
   </button>
   <div id="menu-mas-container"></div>
 <script>

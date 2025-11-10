@@ -1,18 +1,76 @@
 const connection = require('../config/db');
 
-// Obtener publicaciones
+// Obtener publicaciones con soporte para búsqueda y filtros
 exports.getPublicaciones = (req, res) => {
-  const query = `
-    SELECT * FROM publicaciones
-    ORDER BY fecha DESC
-  `;
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error('Error SQL:', err);
-      return res.status(500).json({ error: 'Error al obtener publicaciones', detalles: err });
+  try {
+    // Parámetros opcionales
+    const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+    const categories = typeof req.query.categories === 'string' && req.query.categories.length ? req.query.categories.split(',').map(c => c.trim()).filter(Boolean) : [];
+    const minPrice = req.query.minPrice ? parseFloat(req.query.minPrice) : null;
+    const maxPrice = req.query.maxPrice ? parseFloat(req.query.maxPrice) : null;
+    const location = typeof req.query.location === 'string' && req.query.location.trim() ? req.query.location.trim() : null;
+    const sort = typeof req.query.sort === 'string' ? req.query.sort : null;
+
+    let sql = 'SELECT * FROM publicaciones WHERE 1=1';
+    const params = [];
+
+    if (q) {
+      sql += ' AND (titulo LIKE ? OR descripcion LIKE ?)';
+      const like = `%${q}%`;
+      params.push(like, like);
     }
-    res.json(results);
-  });
+
+    if (categories.length) {
+      // Construir placeholders dinámicos para IN
+      const ph = categories.map(() => '?').join(',');
+      sql += ` AND categoria IN (${ph})`;
+      categories.forEach(c => params.push(c));
+    }
+
+    if (!isNaN(minPrice) && minPrice !== null) {
+      sql += ' AND precio >= ?';
+      params.push(minPrice);
+    }
+    if (!isNaN(maxPrice) && maxPrice !== null) {
+      sql += ' AND precio <= ?';
+      params.push(maxPrice);
+    }
+
+    if (location) {
+      // Si en la base de datos hay un campo de ubicación, usarlo. Aquí asumimos "ubicacion" o se puede usar lat/lng.
+      // Como la tabla actual no muestra un campo de ubicación claro, intentamos filtrar por categoria o descripcion como heurística.
+      sql += ' AND (descripcion LIKE ? OR categoria LIKE ?)';
+      const likeLoc = `%${location}%`;
+      params.push(likeLoc, likeLoc);
+    }
+
+    // Ordenamiento
+    switch (sort) {
+      case 'Menor precio':
+        sql += ' ORDER BY precio ASC';
+        break;
+      case 'Mayor precio':
+        sql += ' ORDER BY precio DESC';
+        break;
+      case 'Más recientes':
+        sql += ' ORDER BY fecha DESC';
+        break;
+      default:
+        // 'Más relevantes' o valor desconocido -> por fecha descendente
+        sql += ' ORDER BY fecha DESC';
+    }
+
+    connection.query(sql, params, (err, results) => {
+      if (err) {
+        console.error('Error SQL en getPublicaciones:', err, 'SQL:', sql, 'Params:', params);
+        return res.status(500).json({ error: 'Error al obtener publicaciones', detalles: err });
+      }
+      res.json(results);
+    });
+  } catch (error) {
+    console.error('Error en getPublicaciones:', error);
+    res.status(500).json({ error: 'Error en el servidor', detalles: error.message });
+  }
 };
 
 // Crear nueva publicación
