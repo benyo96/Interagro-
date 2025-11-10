@@ -1,48 +1,65 @@
+// -----------------------------
+// 📦 Dependencias
+// -----------------------------
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+
+// -----------------------------
+// 📂 Rutas
+// -----------------------------
 const clientesRoutes = require('./routes/clienteRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const mensajeRoutes = require('./routes/mensajeRoutes');
 const publicacionRoutes = require('./routes/publicacionRoutes');
 const reporteRoutes = require('./routes/reporteRoutes');
 
+// -----------------------------
+// 🚀 Inicialización del servidor Express
+// -----------------------------
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// -----------------------------
+// 🧩 Middlewares
+// -----------------------------
 app.use(cors());
-app.use(express.json()); // Para parsear JSON en las requests
-app.use(express.urlencoded({ extended: true })); // Para parsear datos de formularios
-app.use(express.static('public')); // Servir archivos estáticos
+app.use(express.json()); // Parsear JSON en las requests
+app.use(express.urlencoded({ extended: true })); // Parsear datos de formularios
+app.use(express.static('public')); // Servir archivos estáticos desde /public
 
-// Crear directorio para imágenes si no existe
-const fs = require('fs');
-const path = require('path');
+// -----------------------------
+// 🖼️ Crear directorio para imágenes si no existe
+// -----------------------------
 const uploadDir = path.join(__dirname, 'public/img/publicaciones');
-if (!fs.existsSync(uploadDir)){
-    fs.mkdirSync(uploadDir, { recursive: true });
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Routes
+// -----------------------------
+// 🧭 Rutas principales de la API
+// -----------------------------
 app.use('/api/cliente', clientesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/mensajes', mensajeRoutes);
 app.use('/api/publicaciones', publicacionRoutes);
 app.use('/api/reportes', reporteRoutes);
 
-// Ruta de inicio profesional: redirige a /html/loader.html
+// -----------------------------
+// 🏠 Ruta de inicio
+// -----------------------------
 app.get('/', (req, res) => {
-  res.redirect('/html/loader.html');
+  res.redirect('/html/loader.html'); // Redirige a tu loader
 });
 
-// Manejar rutas no encontradas
+// -----------------------------
+// ⚠️ Rutas no encontradas
+// -----------------------------
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' });
 });
 
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
-
+// -----------------------------
+// 💡 Exportar app (no iniciar servidor aquí)
+// -----------------------------
 module.exports = app;

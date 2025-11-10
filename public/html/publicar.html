@@ -40,6 +40,13 @@
           </select>
           <input type="text" class="form-control mt-2" id="otraCategoria" placeholder="Especifique la categoría" style="display:none;">
         </div>
+        <div class="mb-3">
+          <label class="form-label">Ubicación del producto</label>
+          <div id="miniMapa" style="height:220px;border-radius:8px;overflow:hidden;"></div>
+          <input type="hidden" id="latitud" name="latitud">
+          <input type="hidden" id="longitud" name="longitud">
+          <div class="form-text">Arrastra el marcador para seleccionar la ubicación.</div>
+        </div>
         <button type="submit" class="btn btn-success w-100">Publicar</button>
       </form>
       <div class="mt-3 text-center">
@@ -61,6 +68,10 @@
       <button onclick="document.getElementById('modalConstruccion').style.display='none'" class="btn btn-success mt-2">Cerrar</button>
     </div>
   </div>
+  <!-- Leaflet.js para el mini mapa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="../js/sidebar.js"></script>
+  <script src="../js/publicar.js"></script>
 </body>
 </html>
