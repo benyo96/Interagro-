@@ -10,12 +10,12 @@
   bottom: 70px;
   left: calc(var(--ia-sidebar-width, 220px) + 16px);
   min-width: 260px;
-  background: #181818;
-  color: #fff;
+  background: #000; /* dark popup */
+  color: #e0e0e0;
   border-radius: 22px;
-  box-shadow: 0 4px 32px #0005;
+  box-shadow: 0 4px 32px #0008;
   padding: 10px 0 0 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', 'Poppins', 'Montserrat', sans-serif;
   z-index: 2001 !important;
 }
 .menu-mas-item {
@@ -24,27 +24,28 @@
   gap: 14px;
   padding: 14px 28px;
   font-size: 1.08em;
-  color: #fff;
+  color: #e0e0e0;
   text-decoration: none;
   border: none;
   background: none;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s;
+  transition: all 0.3s ease;
 }
 .menu-mas-item svg {
   min-width: 22px;
   min-height: 22px;
-  color: #4caf50;
+  color: #fff; /* icons white */
+  fill: currentColor;
   flex-shrink: 0;
 }
 .menu-mas-item:hover {
-  background: #222;
-  color: #43e97b;
+  background: rgba(255,255,255,0.03);
+  color: #00a86b;
 }
 .menu-mas hr {
   margin: 0 0 2px 0;
   border: none;
-  border-top: 2px solid #222;
+  border-top: 2px solid #00a86b;
 }
 .menu-mas-item:last-child {
   border-radius: 0 0 22px 22px;
@@ -54,10 +55,10 @@
 }
 /* Sidebar / layout shared styles for InterAgro */
 :root{
-  --ia-sidebar-bg: #0f1412; /* dark sidebar */
-  --ia-accent: #4caf50;
-  --ia-text: #e9ecef;
-  --ia-muted: #bfc9c3;
+  --ia-sidebar-bg: #000; /* dark sidebar */
+  --ia-accent: #00a86b; /* identity green */
+  --ia-text: #e0e0e0;
+  --ia-muted: #9aa19a;
   --ia-sidebar-width: 220px; /* used to place floating elements beside the sidebar */
 }
 
@@ -69,16 +70,16 @@
   bottom: 0;
   width: 180px;
   padding: 28px 18px;
-  background: #121212;
-  color: #CCCCCC;
+  background: #000;
+  color: var(--ia-text);
   box-shadow: none;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   gap: 18px;
   align-items: center;
-  transition: width 0.3s;
-}
+  transition: all 0.3s ease;
+  border-right: 1px solid #00a86b; /* subtle divider to the main area */
 }
 .sidebar .logo{ display:block; width:48px; height:48px; object-fit:cover; border-radius:8px; margin-bottom:4px; }
 .sidebar h4{
@@ -86,7 +87,7 @@
   font-family: 'Inter', 'Poppins', 'Nunito Sans', Arial, sans-serif;
   font-weight: 700;
   font-size: 1.5em;
-  color: #00C36E;
+  color: #00a86b; /* identity green for main titles */
   letter-spacing: 1px;
   line-height: 1.1;
   text-align: center;
@@ -99,55 +100,57 @@
   gap: 8px;
   padding: 10px 0;
   text-decoration: none;
-  color: #CCCCCC;
+  color: var(--ia-text);
   border-radius: 10px;
   font-size: 1em;
   font-family: 'Inter', 'Poppins', 'Nunito Sans', Arial, sans-serif;
-  transition: background 0.18s, color 0.18s, transform 0.18s;
+  transition: all 0.3s ease;
   position: relative;
   justify-content: center;
 }
 .sidebar nav a span {
-  color: #CCCCCC;
+  color: var(--ia-text);
   font-size: 1.2em;
-  transition: color 0.18s, transform 0.18s;
+  transition: all 0.3s ease;
 }
 .sidebar nav a:hover {
-  background: #222222;
-  color: #FFFFFF;
-  transform: scale(1.08);
+  background: rgba(255,255,255,0.03);
+  color: #e0e0e0;
+  transform: none;
 }
 .sidebar nav a:hover span {
-  color: #22c55e;
-  transform: scale(1.15);
+  color: #00a86b;
+  transform: none;
 }
 .sidebar nav a.active {
-  background: #222222;
-  color: #FFFFFF;
-  border-left: 3px solid #00C36E;
+  background: rgba(255,255,255,0.03);
+  color: #e0e0e0;
+  border-left: 3px solid #00a86b;
 }
 .sidebar nav a.active span {
-  color: #3b82f6;
+  color: #00a86b;
 }
 .sidebar nav a img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #E5E5E5;
+  background: transparent;
   object-fit: cover;
 /* === MODIFICACIÓN: Ícono de usuario en sidebar === */
 .sidebar .user-icon {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #E5E5E5;
+  background: rgba(255,255,255,0.06);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: auto;
   margin-bottom: 8px;
 }
-}
+
+/* Ensure SVG/icons are white by default */
+svg, svg * { color: #fff; fill: currentColor; }
 
 /* main content spacing so it doesn't sit under the sidebar */
 .main-content{

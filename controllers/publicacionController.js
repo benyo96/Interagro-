@@ -11,13 +11,12 @@ exports.updateDescripcion = (req, res) => {
   });
 };
 
-// DELETE /api/publicaciones/:id (soft delete)
+// DELETE /api/publicaciones/:id
 exports.deletePublicacion = (req, res) => {
   const { id } = req.params;
-  // Se asume que existe un campo 'activa' (tinyint o boolean) en la tabla publicaciones
-  const query = 'UPDATE publicaciones SET activa = 0 WHERE id_publicacion = ?';
+  const query = 'DELETE FROM publicaciones WHERE id_publicacion = ?';
   connection.query(query, [id], (err, result) => {
-    if (err) return res.status(500).json({ error: 'Error al eliminar publicación', detalles: err });
+    if (err) return res.status(500).json({ error: 'Error al eliminar publicación' });
     if (result.affectedRows === 0) return res.status(404).json({ error: 'Publicación no encontrada' });
     res.status(204).send();
   });

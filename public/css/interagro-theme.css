@@ -1,13 +1,13 @@
 /* === MODIFICACIÓN: Enlaces === */
 a {
-  color: #222222;
+  color: #e0e0e0; /* light text for links */
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
 }
 a:hover {
   text-decoration: underline;
-  color: #777777;
+  opacity: 0.9;
 }
 /* Mini mapa para publicar producto */
 #miniMapa {
@@ -19,9 +19,10 @@ a:hover {
 body {
   min-height: 100vh;
   margin: 0;
-  font-family: 'Montserrat', Arial, sans-serif;
-  background: linear-gradient(135deg, #f5fff5 0%, #e0ffe0 40%, #43e97b 100%);
-  color: #181818;
+  font-family: 'Inter', 'Poppins', 'Montserrat', Arial, sans-serif;
+  background: #000; /* completely black background */
+  color: #e0e0e0; /* light text */
+  transition: all 0.3s ease;
 }
 
 .header-logo {
@@ -37,14 +38,12 @@ body {
 .header-logo span {
   font-size: 2.2em;
   font-weight: bold;
-  background: linear-gradient(90deg, #43e97b, #38f9d7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #00a86b; /* identity green for main title */
+  transition: all 0.3s ease;
 }
 
 .main-content {
-  background: #fff;
+  background: transparent; /* keep cards as surfaces, container stays dark */
   border-radius: 14px;
   box-shadow: none;
   padding: 32px 0;
@@ -53,68 +52,68 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #e0e0e0;
 }
 
 /* === MODIFICACIÓN: Tarjetas minimalistas === */
 .card, .feed-card {
-  background: #fff;
+  background: #fff; /* keep photo and card surfaces unchanged */
   border-radius: 14px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   padding: 20px 18px;
   margin: 24px 0;
-  transition: box-shadow 0.2s, transform 0.2s;
-  border: 1px solid #E5E5E5;
+  transition: all 0.3s ease;
+  border: 1px solid #00a86b; /* divider tone */
 }
 .card:hover, .feed-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
   transform: translateY(-2px);
-}
 }
 
 .btn-primary, .btn-success {
-  background: #fff;
-  color: #222222;
-  border: 1px solid #E5E5E5;
+  background: transparent; /* flat buttons */
+  color: #e0e0e0;
+  border: none;
   font-weight: 600;
   border-radius: 8px;
   box-shadow: none;
   padding: 8px 18px;
   font-size: 1em;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  transition: all 0.3s ease;
 }
 .btn-primary:hover, .btn-success:hover {
-  background: #F8F8F8;
-  color: #222222;
-  border: 1px solid #CCCCCC;
+  background: rgba(255,255,255,0.03);
+  opacity: 0.95;
 }
 
 input, textarea, select {
   border-radius: 8px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #222; /* subtle dark border */
   padding: 10px 14px;
   font-size: 1em;
   margin-bottom: 14px;
-  background: #fff;
-  color: #222222;
+  background: #0b0b0b;
+  color: #e0e0e0;
+  transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
-  background: #E5E5E5;
+  background: #000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CCCCCC;
+  background: #1a1a1a;
   border-radius: 8px;
 }
 
 .sidebar {
-  background: #181818;
-  color: #fff;
+  background: #000; /* ensure sidebar also appears black if referenced here */
+  color: #e0e0e0;
 }
 .sidebar nav a.active, .sidebar nav a:hover {
-  background: #222;
-  color: #43e97b;
+  background: rgba(255,255,255,0.03);
+  color: #e0e0e0;
 }
 
 /* Perfil: foto de usuario circular y tamaño uniforme */
@@ -124,7 +123,7 @@ input, textarea, select {
   border-radius: 50%;
   object-fit: cover;
   display: inline-block;
-  border: 2px solid #E5E5E5;
+  border: 2px solid rgba(255,255,255,0.06);
   box-shadow: none;
 }
 
