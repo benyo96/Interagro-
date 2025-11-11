@@ -1,3 +1,19 @@
+.modal-info {
+	width: 100%;
+	margin-bottom: 10px;
+	text-align: left;
+}
+.modal-info h4 {
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #222;
+	margin-bottom: 6px;
+}
+.modal-info div {
+	font-size: 1em;
+	color: #222;
+	margin-bottom: 6px;
+}
 /* === Grid de publicaciones estilo Instagram === */
 .publicaciones-grid {
 	display: grid;

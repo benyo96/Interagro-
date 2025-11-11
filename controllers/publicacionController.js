@@ -1,3 +1,27 @@
+// PATCH /api/publicaciones/:id
+exports.updateDescripcion = (req, res) => {
+  const { id } = req.params;
+  const { descripcion } = req.body;
+  if (!descripcion) return res.status(400).json({ error: 'Descripción requerida' });
+  const query = 'UPDATE publicaciones SET descripcion = ? WHERE id_publicacion = ?';
+  connection.query(query, [descripcion, id], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Error al actualizar descripción' });
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Publicación no encontrada' });
+    res.status(204).send();
+  });
+};
+
+// DELETE /api/publicaciones/:id (soft delete)
+exports.deletePublicacion = (req, res) => {
+  const { id } = req.params;
+  // Se asume que existe un campo 'activa' (tinyint o boolean) en la tabla publicaciones
+  const query = 'UPDATE publicaciones SET activa = 0 WHERE id_publicacion = ?';
+  connection.query(query, [id], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Error al eliminar publicación', detalles: err });
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Publicación no encontrada' });
+    res.status(204).send();
+  });
+};
 const connection = require('../config/db');
 
 // Obtener publicaciones con soporte para búsqueda y filtros

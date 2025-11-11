@@ -237,12 +237,12 @@ function hidePanels() {
       const priceMaxInput = document.getElementById('priceMaxInput');
 
       if (priceRange && priceMinLabel && priceMaxLabel && priceMinInput && priceMaxInput) {
-        // Inicializar valores
-        priceRange.value = 50000;
-        priceMinInput.value = 50000;
-        priceMaxInput.value = 10000000;
-        priceMinLabel.textContent = `$${Number(priceRange.value).toLocaleString()}`;
-        priceMaxLabel.textContent = `$${Number(priceMaxInput.value).toLocaleString()}`;
+        // No inicializar valores predeterminados, dejar inputs vacíos
+        priceRange.value = '';
+        priceMinInput.value = '';
+        priceMaxInput.value = '';
+        priceMinLabel.textContent = '$50,000';
+        priceMaxLabel.textContent = '$10,000,000';
 
         priceRange.addEventListener('input', function () {
           const value = parseInt(priceRange.value);

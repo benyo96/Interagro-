@@ -1,3 +1,21 @@
+      <!-- Mini-modal editar descripción -->
+      <div id="miniModalEditarDesc" class="mini-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.18);z-index:2100;">
+        <div class="mini-modal-content" style="background:#fff;padding:28px 24px 20px 24px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.10);max-width:370px;width:90vw;position:relative;display:flex;flex-direction:column;align-items:center;animation:fadeInMini 0.25s;">
+          <h4 style="font-weight:700;font-size:1.18em;color:#222;margin-bottom:16px;">Editar descripción</h4>
+          <textarea id="miniModalDescInput" style="width:100%;min-height:90px;resize:vertical;border:1px solid #E5E5E5;border-radius:8px;padding:10px;margin-bottom:18px;font-size:1em;color:#222;background:#fafafa;"></textarea>
+          <div style="display:flex;gap:12px;width:100%;justify-content:center;">
+            <button id="miniModalGuardar" style="flex:1;background:#fff;border:1px solid #E5E5E5;color:#222;border-radius:8px;padding:8px 0;cursor:pointer;transition:box-shadow 0.2s;">Guardar cambios</button>
+            <button id="miniModalCancelar" style="flex:1;background:#fff;border:1px solid #E5E5E5;color:#888;border-radius:8px;padding:8px 0;cursor:pointer;transition:box-shadow 0.2s;">Cancelar</button>
+          </div>
+        </div>
+      </div>
+      <style>
+        @keyframes fadeInMini { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+        .mini-modal { display: none; align-items: center; justify-content: center; }
+        .mini-modal.show { display: flex; }
+        .mini-modal-content { box-shadow: 0 4px 24px rgba(0,0,0,0.10); }
+        .mini-modal-content button:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+      </style>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -31,12 +49,14 @@
       <!-- Modal de publicación estilo Instagram -->
       <div id="modalPublicacion" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.7);z-index:2000;">
         <div class="modal-content" style="background:#fff;padding:32px;border-radius:18px;max-width:480px;width:90vw;position:relative;display:flex;flex-direction:column;align-items:center;">
+          <span class="close" id="cerrarModalPublicacion" style="position:absolute;top:18px;left:18px;font-size:1.5em;cursor:pointer;">&times;</span>
           <img id="modalImg" src="" alt="Publicación" style="width:100%;border-radius:14px;margin-bottom:18px;max-height:340px;object-fit:cover;">
           <button id="modalOpciones" class="modal-options" style="position:absolute;top:18px;right:18px;background:none;border:none;cursor:pointer;font-size:1.6em;color:#222;">&#8942;</button>
           <div id="modalMenu" class="modal-menu" style="display:none;position:absolute;top:48px;right:18px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
             <button id="modalEditarDesc" style="display:block;width:100%;background:none;border:none;padding:12px 18px;color:#222;text-align:left;cursor:pointer;">Editar descripción</button>
             <button id="modalEliminar" style="display:block;width:100%;background:none;border:none;padding:12px 18px;color:#222;text-align:left;cursor:pointer;">Eliminar publicación</button>
           </div>
+          <!-- Aquí se inserta la info dinámica de la publicación -->
           <form id="modalEditForm" class="edit-form" style="display:none;width:100%;margin-top:12px;">
             <textarea id="modalDescInput" placeholder="Nueva descripción" style="width:100%;border:1px solid #E5E5E5;border-radius:8px;padding:10px;margin-bottom:12px;"></textarea>
             <button type="submit" style="background:#fff;border:1px solid #E5E5E5;color:#222;border-radius:8px;padding:8px 18px;cursor:pointer;">Guardar</button>

@@ -1,3 +1,13 @@
+  // Cerrar modal de publicación con la X
+  const cerrarModalPublicacion = document.getElementById('cerrarModalPublicacion');
+  if (cerrarModalPublicacion) {
+    cerrarModalPublicacion.onclick = function() {
+      const modal = document.getElementById('modalPublicacion');
+      modal.style.display = 'none';
+      document.getElementById('modalMenu').style.display = 'none';
+      document.getElementById('modalEditForm').style.display = 'none';
+    };
+  }
 
 // --- Estado y elementos ---
 let descripcion = localStorage.getItem('perfil_descripcion') || '';
@@ -177,7 +187,8 @@ if (btnNuevaPublicacion) {
   console.error('Botón nueva publicación no encontrado');
 }
 if (cerrarModalNuevaPublicacion) {
-    cerrarModalNuevaPublicacion.addEventListener('click', () => {
+  cerrarModalNuevaPublicacion.addEventListener('click', () => {
+    modalNuevaPublicacion.style.display = 'none';
     modalNuevaPublicacion.classList.remove('show');
     if (tituloPublicacion) tituloPublicacion.value = '';
     if (precioPublicacion) precioPublicacion.value = '';
@@ -360,29 +371,47 @@ function mostrarPublicaciones(publicaciones) {
   }
 
   perfilPublicaciones.textContent = publicaciones.length;
+
+
+  /* === MODIFICACIÓN: Renderizar tarjetas con data-id y event delegation === */
+
   publicacionesGrid.innerHTML = publicaciones.map(pub => `
     <div class="publicacion-card" data-id="${pub.id_publicacion}">
-      <img src="${pub.foto || '../img/placeholder.jpg'}" alt="${pub.titulo}">
+      <img src="${pub.foto || '../img/placeholder.jpg'}" alt="${pub.titulo}" data-id="${pub.id_publicacion}" class="card-img">
     </div>
   `).join('');
 
-  // Interacción: abrir modal al hacer click en foto
-  document.querySelectorAll('.publicacion-card').forEach(card => {
-    card.onclick = function() {
-      const pubId = this.getAttribute('data-id');
-      const pub = publicaciones.find(p => p.id_publicacion == pubId);
-      if (!pub) return;
-      const modal = document.getElementById('modalPublicacion');
-      const modalImg = document.getElementById('modalImg');
-      const modalDescInput = document.getElementById('modalDescInput');
-      modalImg.src = pub.foto || '../img/placeholder.jpg';
-      modalDescInput.value = pub.descripcion || '';
-      modal.setAttribute('data-id', pubId);
-      modal.style.display = 'flex';
-      document.getElementById('modalMenu').style.display = 'none';
-      document.getElementById('modalEditForm').style.display = 'none';
-    };
-  });
+  // Event delegation para clicks en imágenes del grid
+  publicacionesGrid.onclick = function(e) {
+    const img = e.target.closest('.card-img');
+    if (!img) return;
+    const pubId = img.getAttribute('data-id');
+    const pub = publicaciones.find(p => p.id_publicacion == pubId);
+    if (!pub) return;
+    const modal = document.getElementById('modalPublicacion');
+    const modalImg = document.getElementById('modalImg');
+    modalImg.src = pub.foto || '../img/placeholder.jpg';
+    modal.setAttribute('data-id', pubId);
+    // Mostrar info en el modal
+    let descripcion = pub.descripcion && pub.descripcion.trim() ? pub.descripcion : 'Sin descripción disponible.';
+    let infoHtml = `<div class='modal-info' data-id='${pubId}' style='width:100%;text-align:left;'>
+      <h4 style='font-weight:700;color:#222;margin-bottom:6px;'>${pub.titulo || ''}</h4>
+      <div style='font-size:1.1em;color:#222;margin-bottom:6px;'><b>Precio:</b> $${Number(pub.precio).toLocaleString('es-CO')}</div>
+      <div style='font-size:1em;color:#222;margin-bottom:6px;'><b>Categoría:</b> ${pub.categoria || 'Sin categoría'}</div>
+      <div style='font-size:1em;color:#222;margin-bottom:6px;'><b>Descripción:</b> <span id='modalDescText'>${descripcion}</span></div>
+    </div>`;
+    // Insertar info antes del form de edición
+    const modalContent = modal.querySelector('.modal-content');
+    const prevInfo = modalContent.querySelector('.modal-info');
+    if (prevInfo) prevInfo.remove();
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'modal-info';
+    infoDiv.innerHTML = infoHtml;
+    modalContent.insertBefore(infoDiv, modalContent.querySelector('#modalMenu'));
+    document.getElementById('modalMenu').style.display = 'none';
+    document.getElementById('modalEditForm').style.display = 'none';
+    modal.style.display = 'flex';
+  };
 
   // Cerrar modal al hacer click fuera del contenido
   const modal = document.getElementById('modalPublicacion');
@@ -392,18 +421,82 @@ function mostrarPublicaciones(publicaciones) {
     document.getElementById('modalEditForm').style.display = 'none';
   };
 
-  // Mostrar menú de opciones (tres puntos)
+
+  /* === MODIFICACIÓN: Mostrar menú de opciones (tres puntos) === */
   document.getElementById('modalOpciones').onclick = function(e) {
     e.stopPropagation();
     const menu = document.getElementById('modalMenu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
   };
 
-  // Editar descripción
+
+
+
+  /* === MODIFICACIÓN: Editar descripción (mini-modal) === */
   document.getElementById('modalEditarDesc').onclick = function() {
-    document.getElementById('modalEditForm').style.display = 'block';
     document.getElementById('modalMenu').style.display = 'none';
+    const pubId = modal.getAttribute('data-id');
+    const pub = publicaciones.find(p => p.id_publicacion == pubId);
+    const miniModal = document.getElementById('miniModalEditarDesc');
+    const miniInput = document.getElementById('miniModalTextarea');
+    miniModal.setAttribute('data-id', pubId);
+    miniInput.value = pub.descripcion && pub.descripcion.trim() ? pub.descripcion : '';
+    miniModal.classList.add('show');
+    miniInput.focus();
   };
+
+
+
+  /* === MODIFICACIÓN: Guardar cambios desde mini-modal === */
+  document.getElementById('miniModalGuardar').onclick = async function() {
+    const miniModal = document.getElementById('miniModalEditarDesc');
+    const pubId = miniModal.getAttribute('data-id');
+    const nuevaDesc = document.getElementById('miniModalTextarea').value.trim();
+    if (!miniModal.classList.contains('show')) return;
+    try {
+      // PATCH API
+      const res = await fetch(`/api/publicaciones/${pubId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ descripcion: nuevaDesc })
+      });
+      console.log('PATCH /api/publicaciones/:id response', res);
+      if (res.status !== 200 && res.status !== 204) {
+        let msg = 'No se pudo actualizar la descripción';
+        try { msg = (await res.json()).message || msg; } catch {}
+        alert(msg);
+        console.error('PATCH error', res);
+        return;
+      }
+      // Actualizar descripción en el modal principal
+      document.getElementById('modalDescText').textContent = nuevaDesc || 'Sin descripción disponible.';
+      // Actualizar en el objeto publicación y en el grid
+      const pub = publicaciones.find(p => p.id_publicacion == pubId);
+      if (pub) pub.descripcion = nuevaDesc;
+      miniModal.classList.remove('show');
+      alert('Descripción actualizada');
+    } catch (err) {
+      alert('No se pudo actualizar la descripción');
+      console.error('PATCH error', err);
+    }
+  };
+
+  // Cancelar mini-modal
+
+  document.getElementById('miniModalCancelar').onclick = function() {
+    document.getElementById('miniModalEditarDesc').classList.remove('show');
+  };
+
+  // Cerrar mini-modal al hacer click fuera o presionar Esc
+  document.getElementById('miniModalEditarDesc').onclick = function(e) {
+    if (e.target === this) this.classList.remove('show');
+  };
+  document.addEventListener('keydown', function(e) {
+    const miniModal = document.getElementById('miniModalEditarDesc');
+    if (miniModal.classList.contains('show') && e.key === 'Escape') {
+      miniModal.classList.remove('show');
+    }
+  });
 
   // Guardar nueva descripción
   document.getElementById('modalEditForm').onsubmit = async function(e) {
@@ -418,7 +511,9 @@ function mostrarPublicaciones(publicaciones) {
         body: JSON.stringify({ descripcion: nuevaDesc })
       });
       if (!res.ok) throw new Error('Error al actualizar descripción');
-      modal.style.display = 'none';
+      // Actualizar descripción en el modal
+      document.getElementById('modalDescText').textContent = nuevaDesc;
+      document.getElementById('modalEditForm').style.display = 'none';
       cargarPublicaciones();
       alert('Descripción actualizada');
     } catch (err) {
@@ -426,18 +521,31 @@ function mostrarPublicaciones(publicaciones) {
     }
   };
 
-  // Eliminar publicación
+
+
+  /* === MODIFICACIÓN: Eliminar publicación === */
   document.getElementById('modalEliminar').onclick = async function() {
-    if (!confirm('¿Seguro que deseas eliminar esta publicación?')) return;
+    if (!confirm('¿Deseas eliminar esta publicación?')) return;
     const pubId = modal.getAttribute('data-id');
     try {
+      // DELETE API
       const res = await fetch(`/api/publicaciones/${pubId}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Error al eliminar publicación');
+      console.log('DELETE /api/publicaciones/:id response', res);
+      if (res.status !== 200 && res.status !== 204) {
+        let msg = 'No se pudo eliminar la publicación';
+        try { msg = (await res.json()).message || msg; } catch {}
+        alert(msg);
+        console.error('DELETE error', res);
+        return;
+      }
+      // Remover tarjeta del grid
+      const card = document.querySelector(`.publicacion-card[data-id='${pubId}']`);
+      if (card) card.remove();
       modal.style.display = 'none';
-      cargarPublicaciones();
-      alert('Publicación eliminada');
+      alert('Publicación eliminada correctamente');
     } catch (err) {
       alert('No se pudo eliminar la publicación');
+      console.error('DELETE error', err);
     }
   };
 }
