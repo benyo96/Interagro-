@@ -1,9 +1,30 @@
 {
   "version": 2,
+  "name": "interagro-backend",
   "builds": [
-    { "src": "api/index.js", "use": "@vercel/node" }
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/api/index.js" }
-  ]
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "env": {
+    "DB_HOST": "tu_host_remoto_mysql",
+    "DB_USER": "tu_usuario",
+    "DB_PASSWORD": "tu_contraseña",
+    "DB_NAME": "nombre_bd"
+  }
 }

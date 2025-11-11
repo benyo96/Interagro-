@@ -1,5 +1,9 @@
+// Dependencias principales
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+
+// Rutas
 const clientesRoutes = require('./routes/clienteRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const mensajeRoutes = require('./routes/mensajeRoutes');
@@ -7,32 +11,50 @@ const publicacionRoutes = require('./routes/publicacionRoutes');
 const reporteRoutes = require('./routes/reporteRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middlewares
-app.use(cors());
-app.use(express.json()); // Para parsear JSON en las requests
+// -------------------------
+// 🔒 Seguridad básica
+// -------------------------
+app.disable('x-powered-by'); // Oculta cabecera X-Powered-By
+app.use(helmet()); // Configura headers de seguridad
 
+// CORS: restringe a dominios conocidos (ajusta según tu dominio de Vercel)
+const corsOptions = {
+  origin: [
+    'https://interagro.vercel.app', // dominio de producción
+    'http://localhost:3000'         // para pruebas locales
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+// -------------------------
+// ⚙️ Middlewares
+// -------------------------
+app.use(express.json()); // Parsear JSON
 app.use(express.static('public')); // Servir archivos estáticos
 
-// Routes
+// -------------------------
+// 📡 Rutas
+// -------------------------
 app.use('/api/cliente', clientesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/mensajes', mensajeRoutes);
 app.use('/api/publicaciones', publicacionRoutes);
 app.use('/api/reportes', reporteRoutes);
 
-// Ruta de inicio profesional: redirige a /html/loader.html
+// Ruta de inicio: redirige al loader
 app.get('/', (req, res) => {
   res.redirect('/html/loader.html');
 });
 
-// Manejar rutas no encontradas
+// Manejo de rutas inexistentes
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' });
 });
 
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// -------------------------
+// 🚀 Exportar app (para Vercel o tests)
+// -------------------------
+module.exports = app;

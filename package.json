@@ -1,20 +1,41 @@
 {
-  "name": "nodejs-mysql-app",
+  "name": "interagro-backend",
   "version": "1.0.0",
-  "description": "A Node.js application that connects to a local MySQL database.",
-  "main": "src/app.js",
+  "description": "Aplicación Node.js con Express y MySQL, lista para desplegar en Vercel con HTTPS y seguridad básica.",
+  "main": "app.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "npm install && node app.js",
+    "start": "node app.js",
+    "vercel-build": "echo 'No build step needed for this project'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "helmet": "^8.1.0",
     "multer": "^2.0.2",
     "mysql": "^2.18.1",
-    "mysql2": "^3.15.1"
+    "mysql2": "^3.15.1",
+    "serverless-http": "^4.0.0"
   },
-  "author": "",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benyo96/Interagro-.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "vercel",
+    "api",
+    "backend",
+    "ssl",
+    "https"
+  ],
+  "author": "Benyo96",
   "license": "ISC"
 }
