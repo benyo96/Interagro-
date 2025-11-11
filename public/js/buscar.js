@@ -125,8 +125,7 @@ function hidePanels() {
 
       if (resultsInfo) resultsInfo.innerText = `Mostrando ${publicaciones.length} resultados`;
 
-      grid.innerHTML = publicaciones.map(pub => {
-        // Corregir la ruta de la imagen si es relativa
+      grid.innerHTML = publicaciones.map((pub, idx) => {
         let foto = pub.foto;
         if (foto && foto.startsWith('/img/publicaciones/')) {
           foto = '..' + foto;
@@ -135,7 +134,7 @@ function hidePanels() {
         }
         return `
         <div>
-          <div class="card h-100 product-card">
+          <div class="card h-100 product-card" data-idx="${idx}">
             <div class="position-relative">
               <img src="${foto}" class="card-img-top" alt="${pub.titulo}">
               <span class="badge bg-success position-absolute top-0 end-0 m-2">Nuevo</span>
@@ -146,13 +145,37 @@ function hidePanels() {
               <p class="card-text text-muted small">${pub.descripcion || ''}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <span class="text-muted small"><i class="fas fa-map-marker-alt"></i> ${pub.categoria || 'Sin categoría'}</span>
-                <button class="btn btn-outline-success btn-sm">Ver detalles</button>
+                <button class="btn btn-outline-success btn-sm ver-detalles-btn" data-idx="${idx}">Ver detalles</button>
               </div>
             </div>
           </div>
         </div>
         `;
       }).join('');
+
+      // Evento para mostrar modal de detalles
+      setTimeout(() => {
+        document.querySelectorAll('.ver-detalles-btn').forEach(btn => {
+          btn.onclick = function() {
+            const idx = this.getAttribute('data-idx');
+            const pub = publicaciones[idx];
+            if (!pub) return;
+            document.getElementById('modalProductoImg').src = pub.foto || '../img/4.png';
+            document.getElementById('modalProductoTitulo').textContent = pub.titulo || '';
+            document.getElementById('modalProductoPrecio').textContent = `$${Number(pub.precio).toLocaleString('es-CO')}`;
+            document.getElementById('modalProductoCategoria').textContent = pub.categoria || 'Sin categoría';
+            document.getElementById('modalProductoDesc').textContent = pub.descripcion || '';
+            document.getElementById('modalProducto').style.display = 'flex';
+          };
+        });
+        document.getElementById('cerrarModalProducto').onclick = function() {
+          document.getElementById('modalProducto').style.display = 'none';
+        };
+        // Cerrar modal al hacer click fuera del contenido
+        document.getElementById('modalProducto').onclick = function(e) {
+          if (e.target === this) this.style.display = 'none';
+        };
+      }, 100);
     } catch (error) {
       if (resultsInfo) resultsInfo.innerText = 'Error al cargar resultados';
       grid.innerHTML = '<div style="text-align:center;padding:32px;">Error al cargar publicaciones.</div>';
@@ -206,6 +229,46 @@ function hidePanels() {
     if (searchBtn) searchBtn.addEventListener('click', () => cargarPublicacionesBuscar(gatherFilters()));
     if (searchInput) searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); cargarPublicacionesBuscar(gatherFilters()); } });
     if (filterSection) {
+      // Sincronizar slider y inputs de precio
+      const priceRange = document.getElementById('priceRange');
+      const priceMinLabel = document.getElementById('priceMinLabel');
+      const priceMaxLabel = document.getElementById('priceMaxLabel');
+      const priceMinInput = document.getElementById('priceMinInput');
+      const priceMaxInput = document.getElementById('priceMaxInput');
+
+      if (priceRange && priceMinLabel && priceMaxLabel && priceMinInput && priceMaxInput) {
+        // No inicializar valores predeterminados, dejar inputs vacíos
+        priceRange.value = '';
+        priceMinInput.value = '';
+        priceMaxInput.value = '';
+        priceMinLabel.textContent = '$50,000';
+        priceMaxLabel.textContent = '$10,000,000';
+
+        priceRange.addEventListener('input', function () {
+          const value = parseInt(priceRange.value);
+          priceMinLabel.textContent = `$${value.toLocaleString()}`;
+          priceMinInput.value = value;
+          cargarPublicacionesBuscar(gatherFilters());
+        });
+        priceMinInput.addEventListener('input', function () {
+          let min = parseInt(priceMinInput.value) || 50000;
+          let max = parseInt(priceMaxInput.value) || 10000000;
+          if (min < 50000) min = 50000;
+          if (min > max) min = max;
+          priceRange.value = min;
+          priceMinLabel.textContent = `$${min.toLocaleString()}`;
+          cargarPublicacionesBuscar(gatherFilters());
+        });
+        priceMaxInput.addEventListener('input', function () {
+          let min = parseInt(priceMinInput.value) || 50000;
+          let max = parseInt(priceMaxInput.value) || 10000000;
+          if (max > 10000000) max = 10000000;
+          if (max < min) max = min;
+          priceMaxLabel.textContent = `$${max.toLocaleString()}`;
+          cargarPublicacionesBuscar(gatherFilters());
+        });
+      }
+
       filterSection.addEventListener('change', (e) => {
         // responde a cambios en checkboxes, price inputs o location select
         cargarPublicacionesBuscar(gatherFilters());

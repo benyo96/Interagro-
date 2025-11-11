@@ -8,21 +8,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/interagro-theme.css">
   <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/mensajes.css">
 </head>
 <body>
   <!-- Menú lateral global -->
   <div id="sidebar-container"></div>
   <main class="main-content">
-    <div class="msg-panel">
-      <div class="msg-left">
-        <div class="inbox-header" style="padding:24px 18px 12px 18px; border-bottom:1px solid #222;">
-          <h5 style="color:#4caf50;font-weight:700;margin-bottom:0;font-family:'Montserrat',sans-serif;">Conversaciones</h5>
+    <div class="messages-app">
+      <aside class="messages-left">
+        <div class="inbox-header">
+          <h2>Mensajes</h2>
         </div>
-        <div id="inboxList" style="flex:1;overflow-y:auto;padding:8px 0;"></div>
-      </div>
-      <div class="msg-right">
-  <div id="conversacionPanel" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;"></div>
-      </div>
+        <div id="inboxList" class="inbox-list"></div>
+      </aside>
+      <section class="messages-right">
+        <div id="conversacionPanel" class="conversacion-panel empty">
+          <div class="conversacion-empty">Selecciona una conversación a la izquierda</div>
+        </div>
+      </section>
     </div>
   </main>
   <!-- Menú Más global -->

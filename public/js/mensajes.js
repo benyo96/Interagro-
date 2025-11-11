@@ -1,3 +1,145 @@
+// mensajes.js - funcionalidad básica para la vista de mensajes
+document.addEventListener('DOMContentLoaded', function(){
+  const inboxList = document.getElementById('inboxList');
+  const conversacionPanel = document.getElementById('conversacionPanel');
+
+  // Datos de ejemplo
+  const users = [
+    { id: 'u1', name: 'Ejemplo 1', avatar: '../img/placeholder.jpg', last: '¿Tienes disponibilidad esta semana?', messages: [
+      {from:'them', text:'Hola! ¿Tienes disponibilidad esta semana?'},
+      {from:'me', text:'Sí, el jueves por la mañana me viene bien.'}
+    ]},
+    { id: 'u2', name: 'Ejemplo 2', avatar: '../img/placeholder.jpg', last: 'Perfecto, confirmo', messages: [
+      {from:'them', text:'Perfecto, confirmo'},
+      {from:'me', text:'Genial, nos vemos entonces.'}
+    ]}
+  ];
+
+  let activeUser = null;
+
+  function renderInbox(){
+    inboxList.innerHTML = '';
+    users.forEach(u => {
+      const item = document.createElement('div');
+      item.className = 'chat-item';
+      item.dataset.id = u.id;
+      item.innerHTML = `
+        <img class="avatar" src="${u.avatar}" alt="${u.name}">
+        <div class="meta">
+          <div class="name">${u.name}</div>
+          <div class="last">${u.last}</div>
+        </div>
+      `;
+      item.addEventListener('click', ()=>{
+        document.querySelectorAll('.chat-item').forEach(ci=>ci.classList.remove('active'));
+        item.classList.add('active');
+        loadConversation(u.id);
+      });
+      inboxList.appendChild(item);
+    });
+  }
+
+  function loadConversation(id){
+    const u = users.find(x=>x.id===id);
+    if(!u) return;
+    activeUser = u;
+    // build header + messages + composer
+    conversacionPanel.classList.remove('empty');
+    conversacionPanel.innerHTML = `
+      <div class="conversacion-header">
+        <img src="${u.avatar}" class="avatar" />
+        <div class="name">${u.name}</div>
+        <div class="actions">
+          <div class="icon" title="Llamar">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="icon" title="Videollamada">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="15" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M17 9l4-2v10l-4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="messages-list" id="messagesList"></div>
+      <div class="compose-bar">
+        <label class="btn-ico" title="Emoji">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 15s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+        </label>
+        <label class="btn-ico" title="Imagen">
+          <input type="file" id="fileImage" accept="image/*">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><path d="M21 15l-5-5-4 4-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </label>
+        <div class="input-wrap">
+          <input id="msgInput" type="text" placeholder="Escribe un mensaje...">
+        </div>
+        <button class="send-btn" id="sendBtn">Enviar</button>
+      </div>
+    `;
+
+    const messagesList = document.getElementById('messagesList');
+    u.messages.forEach(m => appendMessage(m, messagesList));
+
+    // scroll to bottom
+    setTimeout(()=> messagesList.scrollTop = messagesList.scrollHeight, 60);
+
+    // events
+    const sendBtn = document.getElementById('sendBtn');
+    const msgInput = document.getElementById('msgInput');
+    const fileImage = document.getElementById('fileImage');
+
+    sendBtn.onclick = sendMessage;
+    msgInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ sendMessage(); e.preventDefault(); } });
+
+    fileImage.addEventListener('change', function(ev){
+      const f = ev.target.files[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = function(e){
+        appendMessage({from:'me', image: e.target.result}, messagesList);
+        messagesList.scrollTop = messagesList.scrollHeight;
+      }
+      reader.readAsDataURL(f);
+      fileImage.value = '';
+    });
+
+    function sendMessage(){
+      const text = msgInput.value.trim();
+      if(!text) return;
+      const m = {from:'me', text};
+      u.messages.push(m);
+      appendMessage(m, messagesList);
+      msgInput.value = '';
+      messagesList.scrollTop = messagesList.scrollHeight;
+    }
+  }
+
+  function appendMessage(m, container){
+    const box = document.createElement('div');
+    const cls = m.from === 'me' ? 'bubble sent' : 'bubble received';
+    box.className = cls;
+    if(m.image){
+      const img = document.createElement('img');
+      img.src = m.image;
+      img.style.maxWidth = '220px';
+      img.style.borderRadius = '10px';
+      img.style.display = 'block';
+      box.appendChild(img);
+    }
+    if(m.text){
+      const p = document.createElement('div');
+      p.textContent = m.text;
+      box.appendChild(p);
+    }
+    // container can be messages-list or conversacionPanel when empty
+    if(container) container.appendChild(box);
+  }
+
+  // init
+  renderInbox();
+  // select first chat by default
+  setTimeout(()=>{
+    const first = document.querySelector('.chat-item');
+    if(first) first.click();
+  },50);
+});
 
 // Salir y cambiar cuenta
 document.getElementById('salirBtn').onclick = () => {
