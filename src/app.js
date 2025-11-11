@@ -9,11 +9,11 @@ const path = require('path');
 // -----------------------------
 // 📂 Rutas
 // -----------------------------
-const clientesRoutes = require('./routes/clienteRoutes');
-const usuarioRoutes = require('./routes/usuarioRoutes');
-const mensajeRoutes = require('./routes/mensajeRoutes');
-const publicacionRoutes = require('./routes/publicacionRoutes');
-const reporteRoutes = require('./routes/reporteRoutes');
+const clientesRoutes = require('../routes/clienteRoutes');
+const usuarioRoutes = require('../routes/usuarioRoutes');
+const mensajeRoutes = require('../routes/mensajeRoutes');
+const publicacionRoutes = require('../routes/publicacionRoutes');
+const reporteRoutes = require('../routes/reporteRoutes');
 
 // -----------------------------
 // 🚀 Inicialización del servidor Express
@@ -26,12 +26,15 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Parsear JSON en las requests
 app.use(express.urlencoded({ extended: true })); // Parsear datos de formularios
-app.use(express.static('public')); // Servir archivos estáticos desde /public
+
+// Servir archivos estáticos desde /public
+// ⚠️ Para Vercel: usar ruta absoluta desde src
+app.use(express.static(path.join(__dirname, '../public')));
 
 // -----------------------------
 // 🖼️ Crear directorio para imágenes si no existe
 // -----------------------------
-const uploadDir = path.join(__dirname, 'public/img/publicaciones');
+const uploadDir = path.join(__dirname, '../public/img/publicaciones');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -49,7 +52,8 @@ app.use('/api/reportes', reporteRoutes);
 // 🏠 Ruta de inicio
 // -----------------------------
 app.get('/', (req, res) => {
-  res.redirect('/html/loader.html'); // Redirige a tu loader
+  // ⚠️ Redirige correctamente a tu HTML en public/html
+  res.sendFile(path.join(__dirname, '../public/html/loader.html'));
 });
 
 // -----------------------------
