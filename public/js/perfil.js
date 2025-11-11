@@ -361,26 +361,85 @@ function mostrarPublicaciones(publicaciones) {
 
   perfilPublicaciones.textContent = publicaciones.length;
   publicacionesGrid.innerHTML = publicaciones.map(pub => `
-    <div class="publicacion-card" style="background:#fff;border-radius:14px;box-shadow:0 2px 12px #0001;padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;">
-      <div style="width:100%;height:200px;overflow:hidden;border-radius:10px;margin-bottom:8px;">
-        <img src="${pub.foto || '../img/placeholder.jpg'}" 
-             style="width:100%;height:100%;object-fit:cover;" 
-             alt="${pub.titulo}">
-      </div>
-      <div style="font-weight:700;font-size:1.08em;color:#4caf50;">${pub.titulo}</div>
-      <div style="color:#222;font-size:.98em;margin-bottom:4px;">${pub.descripcion || ''}</div>
-      <div style="color:#388e3c;font-size:1.08em;font-weight:600;">$${Number(pub.precio).toLocaleString('es-CO')}</div>
-      <div style="color:#222;font-size:.95em;">Categoría: ${pub.categoria || 'Sin categoría'}</div>
-      <div class="acciones" style="display:flex;gap:10px;margin-top:10px;width:100%;">
-        <button onclick="editarPublicacion(${pub.id_publicacion})" 
-                class="btn btn-outline-success" 
-                style="flex:1;">Editar</button>
-        <button onclick="eliminarPublicacion(${pub.id_publicacion})" 
-                class="btn btn-outline-danger" 
-                style="flex:1;">Eliminar</button>
-      </div>
+    <div class="publicacion-card" data-id="${pub.id_publicacion}">
+      <img src="${pub.foto || '../img/placeholder.jpg'}" alt="${pub.titulo}">
     </div>
   `).join('');
+
+  // Interacción: abrir modal al hacer click en foto
+  document.querySelectorAll('.publicacion-card').forEach(card => {
+    card.onclick = function() {
+      const pubId = this.getAttribute('data-id');
+      const pub = publicaciones.find(p => p.id_publicacion == pubId);
+      if (!pub) return;
+      const modal = document.getElementById('modalPublicacion');
+      const modalImg = document.getElementById('modalImg');
+      const modalDescInput = document.getElementById('modalDescInput');
+      modalImg.src = pub.foto || '../img/placeholder.jpg';
+      modalDescInput.value = pub.descripcion || '';
+      modal.setAttribute('data-id', pubId);
+      modal.style.display = 'flex';
+      document.getElementById('modalMenu').style.display = 'none';
+      document.getElementById('modalEditForm').style.display = 'none';
+    };
+  });
+
+  // Cerrar modal al hacer click fuera del contenido
+  const modal = document.getElementById('modalPublicacion');
+  modal.onclick = function(e) {
+    if (e.target === this) this.style.display = 'none';
+    document.getElementById('modalMenu').style.display = 'none';
+    document.getElementById('modalEditForm').style.display = 'none';
+  };
+
+  // Mostrar menú de opciones (tres puntos)
+  document.getElementById('modalOpciones').onclick = function(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('modalMenu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  };
+
+  // Editar descripción
+  document.getElementById('modalEditarDesc').onclick = function() {
+    document.getElementById('modalEditForm').style.display = 'block';
+    document.getElementById('modalMenu').style.display = 'none';
+  };
+
+  // Guardar nueva descripción
+  document.getElementById('modalEditForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const pubId = modal.getAttribute('data-id');
+    const nuevaDesc = document.getElementById('modalDescInput').value.trim();
+    // Lógica para actualizar descripción en backend
+    try {
+      const res = await fetch(`/api/publicaciones/${pubId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ descripcion: nuevaDesc })
+      });
+      if (!res.ok) throw new Error('Error al actualizar descripción');
+      modal.style.display = 'none';
+      cargarPublicaciones();
+      alert('Descripción actualizada');
+    } catch (err) {
+      alert('No se pudo actualizar la descripción');
+    }
+  };
+
+  // Eliminar publicación
+  document.getElementById('modalEliminar').onclick = async function() {
+    if (!confirm('¿Seguro que deseas eliminar esta publicación?')) return;
+    const pubId = modal.getAttribute('data-id');
+    try {
+      const res = await fetch(`/api/publicaciones/${pubId}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Error al eliminar publicación');
+      modal.style.display = 'none';
+      cargarPublicaciones();
+      alert('Publicación eliminada');
+    } catch (err) {
+      alert('No se pudo eliminar la publicación');
+    }
+  };
 }
 
 // Inicializar perfil al cargar

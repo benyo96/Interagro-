@@ -61,41 +61,93 @@
   --ia-sidebar-width: 220px; /* used to place floating elements beside the sidebar */
 }
 
-/* Basic sidebar layout */
-.sidebar{
-  position:fixed;
-  top:0;
-  left:0;
-  bottom:0;
-  width:var(--ia-sidebar-width);
-  padding:28px 18px;
-  background: linear-gradient(180deg,var(--ia-sidebar-bg), #0b0d0c 70%);
-  color:var(--ia-text);
-  box-shadow: 4px 0 18px rgba(0,0,0,0.25);
-  z-index:1000;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-  align-items:flex-start;
+/* === MODIFICACIÓN: Sidebar mejorada === */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 180px;
+  padding: 28px 18px;
+  background: #121212;
+  color: #CCCCCC;
+  box-shadow: none;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  transition: width 0.3s;
+}
 }
 .sidebar .logo{ display:block; width:48px; height:48px; object-fit:cover; border-radius:8px; margin-bottom:4px; }
 .sidebar h4{
   margin: 0 0 18px 0;
+  font-family: 'Inter', 'Poppins', 'Nunito Sans', Arial, sans-serif;
   font-weight: 700;
-  font-size: 1.7em;
-  color: var(--ia-accent);
-  letter-spacing: 0.5px;
+  font-size: 1.5em;
+  color: #00C36E;
+  letter-spacing: 1px;
   line-height: 1.1;
+  text-align: center;
 }
 .sidebar nav{ width:100%; display:flex; flex-direction:column; gap:6px; }
-.sidebar nav a{
-  display:flex; align-items:center; gap:12px; padding:10px 12px; text-decoration:none; color:var(--ia-text); border-radius:12px; transition:all .18s ease;
+/* === MODIFICACIÓN: Ítems de menú sidebar === */
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #CCCCCC;
+  border-radius: 10px;
+  font-size: 1em;
+  font-family: 'Inter', 'Poppins', 'Nunito Sans', Arial, sans-serif;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  position: relative;
+  justify-content: center;
 }
-.sidebar nav a span{ color:var(--ia-text); }
-.sidebar nav a svg{ flex:0 0 28px; }
-.sidebar nav a:hover{ background: rgba(255,255,255,0.03); transform:translateX(4px); }
-.sidebar nav a.active{ background: rgba(255,255,255,0.04); box-shadow: inset 0 0 0 2px rgba(76,175,80,0.06); }
-.sidebar nav a img{ width:28px; height:28px; border-radius:50%; }
+.sidebar nav a span {
+  color: #CCCCCC;
+  font-size: 1.2em;
+  transition: color 0.18s, transform 0.18s;
+}
+.sidebar nav a:hover {
+  background: #222222;
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+.sidebar nav a:hover span {
+  color: #22c55e;
+  transform: scale(1.15);
+}
+.sidebar nav a.active {
+  background: #222222;
+  color: #FFFFFF;
+  border-left: 3px solid #00C36E;
+}
+.sidebar nav a.active span {
+  color: #3b82f6;
+}
+.sidebar nav a img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #E5E5E5;
+  object-fit: cover;
+/* === MODIFICACIÓN: Ícono de usuario en sidebar === */
+.sidebar .user-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #E5E5E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+}
 
 /* main content spacing so it doesn't sit under the sidebar */
 .main-content{
@@ -116,17 +168,26 @@
   .sidebar{ width:var(--ia-sidebar-width); padding:18px 12px; }
   .main-content{ margin-left: calc(var(--ia-sidebar-width) + 40px); padding:20px; }
 }
-@media (max-width: 720px){
-  /* collapse labels -> compact sidebar */
-  :root{ --ia-sidebar-width: 76px; }
-  .sidebar{ width:var(--ia-sidebar-width); padding:18px 10px; align-items:center; }
-  .sidebar h4{ display:none; }
-  .sidebar nav a{ justify-content:center; padding:12px; }
-  .sidebar nav a span{ display:none; }
-  .main-content{ margin-left: calc(var(--ia-sidebar-width) + 20px); padding:16px; }
-  /* place Mas/button just outside collapsed sidebar */
-  .mas-btn{ left: calc(var(--ia-sidebar-width) + 16px) !important; }
-  .menu-mas{ left: calc(var(--ia-sidebar-width) + 16px) !important; }
+/* === MODIFICACIÓN: Sidebar responsiva === */
+@media (max-width: 720px) {
+  :root { --ia-sidebar-width: 76px; }
+  .sidebar {
+    width: var(--ia-sidebar-width);
+    padding: 18px 10px;
+    align-items: center;
+  }
+  .sidebar h4 { display: none; }
+  .sidebar nav a { justify-content: center; padding: 12px; }
+  .sidebar nav a span { display: none; }
+  .main-content { margin-left: calc(var(--ia-sidebar-width) + 20px); padding: 16px; }
+  .mas-btn { left: calc(var(--ia-sidebar-width) + 16px) !important; }
+  .menu-mas { left: calc(var(--ia-sidebar-width) + 16px) !important; }
+}
+@media (max-width: 420px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; padding: 12px; }
+  .mas-btn { left: 12px !important; }
+  .menu-mas { left: 12px !important; }
 }
 @media (max-width:420px){
   /* On very small screens hide the sidebar (use compact navigation via icons or hamburger later) */
