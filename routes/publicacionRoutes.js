@@ -11,5 +11,10 @@ router.get('/:id', publicacionController.getPublicacionById);
 
 // Crear nueva publicación
 router.post('/', uploadPublicacion, publicacionController.createPublicacion);
+// Actualizar descripción de una publicación
+router.patch('/:id', publicacionController.updateDescripcion);
+
+// Eliminar una publicación
+router.delete('/:id', publicacionController.deletePublicacion);
 
 module.exports = router;
