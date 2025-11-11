@@ -4,7 +4,7 @@
   "description": "A Node.js application that connects to a local MySQL database.",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src && node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
