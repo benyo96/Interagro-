@@ -1,0 +1,12 @@
+body { background: #fafafa; }
+.register-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.logo { width: 120px; margin-bottom: 20px; animation: fadeIn 1.2s; }
+.fade-in { animation: fadeIn 1.2s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.card { border-radius: 16px; box-shadow: 0 2px 16px #0001; border: 1px solid #e0e0e0; max-width: 400px; }
+h2 { color: #4caf50; font-family: 'Pacifico', cursive; }
+.animated-btn { position: relative; overflow: hidden; transition: box-shadow .2s, transform .2s; }
+.animated-btn:hover { box-shadow: 0 4px 16px #4caf5040; transform: scale(1.04); }
+a { color: #388e3c !important; text-decoration: underline; transition: color .2s; }
+a:hover { color: #1b5e20 !important; }
+#loaderOverlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff9; z-index: 9999; align-items: center; justify-content: center; }

@@ -1,0 +1,145 @@
+/*
+  NOTA IMPORTANTE:
+  El menú 'Más' debe tener un z-index MAYOR que el sidebar (sidebar usa z-index:1000).
+  Por eso aquí se usa z-index: 2001 para evitar que quede por detrás del menú lateral.
+  Si el menú sigue quedando detrás, revisa que ningún otro elemento tenga un z-index mayor o que el sidebar no tenga z-index superior a este valor.
+*/
+.menu-mas {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  left: calc(var(--ia-sidebar-width, 220px) + 16px);
+  min-width: 260px;
+  background: #181818;
+  color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 4px 32px #0005;
+  padding: 10px 0 0 0;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 2001 !important;
+}
+.menu-mas-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  font-size: 1.08em;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.menu-mas-item svg {
+  min-width: 22px;
+  min-height: 22px;
+  color: #4caf50;
+  flex-shrink: 0;
+}
+.menu-mas-item:hover {
+  background: #222;
+  color: #43e97b;
+}
+.menu-mas hr {
+  margin: 0 0 2px 0;
+  border: none;
+  border-top: 2px solid #222;
+}
+.menu-mas-item:last-child {
+  border-radius: 0 0 22px 22px;
+}
+.menu-mas-item:active {
+  background: #333;
+}
+/* Sidebar / layout shared styles for InterAgro */
+:root{
+  --ia-sidebar-bg: #0f1412; /* dark sidebar */
+  --ia-accent: #4caf50;
+  --ia-text: #e9ecef;
+  --ia-muted: #bfc9c3;
+  --ia-sidebar-width: 220px; /* used to place floating elements beside the sidebar */
+}
+
+/* Basic sidebar layout */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:var(--ia-sidebar-width);
+  padding:28px 18px;
+  background: linear-gradient(180deg,var(--ia-sidebar-bg), #0b0d0c 70%);
+  color:var(--ia-text);
+  box-shadow: 4px 0 18px rgba(0,0,0,0.25);
+  z-index:1000;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  align-items:flex-start;
+}
+.sidebar .logo{ display:block; width:48px; height:48px; object-fit:cover; border-radius:8px; margin-bottom:4px; }
+.sidebar h4{
+  margin: 0 0 18px 0;
+  font-weight: 700;
+  font-size: 1.7em;
+  color: var(--ia-accent);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+.sidebar nav{ width:100%; display:flex; flex-direction:column; gap:6px; }
+.sidebar nav a{
+  display:flex; align-items:center; gap:12px; padding:10px 12px; text-decoration:none; color:var(--ia-text); border-radius:12px; transition:all .18s ease;
+}
+.sidebar nav a span{ color:var(--ia-text); }
+.sidebar nav a svg{ flex:0 0 28px; }
+.sidebar nav a:hover{ background: rgba(255,255,255,0.03); transform:translateX(4px); }
+.sidebar nav a.active{ background: rgba(255,255,255,0.04); box-shadow: inset 0 0 0 2px rgba(76,175,80,0.06); }
+.sidebar nav a img{ width:28px; height:28px; border-radius:50%; }
+
+/* main content spacing so it doesn't sit under the sidebar */
+.main-content{
+  margin-left: calc(var(--ia-sidebar-width) + 40px); /* leave room for sidebar + gap */
+  padding:34px 32px;
+}
+
+/* Mas button (floating) adjustments - keep visible and not overlap sidebar */
+/* Force the floating Mas button to sit to the right of the sidebar and above it */
+.mas-btn{ left: calc(var(--ia-sidebar-width) + 16px) !important; z-index:1200 !important; }
+
+/* Menu 'Más' popup: ensure it's above content and aligned to sidebar */
+.menu-mas{ left: calc(var(--ia-sidebar-width) + 16px); z-index:1199 !important; }
+
+/* Responsive rules */
+@media (max-width: 1000px){
+  :root{ --ia-sidebar-width: 180px; }
+  .sidebar{ width:var(--ia-sidebar-width); padding:18px 12px; }
+  .main-content{ margin-left: calc(var(--ia-sidebar-width) + 40px); padding:20px; }
+}
+@media (max-width: 720px){
+  /* collapse labels -> compact sidebar */
+  :root{ --ia-sidebar-width: 76px; }
+  .sidebar{ width:var(--ia-sidebar-width); padding:18px 10px; align-items:center; }
+  .sidebar h4{ display:none; }
+  .sidebar nav a{ justify-content:center; padding:12px; }
+  .sidebar nav a span{ display:none; }
+  .main-content{ margin-left: calc(var(--ia-sidebar-width) + 20px); padding:16px; }
+  /* place Mas/button just outside collapsed sidebar */
+  .mas-btn{ left: calc(var(--ia-sidebar-width) + 16px) !important; }
+  .menu-mas{ left: calc(var(--ia-sidebar-width) + 16px) !important; }
+}
+@media (max-width:420px){
+  /* On very small screens hide the sidebar (use compact navigation via icons or hamburger later) */
+  .sidebar{ display:none; }
+  .main-content{ margin-left:0; padding:12px; }
+  .mas-btn{ left:12px !important; }
+  .menu-mas{ left:12px !important; }
+}
+
+/* Small helpers */
+.sidebar .section-title{ color:var(--ia-accent); font-weight:700; margin:12px 0 6px 6px; }
+
+/* Ensure that any inline styles using white backgrounds still look good with sidebar present */
+@media (prefers-color-scheme: dark){
+  :root{ --ia-sidebar-bg: #0b0d0c; }
+}
