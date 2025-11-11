@@ -2,10 +2,11 @@ const mysql = require('mysql2');
 
 // Crear conexión
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: 'caboose.proxy.rlwy.net',
   user: 'root',
-  password: 'root123',
-  database: 'interagro'
+  password: 'onHfBuXBWVkQtphusGGFnQyQLWqCWumI',
+  database: 'interagro',
+  port: 52489
 });
 
 // Conectar
