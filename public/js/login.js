@@ -24,7 +24,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       correo: data.usuario.correo,
       rol: data.usuario.rol || 'cliente'
     }));
-    window.location.href = 'inicio.html';
+    window.location.href = 'buscar.html';
   } else {
     alert(data.error || 'Credenciales incorrectas');
   }
