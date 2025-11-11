@@ -21,36 +21,6 @@ selectCategoria.addEventListener('change', function() {
   }
 });
 
-
-// --- Mini mapa Leaflet para lat/lng ---
-window.addEventListener('DOMContentLoaded', function() {
-  // Solo si existe el div del mapa
-  const mapaDiv = document.getElementById('miniMapa');
-  if (!mapaDiv) return;
-  // Coordenadas por defecto (Colombia centro)
-  const defaultLat = 4.5709, defaultLng = -74.2973;
-  const map = L.map('miniMapa').setView([defaultLat, defaultLng], 6);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap',
-    maxZoom: 18
-  }).addTo(map);
-  const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
-  // Actualiza los campos ocultos
-  function updateLatLngFields(lat, lng) {
-    document.getElementById('latitud').value = lat;
-    document.getElementById('longitud').value = lng;
-  }
-  updateLatLngFields(defaultLat, defaultLng);
-  marker.on('dragend', function(e) {
-    const { lat, lng } = marker.getLatLng();
-    updateLatLngFields(lat, lng);
-  });
-  map.on('click', function(e) {
-    marker.setLatLng(e.latlng);
-    updateLatLngFields(e.latlng.lat, e.latlng.lng);
-  });
-});
-
 document.getElementById('publicarForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   mostrarLoader();
@@ -68,21 +38,16 @@ document.getElementById('publicarForm').addEventListener('submit', async functio
     }
     categoriaFinal += (categoriaFinal ? ', ' : '') + inputOtraCategoria.value.trim();
   }
-  // Mini mapa: obtener lat/lng
-  const latitud = document.getElementById('latitud').value;
-  const longitud = document.getElementById('longitud').value;
   // Validación básica
   if (!nombre_productos || !precio || !descripcion || !categoriaFinal) {
     ocultarLoader();
     alert('Todos los campos son obligatorios.');
     return;
   }
-  // Validar lat/lng (opcional: puedes hacerlos obligatorios si quieres)
-  const body = { id_usuario, nombre_productos, precio, descripcion, categoria: categoriaFinal, latitud, longitud };
   const res = await fetch('/api/productos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    body: JSON.stringify({ id_usuario, nombre_productos, precio, descripcion, categoria: categoriaFinal })
   });
   const data = await res.json();
   ocultarLoader();
