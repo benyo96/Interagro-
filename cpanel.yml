@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ohf16t2bisag/app.js/
+    - /bin/cp -R * $DEPLOYPATH
