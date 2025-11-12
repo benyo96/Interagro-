@@ -165,6 +165,17 @@ function hidePanels() {
             document.getElementById('modalProductoPrecio').textContent = `$${Number(pub.precio).toLocaleString('es-CO')}`;
             document.getElementById('modalProductoCategoria').textContent = pub.categoria || 'Sin categoría';
             document.getElementById('modalProductoDesc').textContent = pub.descripcion || '';
+            // --- Botón Mensaje ---
+            const btnMensaje = document.getElementById('btnMensaje');
+            if (btnMensaje && pub.id_usuario) {
+              btnMensaje.style.display = 'block';
+              btnMensaje.setAttribute('data-idusuario', pub.id_usuario);
+              btnMensaje.onclick = function() {
+                window.location.href = `/mensajes.html?user=${pub.id_usuario}`;
+              };
+            } else if (btnMensaje) {
+              btnMensaje.style.display = 'none';
+            }
             document.getElementById('modalProducto').style.display = 'flex';
           };
         });
