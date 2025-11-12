@@ -317,6 +317,21 @@
   background: #4caf50;
 }
 
+.btn-mensaje {
+  background-color: #1ed760;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.btn-mensaje:hover {
+  background-color: #17b456;
+}
+
 @media (max-width: 768px) {
   .filter-section {
     margin-bottom: 20px;

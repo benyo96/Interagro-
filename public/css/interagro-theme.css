@@ -20,8 +20,8 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: 'Inter', 'Poppins', 'Montserrat', Arial, sans-serif;
-  background: #000; /* completely black background */
-  color: #e0e0e0; /* light text */
+  background: linear-gradient(135deg, #fff 0%, #e0ffe8 60%, #b2f7cc 100%); /* degradado blanco a verde claro */
+  color: #222; /* texto oscuro */
   transition: all 0.3s ease;
 }
 

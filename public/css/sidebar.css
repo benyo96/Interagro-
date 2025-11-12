@@ -10,8 +10,8 @@
   bottom: 70px;
   left: calc(var(--ia-sidebar-width, 220px) + 16px);
   min-width: 260px;
-  background: #000; /* dark popup */
-  color: #e0e0e0;
+  background: linear-gradient(135deg, #fff 0%, #e0ffe8 60%, #b2f7cc 100%); /* degradado blanco a verde claro */
+  color: #222;
   border-radius: 22px;
   box-shadow: 0 4px 32px #0008;
   padding: 10px 0 0 0;
@@ -55,11 +55,11 @@
 }
 /* Sidebar / layout shared styles for InterAgro */
 :root{
-  --ia-sidebar-bg: #000; /* dark sidebar */
-  --ia-accent: #00a86b; /* identity green */
-  --ia-text: #e0e0e0;
-  --ia-muted: #9aa19a;
-  --ia-sidebar-width: 220px; /* used to place floating elements beside the sidebar */
+  --ia-sidebar-bg: linear-gradient(135deg, #fff 0%, #e0ffe8 60%, #b2f7cc 100%);
+  --ia-accent: #00a86b;
+  --ia-text: #222;
+  --ia-muted: #6a7a6a;
+  --ia-sidebar-width: 220px;
 }
 
 /* === MODIFICACIÓN: Sidebar mejorada === */
@@ -70,7 +70,7 @@
   bottom: 0;
   width: 180px;
   padding: 28px 18px;
-  background: #000;
+  background: var(--ia-sidebar-bg);
   color: var(--ia-text);
   box-shadow: none;
   z-index: 1000;
@@ -87,7 +87,7 @@
   font-family: 'Inter', 'Poppins', 'Nunito Sans', Arial, sans-serif;
   font-weight: 700;
   font-size: 1.5em;
-  color: #00a86b; /* identity green for main titles */
+  color: #00a86b;
   letter-spacing: 1px;
   line-height: 1.1;
   text-align: center;

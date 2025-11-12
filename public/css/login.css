@@ -1,7 +1,3 @@
-body { background: #fafafa; }
-.login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-.logo { width: 120px; margin-bottom: 20px; animation: fadeIn 1.2s; }
-.side-img { width: 320px; border-radius: 18px; box-shadow: 0 2px 16px #0002; }
 @media (max-width: 900px) { .side-img { display: none; } }
 .fade-in { animation: fadeIn 1.2s; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
@@ -12,3 +8,5 @@ h2 { color: #4caf50; font-family: 'Pacifico', cursive; }
 a { color: #388e3c !important; text-decoration: underline; transition: color .2s; }
 a:hover { color: #1b5e20 !important; }
 #loaderOverlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff9; z-index: 9999; align-items: center; justify-content: center; }
+
+body { background: #fafafa; }
