@@ -1,7 +1,4 @@
----
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ohf16t2bisag/app.js/
+    - export DEPLOYPATH=/home/ohf16t2bisag/public_html/
     - /bin/cp -R * $DEPLOYPATH
-    - cd $DEPLOYPATH
-    - npm start
