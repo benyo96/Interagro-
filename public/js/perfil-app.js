@@ -1,102 +1,169 @@
-const samplePerfilPosts = [
-  { id: 1, titulo: 'Caja de fresas', categoria: 'Frutas', precio: 38000, imagen: '', descripcion: 'Fresas orgánicas recién cosechadas.' },
-  { id: 2, titulo: 'Paquete de calabazas', categoria: 'Verduras', precio: 54000, imagen: '', descripcion: 'Calabazas grandes perfectas para sopas.' },
-  { id: 3, titulo: 'Ramos de cilantro', categoria: 'Plantas Aromáticas', precio: 16000, imagen: '', descripcion: 'Cilantro fresco para tus recetas.' },
-  { id: 4, titulo: 'Miel natural', categoria: 'Derivados', precio: 72000, imagen: '', descripcion: 'Miel pura de abeja de la región.' }
-];
+let currentUser = null;
+let userPosts = [];
 
-function renderAvatar(user, savedProfile) {
+function renderAvatar(user) {
   const avatarElement = document.querySelector('.profile-avatar');
   if (!avatarElement) return;
 
-  if (savedProfile.avatar) {
-    avatarElement.style.backgroundImage = `url('${savedProfile.avatar}')`;
+  if (user?.foto_perfil) {
+    avatarElement.style.backgroundImage = `url('${user.foto_perfil}')`;
     avatarElement.textContent = '';
     return;
   }
 
-  const initials = (user.nombre || 'AG').split(' ').filter(Boolean).map(word => word[0].toUpperCase()).slice(0, 2).join('');
+  const initials = (user?.nombre || 'AG').split(' ').filter(Boolean).map(word => word[0].toUpperCase()).slice(0, 2).join('');
   avatarElement.style.backgroundImage = 'none';
   avatarElement.textContent = initials || 'AG';
-}
-
-function saveProfileState(profile) {
-  localStorage.setItem('interagro_profile', JSON.stringify(profile));
 }
 
 function renderProfileCards(posts) {
   const grid = document.getElementById('profileGrid');
   if (!grid) return;
+
+  if (!posts.length) {
+    grid.innerHTML = '<div class="profile-empty">No hay publicaciones propias por el momento.</div>';
+    return;
+  }
+
   grid.innerHTML = posts.map(post => `
     <article class="post-card">
-      <img src="${post.imagen || createPlaceholderImage(post.titulo)}" alt="${post.titulo}" loading="lazy">
+      <img src="${post.foto || createPlaceholderImage(post.titulo)}" alt="${post.titulo}" loading="lazy">
       <div class="post-body">
         <h3>${post.titulo}</h3>
-        <p>${post.descripcion}</p>
-        <span class="badge">${post.categoria}</span>
+        <p>${post.descripcion || 'Sin descripción'}</p>
+        <span class="badge">${post.categoria || 'Producto'}</span>
       </div>
     </article>
   `).join('');
 }
 
+async function loadProfile() {
+  if (!currentUser) return;
+  showLoader();
+  try {
+    const response = await fetch(`/api/usuarios/${currentUser.id}`);
+    if (!response.ok) {
+      throw new Error('No se pudo cargar el perfil');
+    }
+
+    const user = await response.json();
+    currentUser = user;
+
+    document.getElementById('profileName').textContent = user.nombre || 'InterAgro';
+    document.getElementById('profileBio').textContent = user.direccion || 'Productor local con productos frescos directos del campo.';
+    document.getElementById('profileEmail')?.textContent = user.correo || '';
+    document.getElementById('profilePhone')?.textContent = user.telefono || '';
+    renderAvatar(user);
+  } catch (error) {
+    console.error('Error al cargar perfil:', error);
+  } finally {
+    hideLoader();
+  }
+}
+
+async function loadUserPublications() {
+  if (!currentUser) return;
+  showLoader();
+  try {
+    const response = await fetch(`/api/publicaciones?usuario=${currentUser.id}`);
+    if (!response.ok) {
+      throw new Error('No se pudieron cargar las publicaciones');
+    }
+
+    userPosts = await response.json();
+    document.getElementById('profilePosts').textContent = String(userPosts.length);
+    renderProfileCards(userPosts);
+  } catch (error) {
+    console.error('Error al cargar publicaciones propias:', error);
+    userPosts = [];
+    document.getElementById('profilePosts').textContent = '0';
+    renderProfileCards([]);
+  } finally {
+    hideLoader();
+  }
+}
+
+async function updateProfileBio(bio) {
+  if (!currentUser) return false;
+  try {
+    const response = await fetch(`/api/usuarios/${currentUser.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bio: bio.trim() })
+    });
+    return response.ok;
+  } catch (error) {
+    console.error('Error al actualizar la biografía:', error);
+    return false;
+  }
+}
+
+async function uploadAvatar(file) {
+  if (!currentUser || !file) return false;
+  const formData = new FormData();
+  formData.append('usuarioId', currentUser.id);
+  formData.append('foto_perfil', file);
+
+  showLoader();
+  try {
+    const response = await fetch('/api/usuarios/subir-foto-perfil', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.error || 'Error al subir la imagen');
+    }
+    return true;
+  } catch (error) {
+    console.error('Error al subir avatar:', error);
+    alert(error.message || 'No se pudo subir la foto de perfil.');
+    return false;
+  } finally {
+    hideLoader();
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const user = requireAuth();
   if (!user) return;
+  currentUser = user;
 
-  const nameElement = document.getElementById('profileName');
-  const bioElement = document.getElementById('profileBio');
-  const postsCount = document.getElementById('profilePosts');
-  const editButton = document.getElementById('btnEditProfile');
-  const modal = document.getElementById('profileModal');
-  const modalClose = document.getElementById('closeProfileModal');
-  const saveButton = document.getElementById('saveProfileBtn');
-  const bioInput = document.getElementById('bioInput');
-  const avatarInput = document.getElementById('avatarInput');
-
-  const savedProfile = JSON.parse(localStorage.getItem('interagro_profile') || '{}');
-  const posts = JSON.parse(localStorage.getItem('interagro_posts') || '[]');
-  const storedPosts = posts.length ? posts : samplePerfilPosts;
-  if (!posts.length) localStorage.setItem('interagro_posts', JSON.stringify(samplePerfilPosts));
-
-  nameElement.textContent = user.nombre || 'InterAgro';
-  bioElement.textContent = savedProfile.bio || 'Productor local con productos frescos directos del campo.';
-  postsCount.textContent = String(storedPosts.length);
-  renderAvatar(user, savedProfile);
-  renderProfileCards(storedPosts);
-
-  editButton?.addEventListener('click', () => {
-    if (!modal) return;
-    bioInput.value = savedProfile.bio || '';
-    modal.classList.add('show');
+  document.getElementById('btnEditProfile')?.addEventListener('click', () => {
+    const bioInput = document.getElementById('bioInput');
+    if (bioInput) {
+      bioInput.value = currentUser?.direccion || '';
+    }
+    document.getElementById('profileModal')?.classList.add('show');
   });
 
-  modalClose?.addEventListener('click', () => {
-    modal?.classList.remove('show');
+  document.getElementById('closeProfileModal')?.addEventListener('click', () => {
+    document.getElementById('profileModal')?.classList.remove('show');
   });
 
-  saveButton?.addEventListener('click', () => {
-    const updatedBio = bioInput.value.trim();
-    const updatedProfile = {
-      ...savedProfile,
-      bio: updatedBio
-    };
+  document.getElementById('saveProfileBtn')?.addEventListener('click', async () => {
+    const avatarInput = document.getElementById('avatarInput');
+    const bioInput = document.getElementById('bioInput');
+    const newBio = bioInput?.value || '';
+    let success = true;
 
     if (avatarInput?.files?.length) {
-      const file = avatarInput.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        updatedProfile.avatar = reader.result;
-        saveProfileState(updatedProfile);
-        bioElement.textContent = updatedBio || 'Productor local con productos frescos directos del campo.';
-        renderAvatar(user, updatedProfile);
-        modal?.classList.remove('show');
-      };
-      reader.readAsDataURL(file);
-      return;
+      success = await uploadAvatar(avatarInput.files[0]);
     }
 
-    saveProfileState(updatedProfile);
-    bioElement.textContent = updatedBio || 'Productor local con productos frescos directos del campo.';
-    modal?.classList.remove('show');
+    if (newBio.trim()) {
+      const updated = await updateProfileBio(newBio);
+      if (!updated) success = false;
+    }
+
+    if (success) {
+      await loadProfile();
+      avatarInput.value = '';
+      document.getElementById('profileModal')?.classList.remove('show');
+    }
   });
+
+  loadProfile();
+  loadUserPublications();
 });

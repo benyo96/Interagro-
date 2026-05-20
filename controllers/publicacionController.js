@@ -17,10 +17,16 @@ exports.getPublicaciones = (req, res) => {
     const categories = req.query.categories?.split(',').map(c => c.trim()).filter(Boolean) || [];
     const minPrice = req.query.minPrice ? parseFloat(req.query.minPrice) : null;
     const maxPrice = req.query.maxPrice ? parseFloat(req.query.maxPrice) : null;
+    const usuario = req.query.usuario ? parseInt(req.query.usuario, 10) : null;
     const sort = req.query.sort || 'Más recientes';
 
     let sql = 'SELECT * FROM publicaciones WHERE 1=1';
     const params = [];
+
+    if (usuario && !isNaN(usuario)) {
+      sql += ' AND id_usuario = ?';
+      params.push(usuario);
+    }
 
     // Búsqueda por texto
     if (q) {

@@ -1,51 +1,3 @@
-const samplePublicaciones = [
-  {
-    id: 1,
-    titulo: 'Tomates cherry',
-    categoria: 'Frutas',
-    precio: 42000,
-    descripcion: 'Tomates dulces de cosecha reciente, listos para venta.',
-    ubicacion: 'Cundinamarca',
-    imagen: ''
-  },
-  {
-    id: 2,
-    titulo: 'Mangos verdes',
-    categoria: 'Frutas',
-    precio: 32000,
-    descripcion: 'Mangos frescos y aromáticos, perfectos para jugos y postres.',
-    ubicacion: 'Valle del Cauca',
-    imagen: ''
-  },
-  {
-    id: 3,
-    titulo: 'Lechuga Batavia',
-    categoria: 'Verduras',
-    precio: 18000,
-    descripcion: 'Hojas crujientes de lechuga recién cosechada.',
-    ubicacion: 'Antioquia',
-    imagen: ''
-  },
-  {
-    id: 4,
-    titulo: 'Maíz dulce',
-    categoria: 'Cereales',
-    precio: 42000,
-    descripcion: 'Granos dorados y dulces, listos para tu cocina.',
-    ubicacion: 'Tolima',
-    imagen: ''
-  },
-  {
-    id: 5,
-    titulo: 'Hierbas aromáticas',
-    categoria: 'Plantas Aromáticas',
-    precio: 26000,
-    descripcion: 'Lotes frescos de perejil, cilantro y albahaca.',
-    ubicacion: 'Boyacá',
-    imagen: ''
-  }
-];
-
 let deck = [];
 let indexCard = 0;
 let likedCards = JSON.parse(localStorage.getItem('interagro_likes') || '[]');
@@ -53,6 +5,7 @@ let dragState = null;
 let isAnimating = false;
 
 function getCardImage(publicacion) {
+  if (publicacion.foto) return publicacion.foto;
   if (publicacion.imagen) return publicacion.imagen;
   return createPlaceholderImage(publicacion.titulo || publicacion.categoria || 'Agro');
 }
@@ -220,9 +173,8 @@ async function loadPublicaciones() {
       }
     }
   } catch (error) {
-    console.warn('No se pudo cargar publicaciones del servidor, usando datos locales.', error);
+    console.error('No se pudo cargar publicaciones del servidor:', error);
   } finally {
-    if (deck.length === 0) deck = samplePublicaciones;
     renderDeck();
     hideLoader();
   }

@@ -9,6 +9,7 @@ router.post('/register', usuarioController.register);
 
 // ===== PERFIL =====
 router.get('/:id', usuarioController.getPerfil);
+router.patch('/:id', usuarioController.updatePerfil);
 router.post('/subir-foto-perfil', upload.single('foto_perfil'), usuarioController.subirFotoPerfil);
 
 module.exports = router;

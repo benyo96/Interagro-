@@ -157,6 +157,39 @@ const usuarioController = {
       console.error('❌ Error en getPerfil:', error);
       res.status(500).json({ error: 'Error en el servidor' });
     }
+  },
+
+  // ===== PATCH: Actualizar biografía/perfil =====
+  updatePerfil: (req, res) => {
+    try {
+      const usuarioId = req.params.id;
+      const { bio } = req.body;
+
+      if (!usuarioId || isNaN(usuarioId)) {
+        return res.status(400).json({ error: 'ID inválido' });
+      }
+
+      if (typeof bio !== 'string') {
+        return res.status(400).json({ error: 'Contenido inválido' });
+      }
+
+      const query = 'UPDATE usuarios SET direccion = ? WHERE id = ?';
+      db.query(query, [bio.trim() || null, usuarioId], (err, result) => {
+        if (err) {
+          console.error('❌ Error al actualizar perfil:', err);
+          return res.status(500).json({ error: 'Error al actualizar perfil' });
+        }
+
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        res.json({ mensaje: 'Perfil actualizado' });
+      });
+    } catch (error) {
+      console.error('❌ Error en updatePerfil:', error);
+      res.status(500).json({ error: 'Error en el servidor' });
+    }
   }
 };
 

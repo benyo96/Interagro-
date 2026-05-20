@@ -77,14 +77,3 @@ CREATE TABLE IF NOT EXISTS clientes (
   FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
   INDEX idx_usuario (id_usuario)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ===== DATOS DE PRUEBA =====
-INSERT INTO usuarios (nombre, correo, telefono, direccion, contrasena, rol) VALUES
-('Admin InterAgro', 'admin@interagro.com', '1234567890', 'Calle Principal 123', '$2b$10$YourHashedPasswordHere', 'admin'),
-('Juan Pérez', 'juan@test.com', '9876543210', 'Av. Central 456', '$2b$10$YourHashedPasswordHere', 'vendedor'),
-('María García', 'maria@test.com', '5555555555', 'Calle del Campo 789', '$2b$10$YourHashedPasswordHere', 'comprador');
-
-INSERT INTO publicaciones (id_usuario, titulo, descripcion, precio, categoria, foto, fecha) VALUES
-(2, 'Tomates Frescos', 'Tomates de cosecha propia, 100% naturales', 250.00, 'Verduras', '/img/publicaciones/tomates.jpg', NOW()),
-(2, 'Manzanas Rojas', 'Manzanas frescas de temporada', 180.00, 'Frutas', '/img/publicaciones/manzanas.jpg', NOW()),
-(3, 'Lechuga', 'Lechuga orgánica directa del huerto', 50.00, 'Verduras', '/img/publicaciones/lechuga.jpg', NOW());
