@@ -1,158 +1,73 @@
-      <!-- Mini-modal editar descripción -->
-      <div id="miniModalEditarDesc" class="mini-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.18);z-index:2100;">
-        <div class="mini-modal-content" style="background:#fff;padding:28px 24px 20px 24px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.10);max-width:370px;width:90vw;position:relative;display:flex;flex-direction:column;align-items:center;animation:fadeInMini 0.25s;">
-          <h4 style="font-weight:700;font-size:1.18em;color:#222;margin-bottom:16px;">Editar descripción</h4>
-          <textarea id="miniModalDescInput" style="width:100%;min-height:90px;resize:vertical;border:1px solid #E5E5E5;border-radius:8px;padding:10px;margin-bottom:18px;font-size:1em;color:#222;background:#fafafa;"></textarea>
-          <div style="display:flex;gap:12px;width:100%;justify-content:center;">
-            <button id="miniModalGuardar" style="flex:1;background:#fff;border:1px solid #E5E5E5;color:#222;border-radius:8px;padding:8px 0;cursor:pointer;transition:box-shadow 0.2s;">Guardar cambios</button>
-            <button id="miniModalCancelar" style="flex:1;background:#fff;border:1px solid #E5E5E5;color:#888;border-radius:8px;padding:8px 0;cursor:pointer;transition:box-shadow 0.2s;">Cancelar</button>
-          </div>
-        </div>
-      </div>
-      <style>
-        @keyframes fadeInMini { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
-        .mini-modal { display: none; align-items: center; justify-content: center; }
-        .mini-modal.show { display: flex; }
-        .mini-modal-content { box-shadow: 0 4px 24px rgba(0,0,0,0.10); }
-        .mini-modal-content button:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-      </style>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil | InterAgro</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/interagro-theme.css">
-  <link rel="stylesheet" href="../css/sidebar.css">
-  <link rel="stylesheet" href="../css/perfil.css">
-  <link rel="stylesheet" href="../css/modal.css">
+  <title>InterAgro — Perfil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-Gb3mgUO3VrfS7kN9WnPH6o0Txfjz7Ggl4gRbUxw3tJpJz1D9u4Boh1bYDc9R7S8Zn4xZ+Aa/lIlWCQX63rFJwQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
+<body class="profile-page">
+  <main class="page profile-page">
+    <section class="profile-hero">
+      <div class="profile-header">
+        <div class="profile-avatar"></div>
+        <div class="profile-meta">
+          <span class="eyebrow">Mi perfil</span>
+          <h2 id="profileName">InterAgro</h2>
+          <p id="profileBio">Productor local con productos frescos directos del campo.</p>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div>
+          <strong id="profilePosts">0</strong>
+          <span>Publicaciones</span>
+        </div>
+        <div>
+          <strong>0</strong>
+          <span>Seguidores</span>
+        </div>
+        <div>
+          <strong>0</strong>
+          <span>Siguiendo</span>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button id="btnEditProfile" class="btn btn-primary">Editar perfil</button>
+      </div>
+    </section>
 
-  <div id="sidebar-container"></div>
-  <main class="main-content">
-    <div class="perfil-card">
-      <img id="perfilFoto" src="../img/4.png" alt="Foto de perfil" class="perfil-foto">
-      <button id="btnEditarPerfil" class="btn-editar">Editar perfil</button>
-      <div style="width:100%;max-width:420px;margin:0 auto 10px auto;">
-        <h5 style="margin:18px 0 4px 0;font-weight:700;color:#4caf50;">Descripción</h5>
-        <p id="perfilDescripcion" class="perfil-descripcion">Sin descripción</p>
-      </div>
-      <div class="perfil-publicaciones-header">
-        <h3>Mis publicaciones (<span id="perfilPublicaciones">0</span>)</h3>
-        <button id="btnNuevaPublicacion" class="btn-nueva-publicacion">+ Nueva publicación</button>
-      </div>
-      <div id="publicacionesGrid" class="publicaciones-grid"></div>
-      <!-- Modal de publicación estilo Instagram -->
-      <div id="modalPublicacion" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.7);z-index:2000;">
-        <div class="modal-content" style="background:#fff;padding:32px;border-radius:18px;max-width:480px;width:90vw;position:relative;display:flex;flex-direction:column;align-items:center;">
-          <span class="close" id="cerrarModalPublicacion" style="position:absolute;top:18px;left:18px;font-size:1.5em;cursor:pointer;">&times;</span>
-          <img id="modalImg" src="" alt="Publicación" style="width:100%;border-radius:14px;margin-bottom:18px;max-height:340px;object-fit:cover;">
-          <button id="modalOpciones" class="modal-options" style="position:absolute;top:18px;right:18px;background:none;border:none;cursor:pointer;font-size:1.6em;color:#222;">&#8942;</button>
-          <div id="modalMenu" class="modal-menu" style="display:none;position:absolute;top:48px;right:18px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-            <button id="modalEditarDesc" style="display:block;width:100%;background:none;border:none;padding:12px 18px;color:#222;text-align:left;cursor:pointer;">Editar descripción</button>
-            <button id="modalEliminar" style="display:block;width:100%;background:none;border:none;padding:12px 18px;color:#222;text-align:left;cursor:pointer;">Eliminar publicación</button>
-          </div>
-          <!-- Aquí se inserta la info dinámica de la publicación -->
-          <form id="modalEditForm" class="edit-form" style="display:none;width:100%;margin-top:12px;">
-            <textarea id="modalDescInput" placeholder="Nueva descripción" style="width:100%;border:1px solid #E5E5E5;border-radius:8px;padding:10px;margin-bottom:12px;"></textarea>
-            <button type="submit" style="background:#fff;border:1px solid #E5E5E5;color:#222;border-radius:8px;padding:8px 18px;cursor:pointer;">Guardar</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Modal editar perfil -->
-    <div id="modalEditarPerfil" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.25);z-index:1000;">
-      <div class="modal-content" style="background:#fff;padding:24px;border-radius:12px;max-width:350px;width:90vw;box-shadow:0 2px 16px #0002;position:relative;">
-        <span class="close" id="cerrarModalEditarPerfil" style="position:absolute;top:12px;right:16px;font-size:1.5em;cursor:pointer;">&times;</span>
-        <h4>Editar perfil</h4>
-        <label for="inputFotoPerfil" style="font-weight:600;color:#4caf50;margin-bottom:6px;display:block;">Foto de perfil</label>
-        <input type="file" id="inputFotoPerfil" accept="image/*" style="margin-bottom:10px;">
-        <label for="inputDescripcion" style="font-weight:600;color:#4caf50;margin-bottom:6px;display:block;">Descripción</label>
-        <textarea id="inputDescripcion" placeholder="Escribe tu descripción..." style="width:100%;min-height:60px;resize:vertical;"></textarea>
-        <button id="guardarDescripcion" class="btn-guardar" style="margin-top:12px;">Guardar</button>
-      </div>
-    </div>
-    <!-- Modal nueva publicación -->
-    <div id="modalNuevaPublicacion" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.25);z-index:1000;">
-      <div class="modal-content" style="background:#fff;padding:24px;border-radius:12px;max-width:350px;width:90vw;box-shadow:0 2px 16px #0002;position:relative;">
-        <span class="close" id="cerrarModalNuevaPublicacion" style="position:absolute;top:12px;right:16px;font-size:1.5em;cursor:pointer;">&times;</span>
-        <h4>Nueva publicación</h4>
-        <div class="modal-publicar-foto-nombre" style="display:flex;align-items:center;margin-bottom:10px;">
-          <img id="modalPerfilFoto" src="../img/agricultor.png" alt="Foto de perfil" class="perfil-foto" style="width:56px;height:56px;">
-          <span id="modalPerfilNombre" style="font-weight:700;font-size:1.1em;margin-left:10px;">Usuario</span>
-        </div>
-        <input type="text" id="tituloPublicacion" placeholder="Nombre del producto*" required style="margin-bottom:8px;">
-        <input type="text" id="precioPublicacion" placeholder="Precio (COP)*" required autocomplete="off" inputmode="numeric" pattern="[0-9.]*" style="margin-bottom:8px;">
-        <div class="publicar-categorias" style="margin-bottom:8px;">
-          <label for="categoriaPublicacion" style="font-weight:600;color:#222;margin-bottom:4px;">Categoría</label>
-          <select id="categoriaPublicacion" required style="margin-bottom:8px;">
-            <option value="" selected disabled>Seleccione una categoría</option>
-            <optgroup label="Frutas y Verduras">
-              <option value="Frutas">Frutas</option>
-              <option value="Verduras">Verduras</option>
-              <option value="Tubérculos">Tubérculos</option>
-              <option value="Legumbres">Legumbres</option>
-            </optgroup>
-            <optgroup label="Cereales y Plantas">
-              <option value="Cereales">Cereales</option>
-              <option value="Plantas Aromáticas">Plantas Aromáticas</option>
-            </optgroup>
-            <optgroup label="Animales y Derivados">
-              <option value="Animales">Animales</option>
-              <option value="Lácteos">Lácteos</option>
-            </optgroup>
-            <option value="Otra">Otra...</option>
-          </select>
-          <input type="text" id="otraCategoriaPublicacion" placeholder="Especifique la categoría" style="display:none;margin-top:8px;">
-        </div>
-        <textarea id="descPublicacion" placeholder="Descripción del producto (opcional)" style="margin-bottom:8px;"></textarea>
-        <input type="file" id="imgPublicacion" accept="image/*" multiple required style="margin-bottom:8px;">
-        <button id="publicarBtn" class="btn-guardar">Publicar</button>
-      </div>
-    </div>
+    <section class="gallery-grid" id="profileGrid"></section>
   </main>
-  <button class="btn btn-dark mas-btn" id="btnMas">
-    <span style="font-weight:700;">Más</span>
-  </button>
-  <div id="menu-mas-container"></div>
-  <script>
-    // Cargar menú lateral global
-    fetch('../html/sidebar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('sidebar-container').innerHTML = html;
-      });
-    // Cargar menú Más global
-    fetch('../html/menu-mas.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('menu-mas-container').innerHTML = html;
-        const btnMas = document.getElementById('btnMas');
-        const menuMas = document.getElementById('menuMas');
-        let menuMasVisible = false;
-        btnMas.addEventListener('click', function(e) {
-          e.stopPropagation();
-          menuMas.style.display = menuMasVisible ? 'none' : 'block';
-          menuMasVisible = !menuMasVisible;
-        });
-        document.addEventListener('click', function(e) {
-          if (menuMasVisible && !menuMas.contains(e.target) && e.target !== btnMas) {
-            menuMas.style.display = 'none';
-            menuMasVisible = false;
-          }
-        });
-        window.addEventListener('scroll', function() {
-          if (menuMasVisible) {
-            menuMas.style.display = 'none';
-            menuMasVisible = false;
-          }
-        });
-      });
-  </script>
-  <script src="../js/perfil.js"></script>
+
+  <nav class="bottom-bar">
+    <a class="nav-item" href="buscar.html"><i class="fa fa-seedling"></i><span>Inicio</span></a>
+    <a class="nav-item" href="mensajes.html"><i class="fa fa-comment-dots"></i><span>Chats</span></a>
+    <a class="nav-item active" href="perfil.html"><i class="fa fa-user"></i><span>Perfil</span></a>
+  </nav>
+
+  <div id="profileModal" class="modal">
+    <div class="modal-card">
+      <header>
+        <h3>Editar perfil</h3>
+        <button class="modal-close" id="closeProfileModal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="field">
+        <label for="avatarInput">Cambiar avatar</label>
+        <input type="file" id="avatarInput" accept="image/*">
+      </div>
+      <div class="field">
+        <label for="bioInput">Biografía</label>
+        <textarea id="bioInput" placeholder="Describe tu perfil en pocas palabras"></textarea>
+      </div>
+      <button id="saveProfileBtn" class="btn btn-primary">Guardar cambios</button>
+    </div>
+  </div>
+
+  <script src="../js/common.js" defer></script>
+  <script src="../js/perfil-app.js" defer></script>
 </body>
 </html>

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controllers = require('../controllers');
+const clienteController = require('../controllers/clienteController');
 
-router.get('/', controllers.getAllClientes);
-router.post('/', controllers.createCliente);
+// ===== CLIENTES =====
+router.get('/', clienteController.getAllClientes);
+router.post('/', clienteController.createCliente);
+router.get('/:id', clienteController.getClienteById);
 
 module.exports = router;

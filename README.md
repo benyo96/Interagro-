@@ -1,51 +1,127 @@
-# Node.js MySQL Application
+# 🌾 InterAgro - Plataforma de Venta de Productos Agrícolas
 
-This is a simple Node.js application that connects to a local MySQL database. The application is structured in a monolithic architecture and follows best practices for organizing code.
+Aplicación web moderna para la compra y venta de productos agrícolas con funcionalidades de mensajería, publicaciones y reportes.
 
-## Project Structure
+## 📋 Requisitos Previos
 
-```
-nodejs-mysql-app
-├── src
-│   ├── app.js          # Entry point of the application
-│   ├── config          # Configuration files
-│   │   └── db.js      # Database connection setup
-│   ├── controllers     # Business logic for routes
-│   │   └── index.js    # Controller functions
-│   ├── models          # Data models
-│   │   └── index.js    # Model definitions
-│   ├── routes          # Application routes
-│   │   └── index.js    # Route setup
-│   └── utils           # Utility functions
-│       └── index.js    # Common utility functions
-├── package.json        # NPM configuration file
-└── README.md           # Project documentation
+- Node.js v16 o superior
+- MySQL 5.7 o superior  
+- npm o yarn
+
+## 🚀 Instalación y Configuración
+
+### 1. Clonar o descargar el proyecto
+```bash
+cd Interagro-
 ```
 
-## Installation
-
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```
-   cd nodejs-mysql-app
-   ```
-3. Install the dependencies:
-   ```
-   npm install
-   ```
-
-## Usage
-
-To start the application, run the following command:
-```
-node src/app.js
+### 2. Instalar dependencias
+```bash
+npm install
 ```
 
-Make sure your MySQL server is running and the database is properly configured in `src/config/db.js`.
+### 3. Configurar variables de entorno
+Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
-## Contributing
+```env
+# Base de datos
+DB_HOST=tu_host_mysql
+DB_USER=tu_usuario
+DB_PASSWORD=tu_contraseña
+DB_NAME=interagro
+DB_PORT=3306
 
+# Servidor
+PORT=3000
+NODE_ENV=development
+```
+
+### 4. Importar la base de datos
+```bash
+mysql -u root -p interagro < config/publicaciones.sql
+```
+
+### 5. Iniciar el servidor
+```bash
+npm start
+```
+
+El servidor estará disponible en `http://localhost:3000`
+
+## 📁 Estructura del Proyecto
+
+```
+Interagro-/
+├── app.js                    # Punto de entrada
+├── package.json              # Dependencias
+├── .env                      # Variables de entorno
+├── config/
+│   ├── db.js                 # Configuración de MySQL
+│   ├── multerPerfil.js       # Upload de perfiles
+│   ├── multerPublicacion.js  # Upload de publicaciones
+│   └── publicaciones.sql     # Estructura de BD
+├── controllers/              # Lógica de negocio
+│   ├── usuarioController.js
+│   ├── publicacionController.js
+│   ├── mensajeController.js
+│   ├── reporteController.js
+│   └── clienteController.js
+├── routes/                   # Definición de endpoints
+└── public/
+    ├── html/                 # Páginas HTML
+    ├── js/                   # Scripts del frontend
+    ├── css/                  # Estilos
+    └── img/                  # Imágenes
+```
+
+## 🔌 Endpoints API
+
+### Usuarios
+- `POST /api/usuarios/register` - Registrar nuevo usuario
+- `POST /api/usuarios/login` - Iniciar sesión
+- `GET /api/usuarios/:id` - Obtener perfil
+- `POST /api/usuarios/subir-foto-perfil` - Actualizar foto de perfil
+
+### Publicaciones
+- `GET /api/publicaciones` - Listar todas las publicaciones
+- `GET /api/publicaciones/:id` - Obtener publicación específica
+- `POST /api/publicaciones` - Crear nueva publicación
+- `PATCH /api/publicaciones/:id` - Actualizar publicación
+- `DELETE /api/publicaciones/:id` - Eliminar publicación
+
+### Mensajes
+- `GET /api/mensajes/inbox/:id_usuario` - Obtener conversaciones
+- `GET /api/mensajes/conversacion` - Obtener mensajes de conversación
+- `POST /api/mensajes/enviar` - Enviar mensaje
+
+### Reportes
+- `POST /api/reportes` - Crear reporte
+- `GET /api/reportes` - Listar todos los reportes
+- `GET /api/reportes/usuario/:id_usuario` - Reportes de un usuario
+
+## 🔒 Seguridad
+
+- Credenciales de BD protegidas en `.env`
+- Contraseñas encriptadas con bcrypt
+- Validación de datos en todos los endpoints
+- CORS configurado
+
+## 🛠️ Mejoras Realizadas
+
+✅ Migración de mysql a mysql2  
+✅ Variables de entorno con dotenv  
+✅ Manejo robusto de errores  
+✅ Validaciones en todos los controllers  
+✅ Código limpio y consistente  
+✅ Documentación mejorada  
+
+## 📝 Notas Importantes
+
+- Las imágenes se guardan en `public/img/perfiles/` y `public/img/publicaciones/`
+- Asegúrate de que estas carpetas existan o sean creadas automáticamente
+- Para producción, cambiar `NODE_ENV` a `production`
+
+## 📞 Soporte
+
+Para reportar problemas o sugerencias, contactar al equipo de desarrollo.
 Feel free to submit issues or pull requests for improvements or bug fixes.

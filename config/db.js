@@ -1,21 +1,26 @@
+require('dotenv').config();
 const mysql = require('mysql2');
 
-// Crear conexión
-const connection = mysql.createConnection({
-  host: 'caboose.proxy.rlwy.net',
-  user: 'root',
-  password: 'onHfBuXBWVkQtphusGGFnQyQLWqCWumI',
-  database: 'interagro',
-  port: 52489
+// Configuración de la conexión real
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'interagro',
+  port: Number(process.env.DB_PORT) || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-// Conectar
-connection.connect((error) => {
-  if (error) {
-    console.error('Error de conexión:', error);
-    return;
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('❌ Error de conexión a MySQL:', err.message);
+    console.log('Asegúrate de que la base de datos y credenciales en .env sean correctas.');
+    process.exit(1);
   }
-  console.log('Conectado a MySQL');
+  console.log('✅ Conectado exitosamente a MySQL');
+  connection.release();
 });
 
-module.exports = connection;
+module.exports = pool;

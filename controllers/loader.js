@@ -1,4 +1,3 @@
-// loader.js
-setTimeout(function() {
-  window.location.href = 'login.html';
-}, 1800); // 1.8 segundos de carga
+// Este archivo es un duplicado y no se usa
+// El loader.js real está en: public/js/loader.js
+// Este puede ser eliminado
