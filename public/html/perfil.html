@@ -39,6 +39,7 @@
       </div>
       <div class="profile-actions">
         <button id="btnEditProfile" class="btn btn-primary">Editar perfil</button>
+        <button id="btnCreatePost" class="btn btn-secondary">+ Crear publicación</button>
       </div>
     </section>
 
@@ -66,6 +67,44 @@
         <textarea id="bioInput" placeholder="Describe tu perfil en pocas palabras"></textarea>
       </div>
       <button id="saveProfileBtn" class="btn btn-primary">Guardar cambios</button>
+    </div>
+  </div>
+
+  <div id="createPostModal" class="modal">
+    <div class="modal-card">
+      <header>
+        <h3>Crear publicación</h3>
+        <button class="modal-close" id="closeCreatePostModal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="field">
+        <label for="postTitle">Título</label>
+        <input type="text" id="postTitle" placeholder="Nombre del producto">
+      </div>
+      <div class="field">
+        <label for="postDescription">Descripción</label>
+        <textarea id="postDescription" placeholder="Describe tu producto"></textarea>
+      </div>
+      <div class="field">
+        <label for="postPrice">Precio</label>
+        <input type="number" id="postPrice" placeholder="0" min="0" step="100">
+      </div>
+      <div class="field">
+        <label for="postCategory">Categoría</label>
+        <select id="postCategory">
+          <option value="">Selecciona categoría</option>
+          <option value="Verduras">Verduras</option>
+          <option value="Frutas">Frutas</option>
+          <option value="Granos">Granos</option>
+          <option value="Lácteos">Lácteos</option>
+          <option value="Carnes">Carnes</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="postPhoto">Foto</label>
+        <input type="file" id="postPhoto" accept="image/*">
+      </div>
+      <button id="savePostBtn" class="btn btn-primary">Crear publicación</button>
     </div>
   </div>
 

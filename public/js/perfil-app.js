@@ -164,6 +164,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Crear publicación
+  document.getElementById('btnCreatePost')?.addEventListener('click', () => {
+    document.getElementById('createPostModal')?.classList.add('show');
+  });
+
+  document.getElementById('closeCreatePostModal')?.addEventListener('click', () => {
+    document.getElementById('createPostModal')?.classList.remove('show');
+  });
+
+  document.getElementById('savePostBtn')?.addEventListener('click', async () => {
+    showLoader();
+    try {
+      const title = document.getElementById('postTitle')?.value.trim();
+      const description = document.getElementById('postDescription')?.value.trim();
+      const price = document.getElementById('postPrice')?.value;
+      const category = document.getElementById('postCategory')?.value;
+      const photoInput = document.getElementById('postPhoto');
+
+      if (!title || !price || !category) {
+        alert('Por favor completa todos los campos requeridos');
+        hideLoader();
+        return;
+      }
+
+      if (!photoInput?.files?.length) {
+        alert('Por favor selecciona una foto');
+        hideLoader();
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('id_usuario', currentUser.id);
+      formData.append('titulo', title);
+      formData.append('descripcion', description || '');
+      formData.append('precio', parseFloat(price));
+      formData.append('categoria', category);
+      formData.append('foto', photoInput.files[0]);
+
+      const response = await fetch('/api/publicaciones', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Error al crear la publicación');
+      }
+
+      alert('Publicación creada exitosamente');
+      document.getElementById('createPostModal')?.classList.remove('show');
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postDescription').value = '';
+      document.getElementById('postPrice').value = '';
+      document.getElementById('postCategory').value = '';
+      photoInput.value = '';
+
+      await loadUserPublications();
+    } catch (error) {
+      console.error('Error al crear publicación:', error);
+      alert(error.message || 'No se pudo crear la publicación');
+    } finally {
+      hideLoader();
+    }
+  });
+
   loadProfile();
   loadUserPublications();
 });

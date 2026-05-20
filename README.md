@@ -36,9 +36,13 @@ PORT=3000
 NODE_ENV=development
 ```
 
-### 4. Importar la base de datos
+### 4. Crear la base de datos
 ```bash
-mysql -u root -p interagro < config/publicaciones.sql
+node setup-database.js
+```
+O importar manualmente:
+```bash
+mysql -u root -p interagro < config/db-init.sql
 ```
 
 ### 5. Iniciar el servidor
@@ -59,7 +63,7 @@ Interagro-/
 │   ├── db.js                 # Configuración de MySQL
 │   ├── multerPerfil.js       # Upload de perfiles
 │   ├── multerPublicacion.js  # Upload de publicaciones
-│   └── publicaciones.sql     # Estructura de BD
+│   └── db-init.sql           # Estructura de BD
 ├── controllers/              # Lógica de negocio
 │   ├── usuarioController.js
 │   ├── publicacionController.js
