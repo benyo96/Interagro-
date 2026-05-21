@@ -8,15 +8,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="../css/mensajes.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-Gb3mgUO3VrfS7kN9WnPH6o0Txfjz7Ggl4gRbUxw3tJpJz1D9u4Boh1bYDc9R7S8Zn4xZ+Aa/lIlWCQX63rFJwQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="messages-page">
   <main class="page">
-    <section class="messages-page">
-      <div class="messages-shell">
+    <section class="messages-shell">
+      <aside class="message-list-shell">
+        <div class="chat-list-header">
+          <div>
+            <h2>Mensajes</h2>
+            <p class="text-muted">Conversaciones recientes</p>
+          </div>
+          <button id="refreshChats" class="icon-btn" aria-label="Refrescar chats"><i class="fa fa-sync-alt"></i></button>
+        </div>
         <div class="chat-list" id="chatList"></div>
-        <div class="chat-view" id="chatView"></div>
-      </div>
+      </aside>
+      <section class="chat-view" id="chatView"></section>
     </section>
   </main>
 
@@ -26,7 +34,13 @@
     <a class="nav-item" href="perfil.html"><i class="fa fa-user"></i><span>Perfil</span></a>
   </nav>
 
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="loader-spinner"></div>
+    <p>Cargando mensajes...</p>
+  </div>
+
   <script src="../js/common.js" defer></script>
+  <script src="/socket.io/socket.io.js" defer></script>
   <script src="../js/mensajes-app.js" defer></script>
 </body>
 </html>

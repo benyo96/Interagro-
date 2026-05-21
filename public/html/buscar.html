@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="../css/buscar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-Gb3mgUO3VrfS7kN9WnPH6o0Txfjz7Ggl4gRbUxw3tJpJz1D9u4Boh1bYDc9R7S8Zn4xZ+Aa/lIlWCQX63rFJwQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="search-page">
@@ -38,6 +39,33 @@
       <a class="nav-item" href="mensajes.html"><i class="fa fa-comment-dots"></i><span>Chats</span></a>
       <a class="nav-item" href="perfil.html"><i class="fa fa-user"></i><span>Perfil</span></a>
     </nav>
+  <div id="productDetailModal" class="modal">
+    <div class="modal-card product-detail-card">
+      <header>
+        <div>
+          <p class="eyebrow">Detalle del producto</p>
+          <h3 id="detailTitle"></h3>
+        </div>
+        <button type="button" class="modal-close" id="closeDetailModal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="product-detail-body">
+        <img id="detailImage" src="" alt="Detalle" loading="lazy">
+        <div class="product-detail-info">
+          <p id="detailCategory" class="badge"></p>
+          <p id="detailDescription"></p>
+          <div class="detail-meta">
+            <span id="detailPrice"></span>
+            <span id="detailLocation"></span>
+          </div>
+          <p class="seller-info">Vendedor: <strong id="detailSeller"></strong></p>
+        </div>
+      </div>
+      <div class="product-detail-actions">
+        <button type="button" id="detailContactBtn" class="btn btn-secondary">Contactar vendedor</button>
+        <button type="button" id="detailCloseBtn" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
   <div class="loader-overlay" id="loaderOverlay">
     <div class="loader-spinner"></div>
     <p>Cargando...</p>

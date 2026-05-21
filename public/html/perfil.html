@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="../css/perfil.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-Gb3mgUO3VrfS7kN9WnPH6o0Txfjz7Ggl4gRbUxw3tJpJz1D9u4Boh1bYDc9R7S8Zn4xZ+Aa/lIlWCQX63rFJwQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="profile-page">
@@ -21,6 +22,13 @@
           <p id="profileBio">Productor local con productos frescos directos del campo.</p>
           <p id="profileEmail" class="profile-contact"></p>
           <p id="profilePhone" class="profile-contact"></p>
+        </div>
+        <button id="profileSettingsBtn" class="settings-bubble" aria-label="Configuración">
+          <i class="fa fa-cog"></i>
+        </button>
+        <div class="settings-menu" id="settingsMenu">
+          <button type="button" class="settings-item" id="btnOpenSettings">Configuración</button>
+          <button type="button" class="settings-item danger" id="btnLogout">Cerrar sesión</button>
         </div>
       </div>
       <div class="profile-stats">
@@ -38,8 +46,13 @@
         </div>
       </div>
       <div class="profile-actions">
-        <button id="btnEditProfile" class="btn btn-primary">Editar perfil</button>
-        <button id="btnCreatePost" class="btn btn-secondary">+ Crear publicación</button>
+        <button type="button" id="btnEditProfile" class="btn btn-primary">Editar perfil</button>
+        <button type="button" id="btnCreatePost" class="btn btn-secondary">+ Crear publicación</button>
+      </div>
+
+      <div class="settings-menu" id="settingsMenu">
+        <button type="button" class="settings-item" id="btnOpenSettings">Configuración</button>
+        <button type="button" class="settings-item danger" id="btnLogout">Cerrar sesión</button>
       </div>
     </section>
 
@@ -52,11 +65,16 @@
     <a class="nav-item active" href="perfil.html"><i class="fa fa-user"></i><span>Perfil</span></a>
   </nav>
 
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="loader-spinner"></div>
+    <p>Cargando perfil...</p>
+  </div>
+
   <div id="profileModal" class="modal">
     <div class="modal-card">
       <header>
         <h3>Editar perfil</h3>
-        <button class="modal-close" id="closeProfileModal" aria-label="Cerrar">&times;</button>
+        <button type="button" class="modal-close" id="closeProfileModal" aria-label="Cerrar">&times;</button>
       </header>
       <div class="field">
         <label for="avatarInput">Cambiar avatar</label>
@@ -66,7 +84,11 @@
         <label for="bioInput">Biografía</label>
         <textarea id="bioInput" placeholder="Describe tu perfil en pocas palabras"></textarea>
       </div>
-      <button id="saveProfileBtn" class="btn btn-primary">Guardar cambios</button>
+      <div class="field">
+        <label for="passwordInput">Nueva contraseña</label>
+        <input type="password" id="passwordInput" placeholder="Dejar vacío si no cambia">
+      </div>
+      <button type="button" id="saveProfileBtn" class="btn btn-primary">Guardar cambios</button>
     </div>
   </div>
 
@@ -74,7 +96,7 @@
     <div class="modal-card">
       <header>
         <h3>Crear publicación</h3>
-        <button class="modal-close" id="closeCreatePostModal" aria-label="Cerrar">&times;</button>
+        <button type="button" class="modal-close" id="closeCreatePostModal" aria-label="Cerrar">&times;</button>
       </header>
       <div class="field">
         <label for="postTitle">Título</label>
@@ -104,7 +126,41 @@
         <label for="postPhoto">Foto</label>
         <input type="file" id="postPhoto" accept="image/*">
       </div>
-      <button id="savePostBtn" class="btn btn-primary">Crear publicación</button>
+      <button type="button" id="savePostBtn" class="btn btn-primary">Crear publicación</button>
+    </div>
+  </div>
+
+  <div id="editPostModal" class="modal">
+    <div class="modal-card">
+      <header>
+        <h3>Editar publicación</h3>
+        <button type="button" class="modal-close" id="closeEditPostModal" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="field">
+        <label for="editPostTitle">Título</label>
+        <input type="text" id="editPostTitle" placeholder="Nombre del producto">
+      </div>
+      <div class="field">
+        <label for="editPostDescription">Descripción</label>
+        <textarea id="editPostDescription" placeholder="Describe tu producto"></textarea>
+      </div>
+      <div class="field">
+        <label for="editPostPrice">Precio</label>
+        <input type="number" id="editPostPrice" placeholder="0" min="0" step="100">
+      </div>
+      <div class="field">
+        <label for="editPostCategory">Categoría</label>
+        <select id="editPostCategory">
+          <option value="">Selecciona categoría</option>
+          <option value="Verduras">Verduras</option>
+          <option value="Frutas">Frutas</option>
+          <option value="Granos">Granos</option>
+          <option value="Lácteos">Lácteos</option>
+          <option value="Carnes">Carnes</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+      <button type="button" id="saveEditPostBtn" class="btn btn-primary">Guardar cambios</button>
     </div>
   </div>
 

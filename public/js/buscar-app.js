@@ -3,6 +3,7 @@ let indexCard = 0;
 let likedCards = JSON.parse(localStorage.getItem('interagro_likes') || '[]');
 let dragState = null;
 let isAnimating = false;
+let currentUser = null;
 
 function getCardImage(publicacion) {
   if (publicacion.foto) return publicacion.foto;
@@ -31,14 +32,30 @@ function buildCard(item, position) {
 
   if (position === 0) {
     card.classList.add('top-card');
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+
     const detailButton = document.createElement('button');
     detailButton.className = 'ghost-btn';
     detailButton.textContent = 'Ver detalles';
-    detailButton.style.margin = '0 22px 18px';
-    detailButton.addEventListener('click', () => {
-      alert(`${item.titulo}\n\n${item.descripcion}\n\n${formatCurrency(item.precio)}\n${item.ubicacion}`);
-    });
-    card.append(detailButton);
+    detailButton.addEventListener('click', () => openDetailModal(item));
+    actions.append(detailButton);
+
+    if (currentUser && Number(item.id_usuario) !== currentUser.id) {
+      const contactButton = document.createElement('button');
+      contactButton.className = 'ghost-btn';
+      contactButton.textContent = 'Contactar';
+      contactButton.addEventListener('click', () => {
+        localStorage.setItem('pendingChat', JSON.stringify({
+          id: Number(item.id_usuario),
+          name: item.nombre_usuario || 'Vendedor'
+        }));
+        window.location.href = 'mensajes.html';
+      });
+      actions.append(contactButton);
+    }
+
+    card.append(actions);
   }
 
   return card;
@@ -162,6 +179,53 @@ function advanceDeck(action) {
   renderDeck();
 }
 
+function openDetailModal(item) {
+  const modal = document.getElementById('productDetailModal');
+  if (!modal) return;
+
+  document.getElementById('detailTitle').textContent = item.titulo || 'Sin título';
+  document.getElementById('detailImage').src = getCardImage(item);
+  document.getElementById('detailImage').alt = item.titulo || 'Publicación';
+  document.getElementById('detailCategory').textContent = item.categoria || 'Producto';
+  document.getElementById('detailDescription').textContent = item.descripcion || 'Sin descripción disponible.';
+  document.getElementById('detailPrice').textContent = formatCurrency(item.precio);
+  document.getElementById('detailLocation').textContent = item.ubicacion || 'Ubicación no disponible';
+  document.getElementById('detailSeller').textContent = item.nombre_usuario || 'Proveedor';
+
+  const contactBtn = document.getElementById('detailContactBtn');
+  contactBtn.onclick = () => {
+    if (!currentUser) {
+      window.location.href = 'login.html';
+      return;
+    }
+    if (Number(item.id_usuario) === currentUser.id) {
+      alert('No puedes contactar tu propia publicación.');
+      return;
+    }
+    localStorage.setItem('pendingChat', JSON.stringify({
+      id: Number(item.id_usuario),
+      name: item.nombre_usuario || 'Vendedor'
+    }));
+    window.location.href = 'mensajes.html';
+  };
+
+  const closeButtons = [
+    document.getElementById('closeDetailModal'),
+    document.getElementById('detailCloseBtn')
+  ];
+  closeButtons.forEach((button) => {
+    if (button) {
+      button.onclick = () => modal.classList.remove('show');
+    }
+  });
+
+  modal.classList.add('show');
+}
+
+function closeDetailModal() {
+  document.getElementById('productDetailModal')?.classList.remove('show');
+}
+
 async function loadPublicaciones() {
   showLoader();
   try {
@@ -181,11 +245,15 @@ async function loadPublicaciones() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('productDetailModal')?.addEventListener('click', (event) => {
+    if (event.target === event.currentTarget) closeDetailModal();
+  });
   const user = getCurrentUser();
   if (!user) {
     window.location.href = 'login.html';
     return;
   }
+  currentUser = user;
 
   document.getElementById('btnLike')?.addEventListener('click', () => swipeTopCard('like'));
   document.getElementById('btnPass')?.addEventListener('click', () => swipeTopCard('pass'));

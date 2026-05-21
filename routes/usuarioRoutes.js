@@ -11,5 +11,6 @@ router.post('/register', usuarioController.register);
 router.get('/:id', usuarioController.getPerfil);
 router.patch('/:id', usuarioController.updatePerfil);
 router.post('/subir-foto-perfil', upload.single('foto_perfil'), usuarioController.subirFotoPerfil);
+router.post('/reset-password', usuarioController.resetPassword);
 
 module.exports = router;

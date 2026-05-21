@@ -20,49 +20,52 @@ exports.getPublicaciones = (req, res) => {
     const usuario = req.query.usuario ? parseInt(req.query.usuario, 10) : null;
     const sort = req.query.sort || 'Más recientes';
 
-    let sql = 'SELECT * FROM publicaciones WHERE 1=1';
+    let sql = `SELECT p.*, u.nombre AS nombre_usuario, u.foto_perfil AS usuario_foto
+      FROM publicaciones p
+      LEFT JOIN usuarios u ON p.id_usuario = u.id`;
     const params = [];
+    const conditions = [];
 
     if (usuario && !isNaN(usuario)) {
-      sql += ' AND id_usuario = ?';
+      conditions.push('p.id_usuario = ?');
       params.push(usuario);
     }
 
-    // Búsqueda por texto
     if (q) {
-      sql += ' AND (titulo LIKE ? OR descripcion LIKE ?)';
+      conditions.push('(p.titulo LIKE ? OR p.descripcion LIKE ?)');
       const like = `%${q}%`;
       params.push(like, like);
     }
 
-    // Filtro por categorías
     if (categories.length) {
       const ph = categories.map(() => '?').join(',');
-      sql += ` AND categoria IN (${ph})`;
+      conditions.push(`p.categoria IN (${ph})`);
       params.push(...categories);
     }
 
-    // Filtro por rango de precios
     if (!isNaN(minPrice) && minPrice !== null) {
-      sql += ' AND precio >= ?';
+      conditions.push('p.precio >= ?');
       params.push(minPrice);
     }
     if (!isNaN(maxPrice) && maxPrice !== null) {
-      sql += ' AND precio <= ?';
+      conditions.push('p.precio <= ?');
       params.push(maxPrice);
     }
 
-    // Ordenamiento
+    if (conditions.length) {
+      sql += ` WHERE ${conditions.join(' AND ')}`;
+    }
+
     switch (sort) {
       case 'Menor precio':
-        sql += ' ORDER BY precio ASC';
+        sql += ' ORDER BY p.precio ASC';
         break;
       case 'Mayor precio':
-        sql += ' ORDER BY precio DESC';
+        sql += ' ORDER BY p.precio DESC';
         break;
       case 'Más recientes':
       default:
-        sql += ' ORDER BY fecha DESC';
+        sql += ' ORDER BY p.fecha DESC';
     }
 
     connection.query(sql, params, (err, results) => {

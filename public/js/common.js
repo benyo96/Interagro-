@@ -30,6 +30,11 @@ function requireAuth() {
   return user;
 }
 
+function authHeaders() {
+  const user = getCurrentUser();
+  return user ? { 'X-Usuario-Id': String(user.id) } : {};
+}
+
 function formatCurrency(value) {
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
